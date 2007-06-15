@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<rss version="2.0" xmlns:binding="http://www.live.com">
+  <channel>
+    <title>Local UA</title>
+    <description>Показує стислу інформація для заданого міста - погода та курс валют.</description>
+    <language>uk-ua</language>
+    <binding:type>SAdamchuk.MSGadgets.LocalUA</binding:type>
+    <item>
+      <link>http://localhost/Gadgets/LocalUA/LocalUA.js</link>
+    </item>
+    <item>
+      <link binding:type="css">http://localhost/Gadgets/LocalUA/LocalUA.css</link>
+    </item>
+    <icons>
+      <!-- Specifies a .png file to be used as the icon in the title bar for your gadget -->
+      <!-- <icon height="32" width="32">http://localhost/Gadgets/LocalUA/LocalUA.png</icon> -->
+    </icons>
+  </channel>
+</rss>
