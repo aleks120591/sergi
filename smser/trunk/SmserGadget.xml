@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<rss version="2.0" xmlns:binding="http://www.live.com">
+  <channel>
+    <title>Smser</title>
+    <link>http://www.microsoft.com</link>
+    <description>Sends smss using operators site.</description>
+    <language>en-us</language>
+    <binding:type>SAdamchuk.MSGadgets.SmserGadget</binding:type>
+    <item>
+      <link>http://localhost/Gadgets/Hello/SmserGadget.js</link>
+    </item>
+    <item>
+      <link binding:type="css">http://localhost/Gadgets/Hello/SmserGadget.css</link>
+    </item>
+  </channel>
+</rss>
