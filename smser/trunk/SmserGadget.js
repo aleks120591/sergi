@@ -8,10 +8,36 @@ SAdamchuk.MSGadgets.SmserGadget = function(p_elSource, p_args, p_namespace)
 	var m_el = p_elSource;
 	var m_captchaInput;
 	var m_captchaImg;
+	
+	var m_channel;
+	var m_number;
+	var m_message;
+	var m_sender;
+	
 	var m_smser;
 	
 	this.Output = function()
-	{
+	{	
+		m_channel=document.createElement("select");
+		for(var i=0;i<SAdamchuk_Smser_carriers.channels.length;i++){
+		    var c=SAdamchuk_Smser_carriers.channels[i];
+		    if (!c.hidden){
+		        var opt=new Option(c.text);
+		        opt.value=i.toString();
+		        m_channel.options[i]=opt;
+		    }
+		}
+		m_el.appendChild(m_channel);
+		
+		m_number=document.createElement("input");
+		m_number.type="text";
+		m_el.appendChild(m_number);
+		m_el.appendChild(document.createElement("br"));
+		
+		m_message=document.createElement("textarea");
+		m_el.appendChild(m_message);
+		m_el.appendChild(document.createElement("br"));
+		
 		m_captchaImg = document.createElement("img");
 		m_el.appendChild(m_captchaImg);
 		
@@ -19,6 +45,13 @@ SAdamchuk.MSGadgets.SmserGadget = function(p_elSource, p_args, p_namespace)
 		m_captchaInput.id="captchaInput";
 		m_captchaInput.type="text";
 		m_el.appendChild(m_captchaInput);
+
+		
+		m_el.appendChild(document.createElement("br"));
+		
+		m_sender=document.createElement("input");
+		m_sender.type="text";
+		m_el.appendChild(m_sender);
 		
 		var buttonSend=document.createElement("input");
 		buttonSend.type="button";
@@ -40,6 +73,10 @@ SAdamchuk.MSGadgets.SmserGadget = function(p_elSource, p_args, p_namespace)
 		catch(ex){
 		    m_el.innerHTML=ex;
 		}
+		
+		AdjustCurChannel();
+		
+		m_channel.onchange=function(){AdjustCurChannel();};
 	}
 	SAdamchuk.MSGadgets.SmserGadget.registerBaseMethod(this, "Output");
 		
@@ -58,6 +95,11 @@ SAdamchuk.MSGadgets.SmserGadget = function(p_elSource, p_args, p_namespace)
 	    m_captchaInput=null;
 	    m_captchaImg=null;
 	    
+	    m_channel=null;
+	    m_number=null;
+	    m_message=null;
+	    m_sender=null;
+	    
 	    m_smser.dispose();
 	    m_smser=null;
 	    
@@ -68,9 +110,16 @@ SAdamchuk.MSGadgets.SmserGadget = function(p_elSource, p_args, p_namespace)
 	}
 	SAdamchuk.MSGadgets.SmserGadget.registerBaseMethod(this, "dispose");
 	    
-    function SendSms()
-    {
-        m_smser.sendSms(m_captchaInput.value);
+    function SendSms(){
+        m_smser.sendSms(
+            m_number.value,
+            m_message.value,
+            m_sender.value,
+            m_captchaInput.value);
+    }
+    
+    function AdjustCurChannel(){
+        m_smser.setCurrentChannel(parseInt(m_channel.value));
     }
 }
 SAdamchuk.MSGadgets.SmserGadget.registerClass("SAdamchuk.MSGadgets.SmserGadget", "Web.Bindings.Base");
