@@ -1,4 +1,4 @@
-registerNamespace("SAdamchuk.MSGadgets.SmserGadget");
+﻿registerNamespace("SAdamchuk.MSGadgets.SmserGadget");
 
 SAdamchuk.MSGadgets.SmserGadget = function(p_elSource, p_args, p_namespace)
 {
@@ -32,9 +32,14 @@ SAdamchuk.MSGadgets.SmserGadget = function(p_elSource, p_args, p_namespace)
 	    m_el.appendChild(buttonSend);
 	    
 	    m_smser=SAdamchuk_Smser;
-	    m_smser.initialize(Web.Browser.isIE(),m_captchaImg);
+	    m_smser.initialize(SAdamchuk_Smser_Req,m_captchaImg);
 		
-		m_smser.refreshCaptcha();
+		try{
+		    m_smser.refreshCaptcha();
+		}
+		catch(ex){
+		    m_el.innerHTML=ex;
+		}
 	}
 	SAdamchuk.MSGadgets.SmserGadget.registerBaseMethod(this, "Output");
 		
@@ -56,6 +61,9 @@ SAdamchuk.MSGadgets.SmserGadget = function(p_elSource, p_args, p_namespace)
 	    m_smser.dispose();
 	    m_smser=null;
 	    
+	    SAdamchuk_Smser_Req.dispose();
+	    SAdamchuk_Smser_Req=null;
+	    
 	    SAdamchuk.MSGadgets.SmserGadget.getBaseMethod(this, "dispose", "Web.Bindings.Base").call(this, p_blnUnload);
 	}
 	SAdamchuk.MSGadgets.SmserGadget.registerBaseMethod(this, "dispose");
@@ -66,3 +74,45 @@ SAdamchuk.MSGadgets.SmserGadget = function(p_elSource, p_args, p_namespace)
     }
 }
 SAdamchuk.MSGadgets.SmserGadget.registerClass("SAdamchuk.MSGadgets.SmserGadget", "Web.Bindings.Base");
+
+var SAdamchuk_Smser_Req={
+    req:null,
+    callback:null,
+    
+    sendRequest:function(url,callback){
+        this.req=null;
+        if (window.XMLHttpRequest){
+          this.req = new XMLHttpRequest();
+        } else if (window.ActiveXObject){
+          this.req = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        
+        if (!this.req) throw "Не вдалось створити запит.";
+        
+        try{
+            this.req.open("get",url,true);
+        }
+        catch(ex){
+            throw "Виникла помилка при спробі відкрити з'єднання: "+ex.message
+        }
+        
+        this.req.onreadystatechange=function(){
+            if (SAdamchuk_Smser_Req.req.readyState==4)
+            {
+                if ((SAdamchuk_Smser_Req.req.status==200)||(SAdamchuk_Smser_Req.req.status==0)){
+                    SAdamchuk_Smser_Req.callback(SAdamchuk_Smser_Req.req.responseText);
+                }
+                else{
+                    throw "Помилка при одержанні коду з сервера: "+SAdamchuk_Smser_Req.req.statusText;
+                }
+            }
+        }
+        this.callback=callback;
+        this.req.send();
+    },
+    
+    dispose:function(){
+        req=null;
+        callback=null;
+    }
+}

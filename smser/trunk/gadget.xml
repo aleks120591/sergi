@@ -7,13 +7,13 @@
 	<language>en-us</language>
 	<binding:type>SAdamchuk.MSGadgets.SmserGadget</binding:type>
 	<item>
-	  <link>http://localhost/Gadgets/Smser/smser.js</link>
+	  <link>smser.js</link>
 	</item>
 	<item>
-	<link>http://localhost/Gadgets/Smser/SmserGadget.js</link>
+		<link>SmserGadget.js</link>
 	</item>
 	<item>
-	  <link binding:type="css">http://localhost/Gadgets/Smser/SmserGadget.css</link>
+	  <link binding:type="css">SmserGadget.css</link>
 	</item>
   </channel>
 </rss>

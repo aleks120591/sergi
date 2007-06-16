@@ -1,39 +1,33 @@
 ﻿var SAdamchuk_Smser={
+    requester:null,
     captchaReq:null,
-    isIE:null,
     captchaImg:null,
     captchaInternalCode:null,
     
-    initialize:function(isIE,captchaImg){
-        this.isIE=isIE;
+    initialize:function(requester,captchaImg){
+        this.requester=requester;
         this.captchaImg=captchaImg;
     },
 
     dispose:function(){
-        this.isIE=null;
         this.captchaReq=null;
         this.captchaInternalCode=null;
+        this.requester=null;
         
         SAdamchuk_Smser=null;
         SAdamchuk_Smser_carriers=null;
     },
 
     refreshCaptcha:function(){
-        this.captchaReq=this.createHttpRequest();
-        this.captchaReq.open("get", "http://www.umc.ua/ukr/sendsms.php", true);
-        this.captchaReq.onreadystatechange=function(){
-            if ((SAdamchuk_Smser.captchaReq.readyState==4)&&(SAdamchuk_Smser.captchaReq.status==200)){
-                var re = new RegExp("INPUT TYPE=\"hidden\" name=\"PHPSESSID\" value=\"([^\"]+)\"");
-			    SAdamchuk_Smser.captchaInternalCode = SAdamchuk_Smser.captchaReq.responseText.match(re)[1];
-                SAdamchuk_Smser.captchaImg.src="http://www.umc.ua/back/modules/sms/sms_picture2.php?PHPSESSID="+SAdamchuk_Smser.captchaInternalCode;
-            }
-        };
-        this.captchaReq.send();
+        this.requester.sendRequest("http://www.umc.ua/ukr/sendsms.php",function(txt){
+            var re = new RegExp("INPUT TYPE=\"hidden\" name=\"PHPSESSID\" value=\"([^\"]+)\"");
+            SAdamchuk_Smser.captchaInternalCode = txt.match(re)[1];
+            SAdamchuk_Smser.captchaImg.src="http://www.umc.ua/back/modules/sms/sms_picture2.php?PHPSESSID="+SAdamchuk_Smser.captchaInternalCode;            
+        });
     },
     
     sendSms:function(captcha){
         newWin=window.open("about:blank", "_blank");
-        //newWin.name=captcha;
         var frm=newWin.document.createElement("form");
         frm.method="post";
 	    frm.action="http://www.umc.ua/back/modules/sms/db_sms.php";
@@ -50,13 +44,6 @@
 	    
         newWin.document.body.appendChild(frm);
         frm.submit();
-    },
-
-    createHttpRequest:function(){
-        if (this.isIE) 
-            return new ActiveXObject("MSXML2.XMLHTTP.3.0");
-        else
-            return new XMLHttpRequest();
     }
 }
 
