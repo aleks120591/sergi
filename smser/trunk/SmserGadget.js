@@ -8,6 +8,7 @@ SAdamchuk.MSGadgets.SmserGadget = function(p_elSource, p_args, p_namespace)
 	var m_el = p_elSource;
 	var m_captchaInput;
 	var m_captchaImg;
+	var m_smser;
 	
 	this.Output = function()
 	{
@@ -29,14 +30,11 @@ SAdamchuk.MSGadgets.SmserGadget = function(p_elSource, p_args, p_namespace)
             m_this);*/
 				
 	    m_el.appendChild(buttonSend);
+	    
+	    m_smser=SAdamchuk_Smser;
+	    m_smser.initialize(Web.Browser.isIE(),m_captchaImg);
 		
-		var req = Web.Network.createRequest(
-            Web.Network.Type.XMLGet,
-            "http://www.umc.ua/ukr/sendsms.php",
-            m_captchaImg,
-            CaptchaLoaded);
-
-        req.execute();
+		m_smser.refreshCaptcha();
 	}
 	SAdamchuk.MSGadgets.SmserGadget.registerBaseMethod(this, "Output");
 		
@@ -55,25 +53,16 @@ SAdamchuk.MSGadgets.SmserGadget = function(p_elSource, p_args, p_namespace)
 	    m_captchaInput=null;
 	    m_captchaImg=null;
 	    
+	    m_smser.dispose();
+	    m_smser=null;
+	    
 	    SAdamchuk.MSGadgets.SmserGadget.getBaseMethod(this, "dispose", "Web.Bindings.Base").call(this, p_blnUnload);
 	}
 	SAdamchuk.MSGadgets.SmserGadget.registerBaseMethod(this, "dispose");
-	
-	function CaptchaLoaded(response)
-    {
-        if ( response.status == 200 )
-        {
-            var re = new RegExp("INPUT TYPE=\"hidden\" name=\"PHPSESSID\" value=\"([^\"]+)\"");
-			var code=response.responseText.match(re)[1];
-			m_captchaImg.src="http://www.umc.ua/back/modules/sms/sms_picture2.php?PHPSESSID="+code;
-        }
-    }
-    
+	    
     function SendSms()
     {
-        var aObjHeaders = new Array();
-        aObjHeaders["Content-Type"] = "application/x-www-form-urlencoded";
-        
+        m_smser.sendSms(m_captchaInput.value);
     }
 }
 SAdamchuk.MSGadgets.SmserGadget.registerClass("SAdamchuk.MSGadgets.SmserGadget", "Web.Bindings.Base");

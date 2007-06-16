@@ -1,16 +1,19 @@
 <?xml version="1.0"?>
 <rss version="2.0" xmlns:binding="http://www.live.com">
   <channel>
-    <title>Free SMS</title>
-    <link>http://code.google.com/p/sergi/wiki/FreeSms</link>
-    <description>Sends smss using operators site.</description>
-    <language>en-us</language>
-    <binding:type>SAdamchuk.MSGadgets.SmserGadget</binding:type>
-    <item>
-      <link>http://localhost/Gadgets/Smser/SmserGadget.js</link>
-    </item>
-    <item>
-      <link binding:type="css">http://localhost/Gadgets/Smser/SmserGadget.css</link>
-    </item>
+	<title>SendSMS.com.ua</title>
+	<link>http://sendsms.com.ua</link>
+	<description>Sends smss using operators site.</description>
+	<language>en-us</language>
+	<binding:type>SAdamchuk.MSGadgets.SmserGadget</binding:type>
+	<item>
+	  <link>http://localhost/Gadgets/Smser/smser.js</link>
+	</item>
+	<item>
+	<link>http://localhost/Gadgets/Smser/SmserGadget.js</link>
+	</item>
+	<item>
+	  <link binding:type="css">http://localhost/Gadgets/Smser/SmserGadget.css</link>
+	</item>
   </channel>
 </rss>
