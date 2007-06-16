@@ -139,7 +139,36 @@ var SAdamchuk_Smser_carriers={
                 },
                 {name: "antispam",
                 getter: function(arg) {return arg.captcha;}
-          })}}
+          })}},
+          {name: "beeline",
+	        captchaProcessor : {
+		        getUrl : "http://beesms.beeline.ua/",
+		        internalCodeExtractor: function(html){
+			        var re = new RegExp("IMG\\s+SRC=\\\"\\.\\.\\/count\\.php(\\?[^\"]+)\\\"");
+			        return html.match(re)[1];
+		        },
+		        imageSourceBuilder: function(code){
+			        return "http://beesms.beeline.ua/count.php"+code+"&jkghf="+Math.random();
+		        }
+	        },
+	        sendProcessor: 
+	        {
+		        type: "PostForm",
+		        postFormUrl: "http://beesms.beeline.ua/",
+		        formItems: new Array(
+			        {name: "op",
+			        getter: "send_sms"},
+			        {name: "dlina",
+			        getter: "142"},
+			        {name: "lg",
+			        getter: "latukr"},
+			        {name: "phone_num",
+			        getter: function(arg) {return arg.channel.value+arg.phoneNum;}},
+			        {name: "text_message",
+			        getter: function(arg) {return arg.message+arg.sender;}},
+			        {name: "code_form",
+			        getter: function(arg) {return arg.captcha;
+			 }})}}
         ),
         
         channels:new Array(
