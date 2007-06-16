@@ -32,7 +32,7 @@ SAdamchuk.MSGadgets.SmserGadget = function(p_elSource, p_args, p_namespace)
 	    m_el.appendChild(buttonSend);
 	    
 	    m_smser=SAdamchuk_Smser;
-	    m_smser.initialize(SAdamchuk_Smser_Req,m_captchaImg);
+	    m_smser.initialize(SAdamchuk_Smser_MSReq,m_captchaImg);
 		
 		try{
 		    m_smser.refreshCaptcha();
@@ -109,6 +109,30 @@ var SAdamchuk_Smser_Req={
         }
         this.callback=callback;
         this.req.send();
+    },
+    
+    dispose:function(){
+        req=null;
+        callback=null;
+    }
+}
+
+var SAdamchuk_Smser_MSReq={
+    req:null,
+    callback:null,
+    
+    sendRequest:function(url,callback){
+        this.req = Web.Network.createRequest(
+            Web.Network.Type.XMLGet,
+            url,
+            null,
+            function(response){
+               if (response.status == 200)
+                SAdamchuk_Smser_MSReq.callback(response.responseText);
+            });
+
+        this.callback=callback;
+        this.req.execute();
     },
     
     dispose:function(){
