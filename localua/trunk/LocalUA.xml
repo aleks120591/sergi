@@ -2,6 +2,7 @@
 <rss version="2.0" xmlns:binding="http://www.live.com">
   <channel>
     <title>Local UA</title>
+    <link>http://code.google.com/p/sergi/wiki/LocalUA</link>
     <description>Показує стислу інформація для заданого міста - погода та курс валют.</description>
     <language>uk-ua</language>
     <binding:type>SAdamchuk.MSGadgets.LocalUA</binding:type>
