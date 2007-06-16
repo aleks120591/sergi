@@ -101,7 +101,7 @@ SAdamchuk.MSGadgets.LocalUA = function(p_elSource, p_args, p_namespace) {
 	    m_regSelector=document.createElement("select");
 	    m_regSelector.id="region_select";
 	    for(var i=0;i<m_regions.length;i++){
-	        var opt=new Option(m_regions[i].reg)
+	        var opt=new Option(m_regions[i].reg);
 	        opt.value=i.toString();
 	        m_regSelector.options[i]=opt;
 	    }
