@@ -9,7 +9,7 @@ SAdamchuk.MSGadgets.SmserGadget = function(p_elSource, p_args, p_namespace)
 	this.Output = function()
 	{	
 		m_view=SAdamchuk_Smser_View(p_elSource,p_args.module);
-		SAdamchuk_Smser_Controller.initialize(m_view,p_args.module,null);
+		SAdamchuk_Smser_Controller.initialize(m_view,null);
 	}
 	SAdamchuk.MSGadgets.SmserGadget.registerBaseMethod(this, "Output");
 		

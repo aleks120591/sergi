@@ -1,10 +1,9 @@
 ﻿// ####### SAdamchuk_Smser_Controller
 var SAdamchuk_Smser_Controller={
-    initialize:function(view,urlResolver,persist){        
+    initialize:function(view,persist){        
         this.view=view;
         this.persist=persist;
         this.model=new SAdamchuk_Smser_Model();
-        this.urlResolver=urlResolver;
         
         var handler=function(){SAdamchuk_Smser_Controller.onNewCookies();};
         if (this.view.frame.attachEvent)
@@ -13,6 +12,7 @@ var SAdamchuk_Smser_Controller={
 		    this.view.frame.onload=handler;
 		this.view.buttonSend.onclick=function(){SAdamchuk_Smser_Controller.sendSms();};
 		this.view.channelSelector.onchange=function(){SAdamchuk_Smser_Controller.adjustChannel();};
+		this.view.captchaImg.onclick=function(){SAdamchuk_Smser_Controller.refreshCaptcha();};
         
         this.refreshCaptcha();
     },
@@ -21,7 +21,6 @@ var SAdamchuk_Smser_Controller={
         this.model.dispose();
         this.model=null;
         this.persist=null;
-        this.urlResolver=null;
     },
 
     refreshCaptcha:function(){
