@@ -28,14 +28,6 @@ var SAdamchuk_Smser_Controller={
         this.view.setWaitingCaptcha();
         var car=this.model.getCurrentCarrier();
         this.view.frame.src=car.baseUrl+car.cookRefreshPath;
-        this.view.frame.onload=function(){
-            alert("Event raised");
-            var car=SAdamchuk_Smser_Controller.model.getCurrentCarrier();
-            var url=car.baseUrl+car.captchaPath;
-            url+=(car.indexOf("?")<0)?"?":"&";
-            url+=("scomua="+Math.random());
-            SAdamchuk_Smser_Controller.view.captchaImg.src=url;
-        };
     },
     
     sendSms:function(){
