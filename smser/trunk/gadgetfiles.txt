@@ -1,0 +1,7 @@
+gadget.xml
+icon_sms32.gif
+smser.js
+SmserGadget.css
+SmserGadget.js
+tabmain.gif
+wait30.gif

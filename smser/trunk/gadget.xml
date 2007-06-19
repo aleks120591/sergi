@@ -15,5 +15,8 @@
 	<item>
 	  <link binding:type="css">SmserGadget.css</link>
 	</item>
+	<icons>
+	    <icon height="32" width="32">icon_sms32.gif</icon>
+    </icons>
   </channel>
 </rss>

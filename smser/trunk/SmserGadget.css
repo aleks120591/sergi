@@ -1,6 +1,19 @@
-﻿.SAdamchuk_MSGadgets_SmserGadget
-{
+﻿.SAdamchuk_MSGadgets_SmserGadget{
 	color: navy;
 	letter-spacing:2px;
 	font-weight:bold;
+}
+
+div{
+	margin:0;
+	padding:0;
+}
+
+#mainPage{
+	background-color:LightCyan;
+	border:1px;
+	padding:5px;
+	border-style:solid;
+	border-color:Navy;
+	width:300;
 }
