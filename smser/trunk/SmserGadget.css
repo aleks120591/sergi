@@ -9,11 +9,38 @@ div{
 	padding:0;
 }
 
-#mainPage{
-	background-color:LightCyan;
+.tab,.activeTab{
+	cursor:pointer;
+}
+
+.activeTab{
+	top:1px;
+	position:relative;
+}
+
+.page{
 	border:1px;
 	padding:5px;
+	border-style:solid;	
+}
+
+#mainPage,.page{
+	background-color:#ADD8E6;
+	border-color:blue;
+}
+
+.control{
 	border-style:solid;
-	border-color:Navy;
-	width:300;
+	border:1px;
+	border-color:blue;
+}
+
+.page div{
+	margin:3px;
+}
+
+#captchaBlock{
+	height:50;
+	display:block;
+	position:static;
 }

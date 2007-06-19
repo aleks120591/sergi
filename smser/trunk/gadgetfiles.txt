@@ -3,5 +3,8 @@ icon_sms32.gif
 smser.js
 SmserGadget.css
 SmserGadget.js
+tabcont.gif
+tabhlp.gif
 tabmain.gif
+tabopt.gif
 wait30.gif

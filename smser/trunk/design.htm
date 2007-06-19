@@ -7,16 +7,30 @@
 </head>
 <body>
     <div id="gadgetHolder">
-    	<div style="margin-top:-1px;margin-bottom:-1px"><img src="tabmain.gif" style="cursor:pointer"></div>
-    	<div id="mainPage">
-			<select><option value="0">UMC (050)</option><option value="1">UMC (095)</option><option value="2">Jeans (099)</option><option value="3">Jeans (066)</option><option value="4">Kyivstar (067)</option><option value="5">Kyivstar (096)</option><option value="6">Kyivstar (097)</option><option value="7">Kyivstar (098)</option><option value="8">GoldenTel1 (039)</option><option value="9">Kyivstar (063)</option><option value="a">Life (093)</option><option value="b">GoldenTel2 (039)</option><option value="c">Welcome (068)</option><option value="d">Beeline (068)</option></select>
-			<input type="text"><br><textarea></textarea><br>
-			<div style="min-width:120;min-height:50;vertical-align:middle;align:center;"><img src="wait30.gif" style="cursor:pointer"></div>
-			<input type="text"><br>
-			<input type="text">
-			<input value="Send" type="button">
-			<iframe src="http://www.umc.ua/ukr/sendsms.php" style="display: none;"></iframe>
-		</div>
+    	<table width="300px"><tr><td>
+    	    <div><img src="tabmain.gif" class="activeTab" alt="Головна" style="top:1px;position:relative;"/><img src="tabopt.gif" class="tab" alt="Опції"/><img src="tabhlp.gif" class="tab" alt="Довідка"/><img src="tabcont.gif" class="tab" alt="Контакти"/></div>
+    	    <div id="mainPage" class="page">
+			    <div>
+			        <select class="control"><option value="0">UMC (050)</option><option value="1">UMC (095)</option><option value="2">Jeans (099)</option><option value="3">Jeans (066)</option><option value="4">Kyivstar (067)</option><option value="5">Kyivstar (096)</option><option value="6">Kyivstar (097)</option><option value="7">Kyivstar (098)</option><option value="8">GoldenTel1 (039)</option><option value="9">Kyivstar (063)</option><option value="a">Life (093)</option><option value="b">GoldenTel2 (039)</option><option value="c">Welcome (068)</option><option value="d">Beeline (068)</option></select>
+			        <input class="control" type="text" maxlength="7" style="width:70px"/>
+			    </div>
+			    <div>
+    			    <textarea class="control" cols="30" rows="5"></textarea>
+			    </div>
+			    <div id="captchaBlock">
+			        <img src="wait30.gif" style="cursor:pointer" alt="Код"/>
+			        <input type="text" class="control" maxlength="5"/>
+			    </div>
+			    <div>
+			        <input type="text" class="control"/>			        
+			    </div>
+			    <div align="center">
+			        <input value="Очистити" type="button" class="control"/>
+			        <input value="Відправити" type="button" class="control"/>
+			    </div>
+			    <iframe src="http://www.umc.ua/ukr/sendsms.php" style="display: none;"></iframe>
+		    </div>
+		</td></tr></table>
     </div>
 </body>
 </html>
