@@ -21,7 +21,40 @@ div{
 .page{
 	border:1px;
 	padding:5px;
-	border-style:solid;	
+	border-style:solid;
+	padding:10px;
+	display:block;
+	overflow:hidden;
+}
+
+.hiddenPage{
+	display:none;
+	overflow:hidden;
+}
+
+#mainPage{
+	background-color:#ADD8E6;
+	border-color:blue;
+}
+
+#helpPage{
+	background-color:#fffacd;
+	border-color:#daa520;
+}
+
+#optPage{
+	background-color:#faebd7;
+	border-color:#b44c48;
+}
+
+#contPage{
+	background-color:#90ee90;
+	border-color:#008000;
+}
+
+.textField
+{
+	width:100px;
 }
 
 #mainPage,.page{
@@ -29,18 +62,22 @@ div{
 	border-color:blue;
 }
 
-.control{
+.control,.textField{
 	border-style:solid;
 	border:1px;
 	border-color:blue;
 }
 
-.page div{
-	margin:3px;
+#captchaInput{
+	width:100px;
 }
 
-#captchaBlock{
-	height:50;
-	display:block;
-	position:static;
+#buttonsBlock{
+	text-align:center;
+}
+
+.button{
+	background-image: url('images/buttonBlue.gif');
+	color: #0067a9;
+	border: solid 1px #000000;
 }
