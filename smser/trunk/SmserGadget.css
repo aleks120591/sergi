@@ -1,24 +1,22 @@
 ﻿.SAdamchuk_MSGadgets_SmserGadget{
 	color: navy;
-	letter-spacing:2px;
-	font-weight:bold;
 }
 
-div{
+.SAdamchuk_MSGadgets_SmserGadget div{
 	margin:0;
 	padding:0;
 }
 
-.tab,.activeTab{
+.SAdamchuk_MSGadgets_SmserGadget .tab,.SAdamchuk_MSGadgets_SmserGadget .activeTab{
 	cursor:pointer;
 }
 
-.activeTab{
+.SAdamchuk_MSGadgets_SmserGadget .activeTab{
 	top:1px;
 	position:relative;
 }
 
-.page{
+.SAdamchuk_MSGadgets_SmserGadget .page{
 	border:1px;
 	padding:5px;
 	border-style:solid;
@@ -27,56 +25,56 @@ div{
 	overflow:hidden;
 }
 
-.hiddenPage{
+.SAdamchuk_MSGadgets_SmserGadget .hiddenPage{
 	display:none;
 	overflow:hidden;
 }
 
-#mainPage{
+.SAdamchuk_MSGadgets_SmserGadget #mainPage{
 	background-color:#ADD8E6;
 	border-color:blue;
 }
 
-#helpPage{
+.SAdamchuk_MSGadgets_SmserGadget #helpPage{
 	background-color:#fffacd;
 	border-color:#daa520;
 }
 
-#optPage{
+.SAdamchuk_MSGadgets_SmserGadget #optPage{
 	background-color:#faebd7;
 	border-color:#b44c48;
 }
 
-#contPage{
+.SAdamchuk_MSGadgets_SmserGadget #contPage{
 	background-color:#90ee90;
 	border-color:#008000;
 }
 
-.textField
+.SAdamchuk_MSGadgets_SmserGadget .textField
 {
 	width:100px;
 }
 
-#mainPage,.page{
+.SAdamchuk_MSGadgets_SmserGadget #mainPage,.SAdamchuk_MSGadgets_SmserGadget .page{
 	background-color:#ADD8E6;
 	border-color:blue;
 }
 
-.control,.textField{
+.SAdamchuk_MSGadgets_SmserGadget .control,.SAdamchuk_MSGadgets_SmserGadget .textField{
 	border-style:solid;
 	border:1px;
 	border-color:blue;
 }
 
-#captchaInput{
+.SAdamchuk_MSGadgets_SmserGadget #captchaInput{
 	width:100px;
 }
 
-#buttonsBlock{
+.SAdamchuk_MSGadgets_SmserGadget #buttonsBlock{
 	text-align:center;
 }
 
-.button{
+.SAdamchuk_MSGadgets_SmserGadget .button{
 	background-image: url('images/buttonBlue.gif');
 	color: #0067a9;
 	border: solid 1px #000000;
