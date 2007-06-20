@@ -10,14 +10,18 @@
         function InitGadget(){
             var urlResolver={resolveUrl:function(path){return path;}};
             var el=document.getElementById("gadgetHolder");
-            var view=SAdamchuk_Smser_View(el,urlResolver);
-		    SAdamchuk_Smser_Controller.initialize(view,null);
-		    view.message.value=el.innerHTML;
+            var view=SAdamchuk_Smser_View(el,urlResolver,0,"Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://sendsms.com.ua/faq.htm\" target=\"_blank\">частих питань</a>.");
+            SAdamchuk_Smser_Controller.initialize(view,null);
+            
+            var txt=document.getElementById("result");
+            if (txt) txt.value=el.innerHTML;
+		    
+		    //view.message.value=el.innerHTML;
 		}
         //-->
     </script>
 </head>
-<body onload="InitGadget()">
+<body onload="InitGadget()" class="SAdamchuk_MSGadgets_SmserGadget">
     <p>Швидка та зручна відправка СМС по Україні</p>
     <div id="gadgetHolder"/>
 </body>

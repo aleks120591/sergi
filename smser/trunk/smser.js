@@ -15,6 +15,7 @@ var SAdamchuk_Smser_Controller={
 		this.view.captchaImg.onclick=function(){SAdamchuk_Smser_Controller.refreshCaptcha();};
         
         this.refreshCaptcha();
+        this.adjustChannel();
     },
 
     dispose:function(){
@@ -64,6 +65,7 @@ var SAdamchuk_Smser_Controller={
         var oldCarrierId=this.model.channel.carrier;
         this.model.channel=SAdamchuk_Smser_carriers.getChannelByCode(this.view.channelSelector.value);
         if(oldCarrierId!=this.model.channel.carrier)this.refreshCaptcha();
+        this.view.setCarrierLogo(this.model.channel.logo);
     }
 }
 
@@ -80,45 +82,204 @@ SAdamchuk_Smser_Model.prototype.dispose=function(){
 }
 
 // ####### SAdamchuk_Smser_View
-function SAdamchuk_Smser_View(div,urlResolver){
+function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
 	var res={};
 	res.urlResolver=urlResolver;
-	res.channelSelector=document.createElement("select");
-	for(var i=0;i<SAdamchuk_Smser_carriers.channels.length;i++){
-        var opt=new Option(SAdamchuk_Smser_carriers.channels[i].text);
-        opt.value=SAdamchuk_Smser_carriers.channels[i].code.toString();
-        res.channelSelector.options[i]=opt;
-	}
-	div.appendChild(res.channelSelector);
+	res.contactPageView=contactPageView;
 	
-	res.phoneNumber=document.createElement("input");
-	res.phoneNumber.type="text";
-	div.appendChild(res.phoneNumber);
-	div.appendChild(document.createElement("br"));
+	res.createSpace=function(width){
+        var r=document.createElement("img");
+        r.width=width;
+        r.height="1px";
+        r.alt=" ";
+        return r;
+    };	
 	
-	res.message=document.createElement("textarea");
-	div.appendChild(res.message);
-	div.appendChild(document.createElement("br"));
+	res.createHeadersDiv=function(){
+	    var curDiv=document.createElement("div");
+	    curDiv.align="left";
+        this.tabs=new Array();
+        this.tabs[0]=document.createElement("img");
+        this.tabs[0].className="activeTab";
+        this.tabs[0].alt="Головна";
+        this.tabs[0].src=urlResolver.resolveUrl("tabmain.gif");
+        this.tabs[0].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(0);};
+        curDiv.appendChild(this.tabs[0]);
+        
+        this.tabs[1]=document.createElement("img");
+        this.tabs[1].className="tab";
+        this.tabs[1].alt="Опції";
+        this.tabs[1].src=urlResolver.resolveUrl("tabopt.gif");
+        this.tabs[1].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(1);};
+        curDiv.appendChild(this.tabs[1]);
+        
+        this.tabs[2]=document.createElement("img");
+        this.tabs[2].className="tab";
+        this.tabs[2].alt="Довідка";
+        this.tabs[2].src=urlResolver.resolveUrl("tabhlp.gif");
+        this.tabs[2].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(2);};
+        curDiv.appendChild(this.tabs[2]);
+        
+        if (contactPageView){
+            this.tabs[3]=document.createElement("img");
+            this.tabs[3].className="tab";
+            this.tabs[3].alt="Контакти";
+            this.tabs[3].src=urlResolver.resolveUrl("tabcont.gif");
+            this.tabs[3].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(3);};
+            curDiv.appendChild(this.tabs[3]);
+        }
+        return curDiv;
+	};	
 	
-	res.captchaImg=document.createElement("img");
-	res.captchaImg.width="120";
-	res.captchaImg.height="50";
-	div.appendChild(res.captchaImg);
+	res.createMainDiv=function(){
+	    var curDiv=document.createElement("div");
+	    curDiv.className="page";
+	    curDiv.id="mainPage";
+	    
+	    var table=document.createElement("table");
+	    
+	    var tr=table.insertRow(0);
+        var td=tr.insertCell(0);
+        
+        this.carLogo=document.createElement("img");
+        this.carLogo.alt="Лого оператора";
+        td.appendChild(this.carLogo);
+        
+        td.appendChild(this.createSpace(3));
+    
+        this.channelSelector=document.createElement("select");
+        this.channelSelector.className="control";
+        this.channelSelector.style.width="120px";
+	    for(var i=0;i<SAdamchuk_Smser_carriers.channels.length;i++){
+            var opt=new Option(SAdamchuk_Smser_carriers.channels[i].text);
+            opt.value=SAdamchuk_Smser_carriers.channels[i].code.toString();
+            res.channelSelector.options[i]=opt;
+	    }
+	    td.appendChild(this.channelSelector);
+    	
+	    td=tr.insertCell(1);
+	    td.align="right";
+	    this.phoneNumber=document.createElement("input");
+	    this.phoneNumber.type="text";
+	    this.phoneNumber.maxLength=7;
+	    this.phoneNumber.value="Номер";
+	    this.phoneNumber.className="textField";    
+	    td.appendChild(this.phoneNumber);
+	    
+	    tr=table.insertRow(1);
+        td=tr.insertCell(0);
+        td.colSpan=2;
+    	
+	    this.message=document.createElement("textarea");
+	    this.message.className="control";
+	    this.message.cols=29;
+	    this.message.rows=6;
+	    this.message.style.width="100%";
+	    this.message.value="Введіть ваше повідомлення";
+	    td.appendChild(this.message);
+	    
+	    tr=table.insertRow(2);
+        td=tr.insertCell(0);
+	    var el=document.createElement("span");
+	    el.innerHTML="Кількісь символів: 0";
+	    td.appendChild(el);
+    	
+	    td=tr.insertCell(1);
+	    td.align="right";
+	    this.senderName=document.createElement("input");
+	    this.senderName.type="text";
+	    this.senderName.className="textField";
+	    this.senderName.value="Підпис";
+	    this.senderName.maxlength=10;
+	    td.appendChild(this.senderName);
+    	
+	    tr=table.insertRow(3);
+        td=tr.insertCell(0);
+        td.style.overflow="hidden";
+        td.style.height="50px";
+	    this.captchaImg=document.createElement("img");
+	    this.captchaImg.style.cursor="pointer";
+	    this.captchaImg.alt="Код";
+	    td.appendChild(this.captchaImg);
+    	
+	    td=tr.insertCell(1);
+	    td.align="right";
+	    this.captcha=document.createElement("input");
+	    this.captcha.type="text";
+	    this.captcha.className="textField";
+	    this.captcha.maxlength=5;
+	    this.captcha.value="<<Код";	    
+	    td.appendChild(this.captcha);
+                
+        tr=table.insertRow(4);
+        
+        td=tr.insertCell(0);
+        td.colSpan=2;
+        td.align="center";
+        var but=document.createElement("input");
+        but.className="button";
+	    but.type="button";
+	    but.value="Очистити";
+	    td.appendChild(but);
+	    
+	    td.appendChild(this.createSpace(5));
+
+        this.buttonSend=document.createElement("input");
+        this.buttonSend.className="button";
+	    this.buttonSend.type="button";
+	    this.buttonSend.value="Відпрвити";
+        td.appendChild(this.buttonSend);
+        
+        this.tabs[0].page=curDiv;
+        curDiv.appendChild(table);
+        
+        return curDiv;
+	};
 	
-	res.captcha=document.createElement("input");
-	res.captcha.type="text";
-	div.appendChild(res.captcha);
+	res.createOptionsDiv=function(){
+	    var curDiv=document.createElement("div");
+	    curDiv.className="hiddenPage";
+	    curDiv.id="optPage";
+	    curDiv.innerHTML="Тут колись будуть опції :)";
+	            
+        this.tabs[1].page=curDiv;
+        
+        return curDiv;
+	};
 	
-	div.appendChild(document.createElement("br"));
+	res.createHelpDiv=function(txt){
+	    var curDiv=document.createElement("div");
+	    curDiv.className="hiddenPage";
+	    curDiv.id="helpPage";
+	    curDiv.innerHTML=txt;
+	            
+        this.tabs[2].page=curDiv;
+        
+        return curDiv;
+	};
 	
-	res.senderName=document.createElement("input");
-	res.senderName.type="text";
-	div.appendChild(res.senderName);
+	res.createContactsDiv=function(){
+	    var curDiv=document.createElement("div");
+	    curDiv.className="hiddenPage";
+	    curDiv.id="contPage";
+	    curDiv.innerHTML="Сторіночка для наших контактів";
+	            
+        this.tabs[3].page=curDiv;
+        
+        return curDiv;
+	};
 	
-	res.buttonSend=document.createElement("input");
-	res.buttonSend.type="button";
-	res.buttonSend.value="Send";
-    div.appendChild(res.buttonSend);
+	var table=document.createElement("table");	
+    table.width="290px";    
+    var el=table.insertRow(0);
+    var td=el.insertCell(0);
+    
+    td.appendChild(res.createHeadersDiv());
+    td.appendChild(res.createMainDiv());
+    td.appendChild(res.createOptionsDiv());
+    td.appendChild(res.createHelpDiv(helpText));
+    if(contactPageView)td.appendChild(res.createContactsDiv());
+    div.appendChild(table);    
     
     res.frame=document.createElement("iframe");
     res.frame.style.display="none";
@@ -133,21 +294,31 @@ function SAdamchuk_Smser_View(div,urlResolver){
         this.senderName=null;
         this.buttonSend=null;
         this.frame=null;
+        this.carLogo=null;
         res.urlResolver=null;
     };
     
-    res.setWaitingCaptcha=function()
-    {
+    res.setWaitingCaptcha=function(){
         this.captchaImg.src=urlResolver.resolveUrl("wait30.gif");
         this.captcha.value="";
     };
     
-    res.setWaitingCaptcha();
+    res.setTab=function(tabId){
+        this.tabs[this.currentTabId].className="tab";
+        this.tabs[this.currentTabId].page.className="hiddenPage";
+        this.currentTabId=tabId;
+        this.tabs[this.currentTabId].className="activeTab";
+        this.tabs[this.currentTabId].page.className="page";
+    };
+    
+    res.setCarrierLogo=function(logoFile){
+        this.carLogo.src=urlResolver.resolveUrl("logos/"+logoFile);        
+    };
+        
+    //res.setWaitingCaptcha();
+    res.currentTabId=0;
     
     return res;
-}
-
-SAdamchuk_Smser_View.prototype.build=function(){
 }
 
 var SAdamchuk_Smser_carriers={
@@ -196,20 +367,20 @@ var SAdamchuk_Smser_carriers={
         ),
         
         channels:new Array(
-			{text:"UMC (050)",carrier:0,value:"UMC",code:"0"},
-			{text:"UMC (095)",carrier:0,value: "UMC095",code:"1"},
-			{text:"Jeans (099)",carrier:0,value: "UMC099",code:"2"},
-			{text:"Jeans (066)",carrier:0,value: "JEANS",code:"3"},
-			{text:"Kyivstar (067)",carrier:1,value: "067",code:"4"},
-			{text:"Kyivstar (096)",carrier:1,value: "096",code:"5"},
-			{text:"Kyivstar (097)",carrier:1,value: "097",code:"6"},
-			{text:"Kyivstar (098)",carrier:1,value: "098",code:"7"},
-			{text:"GoldenTel1 (039)",carrier:1,value: "039",code:"8"},
-			{text:"Kyivstar (063)",carrier:1,value: "063",code:"9"},
-			{text:"Life (093)",carrier:1,value: "093",code:"a"},
-			{text:"GoldenTel2 (039)",carrier:0,value: "GT",code:"b"},
-			{text:"Welcome (068)",carrier:0,value: "WC",code:"c"},
-			{text:"Beeline (068)",carrier:2,value: "38068",code:"d"}),
+			{text:"UMC (050)",carrier:0,value:"UMC",code:"0",logo:"umc.gif"},
+			{text:"UMC (095)",carrier:0,value: "UMC095",code:"1",logo:"umc.gif"},
+			{text:"Jeans (099)",carrier:0,value: "UMC099",code:"2",logo:"jeans.gif"},
+			{text:"Jeans (066)",carrier:0,value: "JEANS",code:"3",logo:"jeans.gif"},
+			{text:"Kyivstar (067)",carrier:1,value: "067",code:"4",logo:"kyivstar.gif"},
+			{text:"Kyivstar (096)",carrier:1,value: "096",code:"5",logo:"kyivstar.gif"},
+			{text:"Kyivstar (097)",carrier:1,value: "097",code:"6",logo:"kyivstar.gif"},
+			{text:"Kyivstar (098)",carrier:1,value: "098",code:"7",logo:"kyivstar.gif"},
+			{text:"GoldenTel1 (039)",carrier:1,value: "039",code:"8",logo:"gt.gif"},
+			{text:"Life (063)",carrier:1,value: "063",code:"9",logo:"life.gif"},
+			{text:"Life (093)",carrier:1,value: "093",code:"a",logo:"life.gif"},
+			{text:"GoldenTel2 (039)",carrier:0,value: "GT",code:"b",logo:"gt.gif"},
+			{text:"Welcome (068)",carrier:0,value: "WC",code:"c",logo:"beeline.gif"},
+			{text:"Beeline (068)",carrier:2,value: "38068",code:"d",logo:"beeline.gif"}),
         
         getValueToString:function(v, arg){
             if (typeof(v)=="function") v = v(arg);
