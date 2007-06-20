@@ -93,7 +93,15 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
         r.height="1px";
         r.alt=" ";
         return r;
-    };	
+    };
+    
+    res.textFocused=function(ctrl){
+        ctrl.style.background="rgb(255, 255, 255)";
+    };
+    
+    res.textBlured=function(ctrl){
+        if (ctrl.value=="")ctrl.style.background="rgb(255, 255, 255) url("+this.urlResolver.resolveUrl("images/wm"+ctrl.name+".gif")+") no-repeat scroll center center";
+    };
 	
 	res.createHeadersDiv=function(){
 	    var curDiv=document.createElement("div");
@@ -161,9 +169,16 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
 	    td.align="right";
 	    this.phoneNumber=document.createElement("input");
 	    this.phoneNumber.type="text";
+	    this.phoneNumber.name="phnum";
 	    this.phoneNumber.maxLength=7;
-	    this.phoneNumber.value="Номер";
-	    this.phoneNumber.className="textField";    
+	    this.phoneNumber.className="textField";
+	    this.textBlured(this.phoneNumber);
+	    this.phoneNumber.onfocus=function(){
+            SAdamchuk_Smser_Controller.view.textFocused(SAdamchuk_Smser_Controller.view.phoneNumber);
+	    };
+	    this.phoneNumber.onblur=function(){
+            SAdamchuk_Smser_Controller.view.textBlured(SAdamchuk_Smser_Controller.view.phoneNumber);
+	    };	    
 	    td.appendChild(this.phoneNumber);
 	    
 	    tr=table.insertRow(1);
@@ -172,10 +187,17 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
     	
 	    this.message=document.createElement("textarea");
 	    this.message.className="control";
+	    this.message.name="msginp";
 	    this.message.cols=29;
 	    this.message.rows=6;
 	    this.message.style.width="100%";
-	    this.message.value="Введіть ваше повідомлення";
+	    this.textBlured(this.message);	    
+	    this.message.onfocus=function(){
+            SAdamchuk_Smser_Controller.view.textFocused(SAdamchuk_Smser_Controller.view.message);
+	    };
+	    this.message.onblur=function(){
+            SAdamchuk_Smser_Controller.view.textBlured(SAdamchuk_Smser_Controller.view.message);
+	    };	    	    	    	    
 	    td.appendChild(this.message);
 	    
 	    tr=table.insertRow(2);
@@ -188,9 +210,16 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
 	    td.align="right";
 	    this.senderName=document.createElement("input");
 	    this.senderName.type="text";
+	    this.senderName.name="sender";
 	    this.senderName.className="textField";
-	    this.senderName.value="Підпис";
 	    this.senderName.maxlength=10;
+	    this.textBlured(this.senderName);
+	    this.senderName.onfocus=function(){
+            SAdamchuk_Smser_Controller.view.textFocused(SAdamchuk_Smser_Controller.view.senderName);
+	    };
+	    this.senderName.onblur=function(){
+            SAdamchuk_Smser_Controller.view.textBlured(SAdamchuk_Smser_Controller.view.senderName);
+	    };	    	    
 	    td.appendChild(this.senderName);
     	
 	    tr=table.insertRow(3);
@@ -206,9 +235,16 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
 	    td.align="right";
 	    this.captcha=document.createElement("input");
 	    this.captcha.type="text";
+	    this.captcha.name="ccode";	    
 	    this.captcha.className="textField";
 	    this.captcha.maxlength=5;
-	    this.captcha.value="<<Код";	    
+	    this.textBlured(this.captcha);
+	    this.captcha.onfocus=function(){
+            SAdamchuk_Smser_Controller.view.textFocused(SAdamchuk_Smser_Controller.view.captcha);
+	    };
+	    this.captcha.onblur=function(){
+            SAdamchuk_Smser_Controller.view.textBlured(SAdamchuk_Smser_Controller.view.captcha);
+	    };	    
 	    td.appendChild(this.captcha);
                 
         tr=table.insertRow(4);
