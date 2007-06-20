@@ -197,13 +197,14 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
 	    };
 	    this.message.onblur=function(){
             SAdamchuk_Smser_Controller.view.textBlured(SAdamchuk_Smser_Controller.view.message);
-	    };	    	    	    	    
+	    };
 	    td.appendChild(this.message);
 	    
 	    tr=table.insertRow(2);
         td=tr.insertCell(0);
 	    var el=document.createElement("span");
-	    el.innerHTML="Кількісь символів: 0";
+	    el.style.fontSize="small";
+	    el.innerHTML="Кількість символів: 0";
 	    td.appendChild(el);
     	
 	    td=tr.insertCell(1);
