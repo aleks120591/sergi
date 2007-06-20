@@ -7,6 +7,13 @@
 	padding:0;
 }
 
+.SAdamchuk_MSGadgets_SmserGadget .headerDiv{
+	margin:0;
+	padding:0;
+	align:left;
+	vertical-align:bottom;
+}
+
 .SAdamchuk_MSGadgets_SmserGadget .tab,.SAdamchuk_MSGadgets_SmserGadget .activeTab{
 	cursor:pointer;
 }
@@ -19,11 +26,11 @@
 .SAdamchuk_MSGadgets_SmserGadget .page{
 	border:1px;
 	padding:5px;
+	margin:0;
 	border-style:solid;
 	padding:10px;
 	display:block;
 	overflow:hidden;
-	height:240px;
 }
 
 .SAdamchuk_MSGadgets_SmserGadget .hiddenPage{
@@ -51,9 +58,14 @@
 	border-color:#008000;
 }
 
-.SAdamchuk_MSGadgets_SmserGadget .textField
-{
+.SAdamchuk_MSGadgets_SmserGadget .textField{
 	width:100px;
+}
+
+.SAdamchuk_MSGadgets_SmserGadget .counter{
+	border-width:0;
+	background:#ADD8E6;
+	width:20px;
 }
 
 .SAdamchuk_MSGadgets_SmserGadget #mainPage,.SAdamchuk_MSGadgets_SmserGadget .page{
