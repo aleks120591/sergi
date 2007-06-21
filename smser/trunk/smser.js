@@ -26,6 +26,7 @@ var SAdamchuk_Smser_Controller={
     },
 
     refreshCaptcha:function(){
+        this.view.frame.src="about:blank";
         this.view.setWaitingCaptcha();
         var car=this.model.getCurrentCarrier();
         this.view.frame.src=car.baseUrl+car.cookRefreshPath;
