@@ -26,8 +26,8 @@
 <body class="SAdamchuk_MSGadgets_SmserGadget">
     <div id="gadgetHolder">
     	<table width="290px"><tr><td>
-    	    <div><img src="tabmain.gif" class="activeTab" alt="Головна" id="mainTabHeader" onclick="javascript:SetPage('main');"/><img src="tabopt.gif" id="optTabHeader" class="tab" alt="Опції" onclick="javascript:SetPage('opt');"/><img src="tabhlp.gif" class="tab" alt="Довідка" id="helpTabHeader" onclick="javascript:SetPage('help');"/><img src="tabcont.gif" class="tab" id="contTabHeader" alt="Контакти" onclick="javascript:SetPage('cont');"/></div>
-    	    <div id="mainPage" class="page">
+    	    <div><img src="tabmain.gif" class="tab" alt="Головна" id="mainTabHeader" onclick="javascript:SetPage('main');"/><img src="tabopt.gif" id="optTabHeader" class="tab" alt="Опції" onclick="javascript:SetPage('opt');"/><img src="tabhlp.gif" class="tab" alt="Довідка" id="helpTabHeader" onclick="javascript:SetPage('help');"/><img src="tabcont.gif" class="activeTab" id="contTabHeader" alt="Контакти" onclick="javascript:SetPage('cont');"/></div>
+    	    <div id="mainPage" class="hiddenPage">
     	        <table><tr>
 			        <td valign="middle"><img src="logos/umc.gif" alt="Лого оператора"/>&nbsp;<select class="control" style="width:120px"><option value="0">UMC (050)</option><option value="1">UMC (095)</option><option value="2">Jeans (099)</option><option value="3">Jeans (066)</option><option value="4">Kyivstar (067)</option><option value="5">Kyivstar (096)</option><option value="6">Kyivstar (097)</option><option value="7">Kyivstar (098)</option><option value="8">GoldenTel1 (039)</option><option value="9">Kyivstar (063)</option><option value="a">Life (093)</option><option value="b">GoldenTel2 (039)</option><option value="c">Welcome (068)</option><option value="d">Beeline (068)</option></select></td>
 			        <td align="right"><input class="textField" type="text" maxlength="7" value="Номер"/></td>
@@ -49,7 +49,6 @@
 			        <input value="Очистити" type="button" class="button"/>
 			        <input value="Відправити" type="button" class="button"/>
 			    </div>
-			    <iframe src="http://www.umc.ua/ukr/sendsms.php" style="display: none;"></iframe>
 		    </div>
 		    <div id="helpPage" class="hiddenPage">
 		        Дякуємо, що скористались нашим ґаджетом. Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href="#">частих питань</a>.
@@ -57,8 +56,28 @@
 		    <div id="optPage" class="hiddenPage">
 		        Тут колись будуть опції :)
 		    </div>
-		    <div id="contPage" class="hiddenPage">
-		        Сторіночка для наших контактів
+		    <div id="contPage" class="page">
+		        <div class="pageTitle">Контакти</div>
+		        <table border="0" cellpadding="0" style="font-size:small;">
+		            <tr>
+		                <td><img src="images/contact.gif" alt="Контакт"/></td>
+		                <td align="center" valign="middle">Контакт 1 </td>
+		                <td><img src="images/edit.gif" alt="Редагувати"/></td>
+		                <td><img src="images/delete.gif" alt="Вилучити"/></td>
+		            </tr>
+		            <tr>
+		                <td><img src="images/contact.gif" alt="Контакт"/></td>
+		                <td align="center" valign="middle"><input class="contactEditor" type="text" value="Контакт 2"/></td>
+		                <td><img src="images/ok.gif" alt="Редагувати"/></td>
+		                <td><img src="images/cancel.gif" alt="Вилучити"/></td>
+		            </tr>
+		            <tr>
+		                <td><img src="images/contact.gif" alt="Контакт"/></td>
+		                <td align="center" valign="middle">Контакт 3</td>
+		                <td><img src="images/edit.gif" alt="Редагувати"/></td>
+		                <td><img src="images/delete.gif" alt="Вилучити"/></td>
+		            </tr>
+		        </table>
 		    </div>
 		</td></tr></table>
     </div>

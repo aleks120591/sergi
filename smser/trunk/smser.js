@@ -17,6 +17,13 @@ var SAdamchuk_Smser_Controller={
         this.refreshCaptcha();
         this.adjustChannel();
         this.view.adjustSymbCounter();
+        
+        this.model.contacts=new Array(
+            new SAdamchuk_Smser_Contact("6","6077288"),
+            new SAdamchuk_Smser_Contact("2","6545645"),
+            new SAdamchuk_Smser_Contact("4","4534534"));
+            
+        this.view.redrawContacts(this.model.contacts);
     },
 
     dispose:function(){
@@ -26,7 +33,7 @@ var SAdamchuk_Smser_Controller={
     },
 
     refreshCaptcha:function(){
-        this.view.frame.src="about:blank";
+        this.view.frame.src="about:blank"; // Necessary for opera
         this.view.setWaitingCaptcha();
         var car=this.model.getCurrentCarrier();
         this.view.frame.src=car.baseUrl+car.cookRefreshPath;
@@ -68,6 +75,16 @@ var SAdamchuk_Smser_Controller={
         this.model.channel=SAdamchuk_Smser_carriers.getChannelByCode(this.view.channelSelector.value);
         if(oldCarrierId!=this.model.channel.carrier)this.refreshCaptcha();
         this.view.setCarrierLogo(this.model.channel.logo);
+    },
+    
+    setFieldsFromContact:function(contactId){
+        var c=this.model.contacts[contactId];
+        this.view.phoneNumber.value=c.number;
+        if(c.channel)this.view.setChannel(c.channel.code);
+        this.adjustChannel();
+        //this.refreshCaptcha();
+        this.view.refreshInnputHints();
+        this.view.setTab(0);
     }
 }
 
@@ -117,6 +134,7 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
     
     res.textBlured=function(ctrl){
         if (ctrl.value=="")ctrl.style.background="rgb(255, 255, 255) url("+this.urlResolver.resolveUrl("images/wm"+ctrl.name+".gif")+") no-repeat scroll center center";
+        else this.textFocused(ctrl);
     };
 	
 	res.createHeadersDiv=function(){
@@ -324,7 +342,9 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
 	    var curDiv=document.createElement("div");
 	    curDiv.className="hiddenPage";
 	    curDiv.id="contPage";
-	    curDiv.innerHTML="Сторіночка для наших контактів";
+	    	    
+	    this.contactsTable=document.createElement("table");
+	    curDiv.appendChild(this.contactsTable);
 	            
         this.tabs[3].page=curDiv;
         
@@ -357,7 +377,8 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
         this.frame=null;
         this.carLogo=null;
         this.symbCounter=null;
-        res.urlResolver=null;
+        this.contactsTable=null;
+        this.urlResolver=null;
     };
     
     res.setWaitingCaptcha=function(){
@@ -380,8 +401,55 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
     res.adjustSymbCounter=function(){
     	this.symbCounter.innerHTML=(this.message.value.length+this.senderName.value.length);
     };
+    
+    res.insertContact=function(contact,index){
+        var fn=function(){SAdamchuk_Smser_Controller.setFieldsFromContact(index);};
+    
+        var tr=this.contactsTable.insertRow(index);
+        var td=tr.insertCell(0);
+        var el=document.createElement("img");
+        el.src=this.urlResolver.resolveUrl("images/contact.gif");
+        el.className="cmdImage";
+        el.onclick=fn;
+        el.alt="Контакт";
+        td.appendChild(el);
         
-    //res.setWaitingCaptcha();
+        td=tr.insertCell(1);
+        el=document.createElement("span");
+        el.style.fontSize="small";
+        el.style.cursor="pointer";
+        el.onclick=fn;
+        el.innerHTML=contact.getDisplayable();
+        td.appendChild(el);
+        
+        td=tr.insertCell(2);
+        el=document.createElement("img");
+        el.src=this.urlResolver.resolveUrl("images/edit.gif");
+        el.className="cmdImage";
+        el.alt="Редагувати";
+        td.appendChild(el);
+        
+        td=tr.insertCell(3);
+        el=document.createElement("img");
+        el.src=this.urlResolver.resolveUrl("images/delete.gif");
+        el.className="cmdImage";
+        el.alt="Вилучити";
+        td.appendChild(el);
+    };
+    
+    res.redrawContacts=function(contacts){
+        while(this.contactsTable.rows.count>0)this.contactsTable.deleteRow(0);
+        for(var i=0;i<contacts.length;i++)this.insertContact(contacts[i],i);
+    };
+    
+    res.setChannel=function(channelCode){
+        for(var i=0;i<this.channelSelector.options.length;i++)
+            if (this.channelSelector.options[i].value==channelCode){
+                this.channelSelector.selectedIndex=i;
+                return;
+            }
+    };
+    
     res.currentTabId=0;
     
     return res;
@@ -457,4 +525,36 @@ var SAdamchuk_Smser_carriers={
                 if (code==this.channels[i].code)return this.channels[i];
             return null;
         }
+}
+
+// ####### SAdamchuk_Smser_Contact
+function SAdamchuk_Smser_Contact(channelCode,number){
+    this.name="";
+    this.rate=0;
+    this.channel=SAdamchuk_Smser_carriers.getChannelByCode(channelCode);
+    this.number=number;
+}
+
+SAdamchuk_Smser_Contact.prototype.getDisplayable=function(){
+    var r=this.name;
+    if(r!="")r+=": ";
+    r+=this.channel.text+" "+this.number;
+    return r;
+}
+
+SAdamchuk_Smser_Contact.prototype.serialize=function(){
+}
+
+function SAdamchuk_Smser_DeserializeContact(txt){
+}
+
+function SAdamchuk_Smser_ToHex(num,len){
+    var r=num.toString(16);
+    while(r.length<len)r="0"+r;
+}
+
+function SAdamchuk_Smser_FromHex(txt){
+    var c=0;
+    while(txt[c]=="0")c++;
+    return parseInt(txt.substr(c),16);
 }

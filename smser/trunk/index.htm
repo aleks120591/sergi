@@ -10,7 +10,7 @@
         function InitGadget(){
             var urlResolver={resolveUrl:function(path){return path;}};
             var el=document.getElementById("gadgetHolder");
-            var view=SAdamchuk_Smser_View(el,urlResolver,0,"Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://sendsms.com.ua/faq.htm\" target=\"_blank\">частих питань</a>.");
+            var view=SAdamchuk_Smser_View(el,urlResolver,1,"Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://sendsms.com.ua/faq.htm\" target=\"_blank\">частих питань</a>.");
             SAdamchuk_Smser_Controller.initialize(view,null);
             
             var txt=document.getElementById("result");

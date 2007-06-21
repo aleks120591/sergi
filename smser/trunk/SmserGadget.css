@@ -64,10 +64,13 @@
 	width:100px;
 }
 
-.SAdamchuk_MSGadgets_SmserGadget .counter{
-	border-width:0;
-	background:#ADD8E6;
-	width:20px;
+.SAdamchuk_MSGadgets_SmserGadget .pageTitle{
+	margin-top:0;
+	margin-bottom:5px;
+	padding-top:0;
+	padding-bottom:2px;
+	font-weight:bold;
+	font-size:large;
 }
 
 .SAdamchuk_MSGadgets_SmserGadget #mainPage,.SAdamchuk_MSGadgets_SmserGadget .page{
@@ -89,4 +92,15 @@
 	background-image: url('images/buttonBlue.gif');
 	color: #0067a9;
 	border: solid 1px #000000;
+}
+
+.SAdamchuk_MSGadgets_SmserGadget .contactEditor{
+	width:60px;
+	height:12px;
+	border-style:solid;
+	border-color:Navy;
+}
+
+.SAdamchuk_MSGadgets_SmserGadget .cmdImage{
+	cursor:pointer;
 }
