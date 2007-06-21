@@ -96,6 +96,20 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
         return r;
     };
     
+    res.clear=function(){
+    	this.message.value="";
+    	this.phoneNumber.value="";
+    	this.adjustSymbCounter();
+    	this.refreshInnputHints();
+    };
+    
+    res.refreshInnputHints=function(){
+    	this.textBlured(this.phoneNumber);
+    	this.textBlured(this.message);
+    	this.textBlured(this.senderName);
+    	this.textBlured(this.captcha);
+    };
+    
     res.textFocused=function(ctrl){
         ctrl.style.background="rgb(255, 255, 255)";
     };
@@ -111,7 +125,6 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
         this.tabs=new Array();
         this.tabs[0]=document.createElement("img");
         this.tabs[0].className="activeTab";
-        //this.tabs[0].style.left="0px";
         this.tabs[0].alt="Головна";
         this.tabs[0].src=urlResolver.resolveUrl("tabmain.gif");
         this.tabs[0].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(0);};
@@ -119,7 +132,6 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
         
         this.tabs[1]=document.createElement("img");
         this.tabs[1].className="pageHeader";
-        //this.tabs[1].style.left="48px";
         this.tabs[1].alt="Опції";
         this.tabs[1].src=urlResolver.resolveUrl("tabopt.gif");
         this.tabs[1].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(1);};
@@ -127,7 +139,6 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
         
         this.tabs[2]=document.createElement("img");
         this.tabs[2].className="pageHeader";
-        //this.tabs[2].style.left="96px";
         this.tabs[2].alt="Довідка";
         this.tabs[2].src=urlResolver.resolveUrl("tabhlp.gif");
         this.tabs[2].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(2);};
@@ -136,7 +147,6 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
         if (contactPageView){
             this.tabs[3]=document.createElement("img");
             this.tabs[3].className="pageHeader";
-            //this.tabs[3].style.left="144px";
             this.tabs[3].alt="Контакти";
             this.tabs[3].src=urlResolver.resolveUrl("tabcont.gif");
             this.tabs[3].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(3);};
@@ -178,7 +188,6 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
 	    this.phoneNumber.name="phnum";
 	    this.phoneNumber.maxLength=7;
 	    this.phoneNumber.className="textField";
-	    this.textBlured(this.phoneNumber);
 	    this.phoneNumber.onfocus=function(){
             SAdamchuk_Smser_Controller.view.textFocused(SAdamchuk_Smser_Controller.view.phoneNumber);
 	    };
@@ -198,7 +207,6 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
 	    this.message.rows=4;
 	    this.message.style.width="100%";
 	    this.message.onchange=this.message.onkeyup=function(){SAdamchuk_Smser_Controller.view.adjustSymbCounter();};
-	    this.textBlured(this.message);
 	    this.message.onfocus=function(){
             SAdamchuk_Smser_Controller.view.textFocused(SAdamchuk_Smser_Controller.view.message);
 	    };
@@ -214,9 +222,11 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
 	    el.innerHTML="Кількість символів:";
 	    td.appendChild(el);
 	    
-	    this.symbCounter=document.createElement("input");
-	    this.symbCounter.className="counter";
-	    this.symbCounter.readonly=true;
+	    td.appendChild(this.createSpace(3));
+	    
+	    this.symbCounter=document.createElement("span");
+	    this.symbCounter.style.color="blue";
+	    this.symbCounter.style.fontSize="small";
 	    td.appendChild(this.symbCounter);
     	
 	    td=tr.insertCell(1);
@@ -227,7 +237,6 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
 	    this.senderName.className="textField";
 	    this.senderName.maxlength=10;
 	   	this.senderName.onchange=this.senderName.onkeyup=function(){SAdamchuk_Smser_Controller.view.adjustSymbCounter();};
-	    this.textBlured(this.senderName);
 	    this.senderName.onfocus=function(){
             SAdamchuk_Smser_Controller.view.textFocused(SAdamchuk_Smser_Controller.view.senderName);
 	    };
@@ -252,7 +261,6 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
 	    this.captcha.name="ccode";	    
 	    this.captcha.className="textField";
 	    this.captcha.maxlength=5;
-	    this.textBlured(this.captcha);
 	    this.captcha.onfocus=function(){
             SAdamchuk_Smser_Controller.view.textFocused(SAdamchuk_Smser_Controller.view.captcha);
 	    };
@@ -260,6 +268,8 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
             SAdamchuk_Smser_Controller.view.textBlured(SAdamchuk_Smser_Controller.view.captcha);
 	    };	    
 	    td.appendChild(this.captcha);
+	    
+	    res.refreshInnputHints();
                 
         tr=table.insertRow(4);
         
@@ -270,6 +280,7 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
         but.className="button";
 	    but.type="button";
 	    but.value="Очистити";
+	    but.onclick=function(){SAdamchuk_Smser_Controller.view.clear();};
 	    td.appendChild(but);
 	    
 	    td.appendChild(this.createSpace(5));
@@ -366,9 +377,9 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
     };
     
     res.adjustSymbCounter=function(){
-    	this.symbCounter.value=(this.message.value.length+this.senderName.value.length);
+    	this.symbCounter.innerHTML=(this.message.value.length+this.senderName.value.length);
     };
-    
+        
     //res.setWaitingCaptcha();
     res.currentTabId=0;
     
