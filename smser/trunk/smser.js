@@ -82,9 +82,18 @@ var SAdamchuk_Smser_Controller={
         this.view.phoneNumber.value=c.number;
         if(c.channel)this.view.setChannel(c.channel.code);
         this.adjustChannel();
-        //this.refreshCaptcha();
         this.view.refreshInnputHints();
         this.view.setTab(0);
+    },
+    
+    deleteContact:function(contactId){
+        var r=new Array();
+        for(var i=0;i<this.model.contacts.length;i++)
+            if(i!=contactId){
+              r[(i<contactId)?i:i-1]=this.model.contacts[i];
+            }
+        this.model.contacts=r;
+        this.view.redrawContacts(this.model.contacts);        
     }
 }
 
@@ -342,10 +351,7 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
 	    var curDiv=document.createElement("div");
 	    curDiv.className="hiddenPage";
 	    curDiv.id="contPage";
-	    	    
-	    this.contactsTable=document.createElement("table");
-	    curDiv.appendChild(this.contactsTable);
-	            
+	    
         this.tabs[3].page=curDiv;
         
         return curDiv;
@@ -434,12 +440,19 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
         el.src=this.urlResolver.resolveUrl("images/delete.gif");
         el.className="cmdImage";
         el.alt="Вилучити";
+        el.onclick=function(){if(confirm("Ви справді бажаєте вилучити цей контакт?"))SAdamchuk_Smser_Controller.deleteContact(index);};
         td.appendChild(el);
     };
     
     res.redrawContacts=function(contacts){
-        while(this.contactsTable.rows.count>0)this.contactsTable.deleteRow(0);
-        for(var i=0;i<contacts.length;i++)this.insertContact(contacts[i],i);
+        if (contacts&&(contacts.length>0)){
+            this.tabs[3].page.innerHTML="";    	
+    	    this.contactsTable=document.createElement("table");
+	        this.tabs[3].page.appendChild(this.contactsTable);
+            //while(this.contactsTable.rows.length>0)this.contactsTable.deleteRow(0);
+            for(var i=0;i<contacts.length;i++)this.insertContact(contacts[i],i);
+        }else
+        this.tabs[3].page.innerHTML="Поки що у вас немає контаків, вони автоматично з'являтимуться тут, коли ви будете відправляти повідомлення.";        
     };
     
     res.setChannel=function(channelCode){
