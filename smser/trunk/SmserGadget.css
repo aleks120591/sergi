@@ -13,7 +13,7 @@
 	padding:0;
 }
 
-.SAdamchuk_MSGadgets_SmserGadget .tab,.SAdamchuk_MSGadgets_SmserGadget .activeTab{
+.SAdamchuk_MSGadgets_SmserGadget .pageHeader,.SAdamchuk_MSGadgets_SmserGadget .activeTab{
 	cursor:pointer;
 }
 
@@ -24,12 +24,11 @@
 
 .SAdamchuk_MSGadgets_SmserGadget .page{
 	border:1px;
-	padding:5px;
 	margin:0;
 	border-style:solid;
-	padding:10px;
 	display:block;
 	overflow:hidden;
+	padding:10px;
 }
 
 .SAdamchuk_MSGadgets_SmserGadget .hiddenPage{
@@ -40,6 +39,10 @@
 .SAdamchuk_MSGadgets_SmserGadget #mainPage{
 	background-color:#ADD8E6;
 	border-color:blue;
+	padding-left:8px;
+	padding-right:8px;
+	padding-top:2px;
+	padding-bottom:2px;	
 }
 
 .SAdamchuk_MSGadgets_SmserGadget #helpPage{

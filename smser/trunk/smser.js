@@ -118,7 +118,7 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
         curDiv.appendChild(this.tabs[0]);
         
         this.tabs[1]=document.createElement("img");
-        this.tabs[1].className="tab";
+        this.tabs[1].className="pageHeader";
         //this.tabs[1].style.left="48px";
         this.tabs[1].alt="Опції";
         this.tabs[1].src=urlResolver.resolveUrl("tabopt.gif");
@@ -126,7 +126,7 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
         curDiv.appendChild(this.tabs[1]);
         
         this.tabs[2]=document.createElement("img");
-        this.tabs[2].className="tab";
+        this.tabs[2].className="pageHeader";
         //this.tabs[2].style.left="96px";
         this.tabs[2].alt="Довідка";
         this.tabs[2].src=urlResolver.resolveUrl("tabhlp.gif");
@@ -135,7 +135,7 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
         
         if (contactPageView){
             this.tabs[3]=document.createElement("img");
-            this.tabs[3].className="tab";
+            this.tabs[3].className="pageHeader";
             //this.tabs[3].style.left="144px";
             this.tabs[3].alt="Контакти";
             this.tabs[3].src=urlResolver.resolveUrl("tabcont.gif");
@@ -195,7 +195,7 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
 	    this.message.className="control";
 	    this.message.name="msginp";
 	    this.message.cols=29;
-	    this.message.rows=6;
+	    this.message.rows=4;
 	    this.message.style.width="100%";
 	    this.message.onchange=this.message.onkeyup=function(){SAdamchuk_Smser_Controller.view.adjustSymbCounter();};
 	    this.textBlured(this.message);
@@ -354,7 +354,7 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
     };
     
     res.setTab=function(tabId){
-        this.tabs[this.currentTabId].className="tab";
+        this.tabs[this.currentTabId].className="pageHeader";
         this.tabs[this.currentTabId].page.className="hiddenPage";
         this.currentTabId=tabId;
         this.tabs[this.currentTabId].className="activeTab";
