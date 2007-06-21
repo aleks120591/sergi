@@ -7,11 +7,10 @@
 	padding:0;
 }
 
-.SAdamchuk_MSGadgets_SmserGadget .headerDiv{
+.SAdamchuk_MSGadgets_SmserGadget #headerDiv{
+	height:18px;
 	margin:0;
 	padding:0;
-	align:left;
-	vertical-align:bottom;
 }
 
 .SAdamchuk_MSGadgets_SmserGadget .tab,.SAdamchuk_MSGadgets_SmserGadget .activeTab{

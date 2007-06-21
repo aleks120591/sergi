@@ -106,10 +106,12 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
 	
 	res.createHeadersDiv=function(){
 	    var curDiv=document.createElement("div");
-	    curDiv.className="headerDiv";
+	    curDiv.id="headerDiv";
+	    curDiv.align="left";
         this.tabs=new Array();
         this.tabs[0]=document.createElement("img");
         this.tabs[0].className="activeTab";
+        //this.tabs[0].style.left="0px";
         this.tabs[0].alt="Головна";
         this.tabs[0].src=urlResolver.resolveUrl("tabmain.gif");
         this.tabs[0].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(0);};
@@ -117,6 +119,7 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
         
         this.tabs[1]=document.createElement("img");
         this.tabs[1].className="tab";
+        //this.tabs[1].style.left="48px";
         this.tabs[1].alt="Опції";
         this.tabs[1].src=urlResolver.resolveUrl("tabopt.gif");
         this.tabs[1].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(1);};
@@ -124,6 +127,7 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
         
         this.tabs[2]=document.createElement("img");
         this.tabs[2].className="tab";
+        //this.tabs[2].style.left="96px";
         this.tabs[2].alt="Довідка";
         this.tabs[2].src=urlResolver.resolveUrl("tabhlp.gif");
         this.tabs[2].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(2);};
@@ -132,6 +136,7 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
         if (contactPageView){
             this.tabs[3]=document.createElement("img");
             this.tabs[3].className="tab";
+            //this.tabs[3].style.left="144px";
             this.tabs[3].alt="Контакти";
             this.tabs[3].src=urlResolver.resolveUrl("tabcont.gif");
             this.tabs[3].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(3);};
@@ -314,17 +319,16 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
         return curDiv;
 	};
 	
-	var table=document.createElement("table");
-    table.width="290px";    
-    var el=table.insertRow(0);
-    var td=el.insertCell(0);
+    var td=document.createElement("div");
+    td.style.width="290px";
+    td.align="left";
     
     td.appendChild(res.createHeadersDiv());
     td.appendChild(res.createMainDiv());
     td.appendChild(res.createOptionsDiv());
     td.appendChild(res.createHelpDiv(helpText));
     if(contactPageView)td.appendChild(res.createContactsDiv());
-    div.appendChild(table);    
+    div.appendChild(td);
     
     res.frame=document.createElement("iframe");
     res.frame.style.display="none";
