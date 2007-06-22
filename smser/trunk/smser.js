@@ -4,6 +4,7 @@ var SAdamchuk_Smser_Controller={
         this.view=view;
         this.persist=persist;
         this.model=new SAdamchuk_Smser_Model();
+        this.authorMode=authorMode;
         
         var handler=function(){SAdamchuk_Smser_Controller.onNewCookies();};
         if (this.view.frame.attachEvent)
@@ -13,25 +14,22 @@ var SAdamchuk_Smser_Controller={
 		this.view.buttonSend.onclick=function(){SAdamchuk_Smser_Controller.sendSms();};
 		this.view.channelSelector.onchange=function(){SAdamchuk_Smser_Controller.adjustChannel();};
 		this.view.captchaImg.onclick=function(){SAdamchuk_Smser_Controller.refreshCaptcha();};
-        
+                
         this.refreshCaptcha();
         this.adjustChannel();
         this.view.adjustSymbCounter();
         
-        this.model.contacts=new Array(
-            new SAdamchuk_Smser_Contact("6","6077288",5),
-            new SAdamchuk_Smser_Contact("2","6545645",3),
-            new SAdamchuk_Smser_Contact("4","4534534",0));
-            
-        this.model.contacts[0].name="Test";
-                
-        this.refreshContacts();
+        if(this.persist){
+            this.model.contacts=this.persist.getContacts();
+            this.refreshContacts();
+        }
     },
 
     dispose:function(){
         this.model.dispose();
         this.model=null;
         this.persist=null;
+        this.authorMode=null;
     },
 
     refreshCaptcha:function(){
@@ -74,6 +72,7 @@ var SAdamchuk_Smser_Controller={
         frm.submit();
         this.model.reuseContact(this.model.channel,this.model.phoneNum);
         this.refreshContacts();
+        this.saveContacts();
         window.setTimeout('SAdamchuk_Smser_Controller.refreshCaptcha()', 2000);
     },
     
@@ -109,7 +108,8 @@ var SAdamchuk_Smser_Controller={
               r[(i<contactId)?i:i-1]=this.model.contacts[i];
             }
         this.model.contacts=r;
-        this.view.redrawContacts(this.model.contacts);        
+        this.saveContacts();
+        this.refreshContacts();  
     },
     
     editContact:function(contactId){
@@ -122,7 +122,14 @@ var SAdamchuk_Smser_Controller={
     
     modifyContactName:function(contactId){
         this.model.contacts[contactId].name=this.view.cntEditor.value;
+        this.saveContacts();
         this.refreshContacts();
+    },
+    
+    saveContacts:function(){
+        if(this.persist&&this.authorMode){
+            this.persist.saveContacts(this.model.contacts);
+        }
     }
 }
 
@@ -148,24 +155,26 @@ SAdamchuk_Smser_Model.prototype.reuseContact=function(channel,number){
         else c.rate=Math.floor(SAdamchuk_Smser_Forget*c.rate);
     }
     
-    if(!cnt)cnt=new SAdamchuk_Smser_Contact(channel.code,number,Math.floor(step));
-
     var res=new Array();
+    var newSize=this.contacts.length;
     
-    var i=0;
-    for(var pos=0;(pos<this.contacts.length)&&(i<SAdamchuk_Smser_MAX_Cont);pos++)
-        if(cnt&&((!this.contacts[pos])||(this.contacts[pos].rate<=cnt.rate))){
+    if(!cnt){
+        cnt=new SAdamchuk_Smser_Contact(channel.code,number,Math.floor(step));
+        if(newSize<SAdamchuk_Smser_MAX_Cont)newSize++;
+    }
+    
+    var p=0;
+    for(var i=0;i<newSize;i++){
+        if(!this.contacts[p])p++;
+        if(cnt&&((p>=this.contacts.length)||(this.contacts[p].rate<=cnt.rate))){
             res[i]=cnt;
-            i++;
             cnt=null;
-            pos--;
         }else{
-            if(this.contacts[pos]){
-                res[i]=this.contacts[pos];
-                i++;
-            }
+            res[i]=this.contacts[p];
+            p++;
         }
-    
+    }
+        
     this.contacts=res;
 }
 
@@ -254,6 +263,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
 	    curDiv.id="mainPage";
 	    
 	    var table=document.createElement("table");
+	    table.width="100%";
 	    
 	    var tr=table.insertRow(0);
         var td=tr.insertCell(0);
@@ -523,6 +533,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
             for(var i=0;i<contacts.length;i++)this.insertContact(contacts[i],i);
         }else
         this.tabs[3].page.innerHTML="Поки що у вас немає контаків, вони автоматично з'являтимуться тут, коли ви будете відправляти повідомлення.";        
+        this.environment.Resize();
     };
     
     res.setChannel=function(channelCode){
@@ -538,6 +549,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
         pg.innerHTML="<span style='font-size:x-small;'>Змінити ім'я для контакту: <b>\""+contact.getDisplayable()+"\"</b></span><br/>";
         this.cntEditor=document.createElement("input");
         this.cntEditor.type="text";
+        this.cntEditor.maxLength=7;
         this.cntEditor.className="contactEditor";
         this.cntEditor.value=contact.name;
         this.cntEditor.onkeyup=function(e){
@@ -563,6 +575,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
         
         this.cntEditor.focus();
         this.cntEditor.select();
+        this.environment.Resize();
     };
     
     res.currentTabId=0;
@@ -648,6 +661,7 @@ function SAdamchuk_Smser_Contact(channelCode,number,rate){
     this.rate=rate;
     this.channel=SAdamchuk_Smser_carriers.getChannelByCode(channelCode);
     this.number=number;
+    this.gate=0; // 0 - site gate, 1 - email gate
 }
 
 SAdamchuk_Smser_Contact.prototype.getDisplayable=function(){
@@ -658,18 +672,59 @@ SAdamchuk_Smser_Contact.prototype.getDisplayable=function(){
 }
 
 SAdamchuk_Smser_Contact.prototype.serialize=function(){
+    return SAdamchuk_Smser_PadStr(this.name,7," ")+
+        SAdamchuk_Smser_ToHex(this.rate,2)+
+        this.channel.code+
+        SAdamchuk_Smser_PadStr(this.number,7," ")+
+        SAdamchuk_Smser_ToHex(this.gate,1);
 }
 
+var SAdamchuk_Smser_Contact_SSize=(new SAdamchuk_Smser_Contact("0","1234567",0)).serialize().length;
+
 function SAdamchuk_Smser_DeserializeContact(txt){
+    var r=new SAdamchuk_Smser_Contact(
+        txt.substr(9,1),
+        SAdamchuk_Smser_TrimStr(txt.substr(10,7),"0"),
+        SAdamchuk_Smser_FromHex(txt.substr(7,2)));
+        
+    r.name=SAdamchuk_Smser_TrimStr(txt.substr(0,7)," ");
+    r.gate=SAdamchuk_Smser_FromHex(txt.substr(17,1));
+        
+    return r;
+}
+
+function SAdamchuk_Smser_SerializeContacts(contacts){
+    var r="";
+    for(var i=0;i<contacts.length;i++)r+=contacts[i].serialize();
+    return r;
+}
+
+function SAdamchuk_Smser_DeserializeContacts(str){
+    var r=new Array();
+    if(!str||(str==""))return r;
+    for(var i=0;i<str.length/SAdamchuk_Smser_Contact_SSize;i++)
+        r[i]=SAdamchuk_Smser_DeserializeContact(str.substr(i*SAdamchuk_Smser_Contact_SSize, SAdamchuk_Smser_Contact_SSize));
+    return r;
 }
 
 function SAdamchuk_Smser_ToHex(num,len){
-    var r=num.toString(16);
-    while(r.length<len)r="0"+r;
+    return SAdamchuk_Smser_PadStr(num.toString(16),len,"0");
 }
 
 function SAdamchuk_Smser_FromHex(txt){
+    var trm=SAdamchuk_Smser_TrimStr(txt,"0");
+    if(trm=="")return 0;
+    return parseInt(trm,16);
+}
+
+function SAdamchuk_Smser_PadStr(txt,len,ch){
+    var r=txt;
+    while(r.length<len)r=ch+r;
+    return r;
+}
+
+function SAdamchuk_Smser_TrimStr(txt,ch){
     var c=0;
-    while(txt[c]=="0")c++;
-    return parseInt(txt.substr(c),16);
+    while(txt.charAt(c)==ch)c++;
+    return txt.substr(c);
 }
