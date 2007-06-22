@@ -58,6 +58,7 @@
 .SAdamchuk_MSGadgets_SmserGadget #contPage{
 	background-color:#90ee90;
 	border-color:#008000;
+	font-size:small;
 }
 
 .SAdamchuk_MSGadgets_SmserGadget .textField{
@@ -91,12 +92,11 @@
 .SAdamchuk_MSGadgets_SmserGadget .button{
 	background-image: url('images/buttonBlue.gif');
 	color: #0067a9;
-	border: solid 1px #000000;
+	border:solid 1px #000000;
 }
 
 .SAdamchuk_MSGadgets_SmserGadget .contactEditor{
-	width:60px;
-	height:12px;
+	width:100px;
 	border-style:solid;
 	border-color:Navy;
 }

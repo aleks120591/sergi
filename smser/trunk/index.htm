@@ -10,8 +10,11 @@
         function InitGadget(){
             var urlResolver={resolveUrl:function(path){return path;}};
             var el=document.getElementById("gadgetHolder");
-            var view=SAdamchuk_Smser_View(el,urlResolver,1,"Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://sendsms.com.ua/faq.htm\" target=\"_blank\">частих питань</a>.");
-            SAdamchuk_Smser_Controller.initialize(view,null);
+            var view=SAdamchuk_Smser_View(
+                el,urlResolver,
+                "Дана версія ґаджету не дозволяє зберігати контакти, якщо хочете щоб останні/найчастіше використовувані телефони запам'ятовувались, будь ласка <a href=\"http://www.live.com/?add=http%3A//sendsms.com.ua/beta/gadget.xml\" target=\"_blank\">проінсталюйте</a> ґаджет на <a href=\"http://live.com\" target=\"_blank\">персоналізовану сторінку Live.com</a>",//null,
+                "Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://sendsms.com.ua/faq.htm\" target=\"_blank\">частих питань</a>.");
+            SAdamchuk_Smser_Controller.initialize(view,1,false);
             
             var txt=document.getElementById("result");
             if (txt) txt.value=el.innerHTML;

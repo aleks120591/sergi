@@ -9,13 +9,13 @@ SAdamchuk.MSGadgets.SmserGadget = function(p_elSource, p_args, p_namespace)
 	this.Output = function()
 	{	
 	    p_elSource.align="center";
-		m_view=SAdamchuk_Smser_View(p_elSource,p_args.module,1,"Дякуємо, що скористались нашим ґаджетом. Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://sendsms.com.ua/faq.htm\" target=\"_blank\">частих питань</a>.");
+		m_view=SAdamchuk_Smser_View(p_elSource,p_args.module,null,"Дякуємо, що скористались нашим ґаджетом. Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://sendsms.com.ua/faq.htm\" target=\"_blank\">частих питань</a>.");
 		
 		/*var txt=document.createElement("textarea");
 		txt.value=p_elSource.innerHTML;
 		p_elSource.appendChild(txt);*/
 		
-		SAdamchuk_Smser_Controller.initialize(m_view,null);
+		SAdamchuk_Smser_Controller.initialize(m_view,1,p_args.module.getMode()==Web.Gadget.Mode.author);
 		p_args.module.Resize()
 	}
 	SAdamchuk.MSGadgets.SmserGadget.registerBaseMethod(this, "Output");

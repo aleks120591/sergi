@@ -1,6 +1,6 @@
 ﻿// ####### SAdamchuk_Smser_Controller
 var SAdamchuk_Smser_Controller={
-    initialize:function(view,persist){
+    initialize:function(view,persist,authorMode){
         this.view=view;
         this.persist=persist;
         this.model=new SAdamchuk_Smser_Model();
@@ -23,7 +23,9 @@ var SAdamchuk_Smser_Controller={
             new SAdamchuk_Smser_Contact("2","6545645"),
             new SAdamchuk_Smser_Contact("4","4534534"));
             
-        this.view.redrawContacts(this.model.contacts);
+        this.model.contacts[0].name="Test";
+                
+        this.refreshContacts();
     },
 
     dispose:function(){
@@ -45,6 +47,16 @@ var SAdamchuk_Smser_Controller={
         this.model.captcha=this.view.captcha.value;
         this.model.sender=this.view.senderName.value;
         
+        var errorM="";
+        if (this.model.phoneNum=="")errorM+="\tНомер одержувача\n";
+        if (this.model.message=="")errorM+="\tПовідомлення\n";
+        if (this.model.captcha=="")errorM+="\tКод\n";
+        
+        if (errorM!=""){
+            alert("Не можливо відправити повідомлення, ви не ввели наступні значення:\n"+errorM);
+            return;
+        }
+        
         newWin=window.open("about:blank", "_blank");
         var frm=newWin.document.createElement("form");
         frm.method="post";
@@ -59,7 +71,8 @@ var SAdamchuk_Smser_Controller={
 	    }
 	    
         newWin.document.body.appendChild(frm);
-        frm.submit();        
+        frm.submit();
+        window.setTimeout('SAdamchuk_Smser_Controller.refreshCaptcha()', 2000);
     },
     
     onNewCookies:function(){
@@ -82,8 +95,9 @@ var SAdamchuk_Smser_Controller={
         this.view.phoneNumber.value=c.number;
         if(c.channel)this.view.setChannel(c.channel.code);
         this.adjustChannel();
-        this.view.refreshInnputHints();
+        this.view.refreshInputHints();
         this.view.setTab(0);
+        this.view.message.focus();
     },
     
     deleteContact:function(contactId){
@@ -94,6 +108,19 @@ var SAdamchuk_Smser_Controller={
             }
         this.model.contacts=r;
         this.view.redrawContacts(this.model.contacts);        
+    },
+    
+    editContact:function(contactId){
+        this.view.setEditContact(this.model.contacts[contactId],contactId);
+    },
+    
+    refreshContacts:function(){
+        if(this.persist)this.view.redrawContacts(this.model.contacts);
+    },
+    
+    modifyContactName:function(contactId){
+        this.model.contacts[contactId].name=this.view.cntEditor.value;
+        this.refreshContacts();
     }
 }
 
@@ -110,10 +137,9 @@ SAdamchuk_Smser_Model.prototype.dispose=function(){
 }
 
 // ####### SAdamchuk_Smser_View
-function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
+function SAdamchuk_Smser_View(div,urlResolver,cntText,helpText){
 	var res={};
 	res.urlResolver=urlResolver;
-	res.contactPageView=contactPageView;
 	
 	res.createSpace=function(width){
         var r=document.createElement("img");
@@ -127,10 +153,10 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
     	this.message.value="";
     	this.phoneNumber.value="";
     	this.adjustSymbCounter();
-    	this.refreshInnputHints();
+    	this.refreshInputHints();
     };
     
-    res.refreshInnputHints=function(){
+    res.refreshInputHints=function(){
     	this.textBlured(this.phoneNumber);
     	this.textBlured(this.message);
     	this.textBlured(this.senderName);
@@ -172,14 +198,12 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
         this.tabs[2].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(2);};
         curDiv.appendChild(this.tabs[2]);
         
-        if (contactPageView){
-            this.tabs[3]=document.createElement("img");
-            this.tabs[3].className="pageHeader";
-            this.tabs[3].alt="Контакти";
-            this.tabs[3].src=urlResolver.resolveUrl("tabcont.gif");
-            this.tabs[3].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(3);};
-            curDiv.appendChild(this.tabs[3]);
-        }
+        this.tabs[3]=document.createElement("img");
+        this.tabs[3].className="pageHeader";
+        this.tabs[3].alt="Контакти";
+        this.tabs[3].src=urlResolver.resolveUrl("tabcont.gif");
+        this.tabs[3].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(3);};
+        curDiv.appendChild(this.tabs[3]);
         return curDiv;
 	};	
 	
@@ -297,7 +321,7 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
 	    };	    
 	    td.appendChild(this.captcha);
 	    
-	    res.refreshInnputHints();
+	    res.refreshInputHints();
                 
         tr=table.insertRow(4);
         
@@ -340,17 +364,20 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
 	    var curDiv=document.createElement("div");
 	    curDiv.className="hiddenPage";
 	    curDiv.id="helpPage";
-	    curDiv.innerHTML=txt;
+	    
+	    if(txt)curDiv.innerHTML=txt;
 	            
         this.tabs[2].page=curDiv;
         
         return curDiv;
 	};
 	
-	res.createContactsDiv=function(){
+	res.createContactsDiv=function(txt){
 	    var curDiv=document.createElement("div");
 	    curDiv.className="hiddenPage";
 	    curDiv.id="contPage";
+	    
+	    if(txt)curDiv.innerHTML=txt;
 	    
         this.tabs[3].page=curDiv;
         
@@ -365,7 +392,7 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
     td.appendChild(res.createMainDiv());
     td.appendChild(res.createOptionsDiv());
     td.appendChild(res.createHelpDiv(helpText));
-    if(contactPageView)td.appendChild(res.createContactsDiv());
+    td.appendChild(res.createContactsDiv(cntText));
     div.appendChild(td);
     
     res.frame=document.createElement("iframe");
@@ -390,6 +417,7 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
     res.setWaitingCaptcha=function(){
         this.captchaImg.src=urlResolver.resolveUrl("wait30.gif");
         this.captcha.value="";
+        this.refreshInputHints();
     };
     
     res.setTab=function(tabId){
@@ -433,6 +461,7 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
         el.src=this.urlResolver.resolveUrl("images/edit.gif");
         el.className="cmdImage";
         el.alt="Редагувати";
+        el.onclick=function(){SAdamchuk_Smser_Controller.editContact(index);};
         td.appendChild(el);
         
         td=tr.insertCell(3);
@@ -449,7 +478,6 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
             this.tabs[3].page.innerHTML="";    	
     	    this.contactsTable=document.createElement("table");
 	        this.tabs[3].page.appendChild(this.contactsTable);
-            //while(this.contactsTable.rows.length>0)this.contactsTable.deleteRow(0);
             for(var i=0;i<contacts.length;i++)this.insertContact(contacts[i],i);
         }else
         this.tabs[3].page.innerHTML="Поки що у вас немає контаків, вони автоматично з'являтимуться тут, коли ви будете відправляти повідомлення.";        
@@ -461,6 +489,38 @@ function SAdamchuk_Smser_View(div,urlResolver,contactPageView,helpText){
                 this.channelSelector.selectedIndex=i;
                 return;
             }
+    };
+    
+    res.setEditContact=function(contact,id){
+        var pg=this.tabs[3].page;
+        pg.innerHTML="<small>Змінити ім'я для контакту: <b>\""+contact.getDisplayable()+"\"</b></small><br/>";
+        this.cntEditor=document.createElement("input");
+        this.cntEditor.type="text";
+        this.cntEditor.className="contactEditor";
+        this.cntEditor.value=contact.name;
+        this.cntEditor.onkeyup=function(e){
+            if(!e)e=event;
+            if(e.keyCode==13)SAdamchuk_Smser_Controller.modifyContactName(id);
+            if(e.keyCode==27)SAdamchuk_Smser_Controller.refreshContacts();
+        };
+        pg.appendChild(this.cntEditor);
+        
+        var el=document.createElement("input");
+        el.type="button";
+        el.className="button";
+        el.value="Зберегти";
+        el.onclick=function(){SAdamchuk_Smser_Controller.modifyContactName(id);};
+        pg.appendChild(el);
+        
+        el=document.createElement("input");
+        el.type="button";
+        el.className="button";
+        el.value="Відмінити";
+        el.onclick=function(){SAdamchuk_Smser_Controller.refreshContacts();};
+        pg.appendChild(el);
+        
+        this.cntEditor.focus();
+        this.cntEditor.select();
     };
     
     res.currentTabId=0;
