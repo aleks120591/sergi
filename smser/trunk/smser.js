@@ -19,9 +19,9 @@ var SAdamchuk_Smser_Controller={
         this.view.adjustSymbCounter();
         
         this.model.contacts=new Array(
-            new SAdamchuk_Smser_Contact("6","6077288"),
-            new SAdamchuk_Smser_Contact("2","6545645"),
-            new SAdamchuk_Smser_Contact("4","4534534"));
+            new SAdamchuk_Smser_Contact("6","6077288",5),
+            new SAdamchuk_Smser_Contact("2","6545645",3),
+            new SAdamchuk_Smser_Contact("4","4534534",0));
             
         this.model.contacts[0].name="Test";
                 
@@ -72,6 +72,8 @@ var SAdamchuk_Smser_Controller={
 	    
         newWin.document.body.appendChild(frm);
         frm.submit();
+        this.model.reuseContact(this.model.channel,this.model.phoneNum);
+        this.refreshContacts();
         window.setTimeout('SAdamchuk_Smser_Controller.refreshCaptcha()', 2000);
     },
     
@@ -133,13 +135,52 @@ SAdamchuk_Smser_Model.prototype.getCurrentCarrier=function(){
     return SAdamchuk_Smser_carriers.carriers[this.channel.carrier];
 }
 
-SAdamchuk_Smser_Model.prototype.dispose=function(){
+SAdamchuk_Smser_Model.prototype.reuseContact=function(channel,number){
+    var cnt=null;
+    var step=255*(1-SAdamchuk_Smser_Forget);
+    for(var i=0;i<this.contacts.length;i++){
+        var c=this.contacts[i];
+        if ((c.channel.code==channel.code)&&(c.number==number)){
+            cnt=c;
+            this.contacts[i]=null;
+            cnt.rate=Math.floor(SAdamchuk_Smser_Forget*c.rate+step);
+        }
+        else c.rate=Math.floor(SAdamchuk_Smser_Forget*c.rate);
+    }
+    
+    if(!cnt)cnt=new SAdamchuk_Smser_Contact(channel.code,number,Math.floor(step));
+
+    var res=new Array();
+    
+    var i=0;
+    for(var pos=0;(pos<this.contacts.length)&&(i<SAdamchuk_Smser_MAX_Cont);pos++)
+        if(cnt&&((!this.contacts[pos])||(this.contacts[pos].rate<=cnt.rate))){
+            res[i]=cnt;
+            i++;
+            cnt=null;
+            pos--;
+        }else{
+            if(this.contacts[pos]){
+                res[i]=this.contacts[pos];
+                i++;
+            }
+        }
+    
+    this.contacts=res;
 }
 
+SAdamchuk_Smser_Model.prototype.dispose=function(){
+    this.channel=null;
+    this.contacts=null;
+}
+
+var SAdamchuk_Smser_Forget=0.96;
+var SAdamchuk_Smser_MAX_Cont=10;
+
 // ####### SAdamchuk_Smser_View
-function SAdamchuk_Smser_View(div,urlResolver,cntText,helpText){
+function SAdamchuk_Smser_View(div,environment,cntText,helpText){
 	var res={};
-	res.urlResolver=urlResolver;
+	res.environment=environment;
 	
 	res.createSpace=function(width){
         var r=document.createElement("img");
@@ -168,7 +209,7 @@ function SAdamchuk_Smser_View(div,urlResolver,cntText,helpText){
     };
     
     res.textBlured=function(ctrl){
-        if (ctrl.value=="")ctrl.style.background="rgb(255, 255, 255) url("+this.urlResolver.resolveUrl("images/wm"+ctrl.name+".gif")+") no-repeat scroll center center";
+        if (ctrl.value=="")ctrl.style.background="rgb(255, 255, 255) url("+this.environment.resolveUrl("images/wm"+ctrl.name+".gif")+") no-repeat scroll center center";
         else this.textFocused(ctrl);
     };
 	
@@ -180,28 +221,28 @@ function SAdamchuk_Smser_View(div,urlResolver,cntText,helpText){
         this.tabs[0]=document.createElement("img");
         this.tabs[0].className="activeTab";
         this.tabs[0].alt="Головна";
-        this.tabs[0].src=urlResolver.resolveUrl("tabmain.gif");
+        this.tabs[0].src=environment.resolveUrl("tabmain.gif");
         this.tabs[0].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(0);};
         curDiv.appendChild(this.tabs[0]);
         
         this.tabs[1]=document.createElement("img");
         this.tabs[1].className="pageHeader";
         this.tabs[1].alt="Опції";
-        this.tabs[1].src=urlResolver.resolveUrl("tabopt.gif");
+        this.tabs[1].src=environment.resolveUrl("tabopt.gif");
         this.tabs[1].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(1);};
         curDiv.appendChild(this.tabs[1]);
         
         this.tabs[2]=document.createElement("img");
         this.tabs[2].className="pageHeader";
         this.tabs[2].alt="Довідка";
-        this.tabs[2].src=urlResolver.resolveUrl("tabhlp.gif");
+        this.tabs[2].src=environment.resolveUrl("tabhlp.gif");
         this.tabs[2].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(2);};
         curDiv.appendChild(this.tabs[2]);
         
         this.tabs[3]=document.createElement("img");
         this.tabs[3].className="pageHeader";
         this.tabs[3].alt="Контакти";
-        this.tabs[3].src=urlResolver.resolveUrl("tabcont.gif");
+        this.tabs[3].src=environment.resolveUrl("tabcont.gif");
         this.tabs[3].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(3);};
         curDiv.appendChild(this.tabs[3]);
         return curDiv;
@@ -411,11 +452,11 @@ function SAdamchuk_Smser_View(div,urlResolver,cntText,helpText){
         this.carLogo=null;
         this.symbCounter=null;
         this.contactsTable=null;
-        this.urlResolver=null;
+        this.environment=null;
     };
     
     res.setWaitingCaptcha=function(){
-        this.captchaImg.src=urlResolver.resolveUrl("wait30.gif");
+        this.captchaImg.src=environment.resolveUrl("wait30.gif");
         this.captcha.value="";
         this.refreshInputHints();
     };
@@ -426,10 +467,11 @@ function SAdamchuk_Smser_View(div,urlResolver,cntText,helpText){
         this.currentTabId=tabId;
         this.tabs[this.currentTabId].className="activeTab";
         this.tabs[this.currentTabId].page.className="page";
+        this.environment.Resize();
     };
     
     res.setCarrierLogo=function(logoFile){
-        this.carLogo.src=urlResolver.resolveUrl("logos/"+logoFile);
+        this.carLogo.src=environment.resolveUrl("logos/"+logoFile);
     };
     
     res.adjustSymbCounter=function(){
@@ -442,7 +484,7 @@ function SAdamchuk_Smser_View(div,urlResolver,cntText,helpText){
         var tr=this.contactsTable.insertRow(index);
         var td=tr.insertCell(0);
         var el=document.createElement("img");
-        el.src=this.urlResolver.resolveUrl("images/contact.gif");
+        el.src=this.environment.resolveUrl("images/contact.gif");
         el.className="cmdImage";
         el.onclick=fn;
         el.alt="Контакт";
@@ -458,7 +500,7 @@ function SAdamchuk_Smser_View(div,urlResolver,cntText,helpText){
         
         td=tr.insertCell(2);
         el=document.createElement("img");
-        el.src=this.urlResolver.resolveUrl("images/edit.gif");
+        el.src=this.environment.resolveUrl("images/edit.gif");
         el.className="cmdImage";
         el.alt="Редагувати";
         el.onclick=function(){SAdamchuk_Smser_Controller.editContact(index);};
@@ -466,7 +508,7 @@ function SAdamchuk_Smser_View(div,urlResolver,cntText,helpText){
         
         td=tr.insertCell(3);
         el=document.createElement("img");
-        el.src=this.urlResolver.resolveUrl("images/delete.gif");
+        el.src=this.environment.resolveUrl("images/delete.gif");
         el.className="cmdImage";
         el.alt="Вилучити";
         el.onclick=function(){if(confirm("Ви справді бажаєте вилучити цей контакт?"))SAdamchuk_Smser_Controller.deleteContact(index);};
@@ -493,7 +535,7 @@ function SAdamchuk_Smser_View(div,urlResolver,cntText,helpText){
     
     res.setEditContact=function(contact,id){
         var pg=this.tabs[3].page;
-        pg.innerHTML="<small>Змінити ім'я для контакту: <b>\""+contact.getDisplayable()+"\"</b></small><br/>";
+        pg.innerHTML="<span style='font-size:x-small;'>Змінити ім'я для контакту: <b>\""+contact.getDisplayable()+"\"</b></span><br/>";
         this.cntEditor=document.createElement("input");
         this.cntEditor.type="text";
         this.cntEditor.className="contactEditor";
@@ -601,16 +643,16 @@ var SAdamchuk_Smser_carriers={
 }
 
 // ####### SAdamchuk_Smser_Contact
-function SAdamchuk_Smser_Contact(channelCode,number){
+function SAdamchuk_Smser_Contact(channelCode,number,rate){
     this.name="";
-    this.rate=0;
+    this.rate=rate;
     this.channel=SAdamchuk_Smser_carriers.getChannelByCode(channelCode);
     this.number=number;
 }
 
 SAdamchuk_Smser_Contact.prototype.getDisplayable=function(){
-    var r=this.name;
-    if(r!="")r+=": ";
+    var r="";
+    if(this.name!="")r+="<b>"+this.name+"</b>: ";
     r+=this.channel.text+" "+this.number;
     return r;
 }
