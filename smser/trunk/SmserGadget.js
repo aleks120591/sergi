@@ -60,3 +60,13 @@ SAdamchuk_Smser_Persister.prototype.getContacts=function(){
 SAdamchuk_Smser_Persister.prototype.saveContacts=function(contacts){
     this.module.setPreference("cnt",SAdamchuk_Smser_SerializeContacts(contacts));
 }
+
+SAdamchuk_Smser_Persister.prototype.getSenderName=function(){
+    var res=this.module.getPreference("snd");
+    if (!res)return "";
+    return res;
+}
+
+SAdamchuk_Smser_Persister.prototype.saveSenderName=function(senderName){
+    this.module.setPreference("snd",senderName);
+}

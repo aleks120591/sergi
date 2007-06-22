@@ -14,15 +14,16 @@ var SAdamchuk_Smser_Controller={
 		this.view.buttonSend.onclick=function(){SAdamchuk_Smser_Controller.sendSms();};
 		this.view.channelSelector.onchange=function(){SAdamchuk_Smser_Controller.adjustChannel();};
 		this.view.captchaImg.onclick=function(){SAdamchuk_Smser_Controller.refreshCaptcha();};
-                
-        this.refreshCaptcha();
-        this.adjustChannel();
-        this.view.adjustSymbCounter();
-        
+                        
         if(this.persist){
             this.model.contacts=this.persist.getContacts();
             this.refreshContacts();
+            this.view.senderName.value=this.persist.getSenderName();
         }
+        
+        this.refreshCaptcha();
+        this.adjustChannel();
+        this.view.adjustSymbCounter();
     },
 
     dispose:function(){
@@ -73,6 +74,7 @@ var SAdamchuk_Smser_Controller={
         this.model.reuseContact(this.model.channel,this.model.phoneNum);
         this.refreshContacts();
         this.saveContacts();
+        this.persist.saveSenderName(this.view.senderName.value);
         window.setTimeout('SAdamchuk_Smser_Controller.refreshCaptcha()', 2000);
     },
     
@@ -338,7 +340,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
 	    this.senderName.type="text";
 	    this.senderName.name="sender";
 	    this.senderName.className="textField";
-	    this.senderName.maxlength=10;
+	    this.senderName.maxLength=12;
 	   	this.senderName.onchange=this.senderName.onkeyup=function(){SAdamchuk_Smser_Controller.view.adjustSymbCounter();};
 	    this.senderName.onfocus=function(){
             SAdamchuk_Smser_Controller.view.textFocused(SAdamchuk_Smser_Controller.view.senderName);
