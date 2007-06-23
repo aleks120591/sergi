@@ -103,3 +103,13 @@
 .SAdamchuk_MSGadgets_SmserGadget .cmdImage{
 	cursor:pointer;
 }
+
+.SAdamchuk_MSGadgets_SmserGadget .rowCaptcha{
+	overflow:hidden;
+	height:50px;
+}
+
+.SAdamchuk_MSGadgets_SmserGadget .rowCaptcha .emailItem,
+.SAdamchuk_MSGadgets_SmserGadget .rowEmail .captchaItem{
+	display:none;
+}

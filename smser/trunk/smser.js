@@ -1,5 +1,4 @@
-﻿// ####### SAdamchuk_Smser_Controller
-var SAdamchuk_Smser_Controller={
+﻿var SAdamchuk_Smser_Controller={
     initialize:function(view,persist,authorMode){
         this.view=view;
         this.persist=persist;
@@ -17,13 +16,17 @@ var SAdamchuk_Smser_Controller={
                         
         if(this.persist){
             this.model.contacts=this.persist.getContacts();
+            this.model.gateType=this.persist.getGateType();
             this.refreshContacts();
             this.view.senderName.value=this.persist.getSenderName();
         }
         
+        this.view.setGateType(this.model.gateType);
+        
         this.refreshCaptcha();
         this.adjustChannel();
         this.view.adjustSymbCounter();
+        this.view.refreshInputHints();
     },
 
     dispose:function(){
@@ -34,6 +37,7 @@ var SAdamchuk_Smser_Controller={
     },
 
     refreshCaptcha:function(){
+        if(this.model.gateType)return;
         this.view.frame.src="about:blank"; // Necessary for opera
         this.view.setWaitingCaptcha();
         var car=this.model.getCurrentCarrier();
@@ -42,17 +46,20 @@ var SAdamchuk_Smser_Controller={
     
     sendSms:function(){
         this.model.phoneNum=this.view.phoneNumber.value;
-        this.model.message=this.view.message.value;
+        this.model.message=SAdamchuk_Smser_Translit.translitString(this.view.message.value);
         this.model.captcha=this.view.captcha.value;
-        this.model.sender=this.view.senderName.value;
+        this.model.sender=SAdamchuk_Smser_Translit.translitString(this.view.senderName.value);
+        this.model.senderEmail=this.view.emailInput.value;
         
         var errorM="";
-        if (this.model.phoneNum=="")errorM+="\tНомер одержувача\n";
-        if (this.model.message=="")errorM+="\tПовідомлення\n";
-        if (this.model.captcha=="")errorM+="\tКод\n";
+        if(this.model.phoneNum=="")errorM+="номер одержувача, ";
+        if(this.model.message=="")errorM+="повідомлення, ";
+        if((this.model.gateType==0)&&(this.model.captcha==""))errorM+="код, ";
+        if((this.model.gateType==1)&&(this.model.senderEmail==""))errorM+="ваш email, ";
         
         if (errorM!=""){
-            alert("Не можливо відправити повідомлення, ви не ввели наступні значення:\n"+errorM);
+        	errorM=errorM.substr(0,errorM.length-2);
+            alert("Не можливо відправити повідомлення, не введено значення: "+errorM);
             return;
         }
         
@@ -73,8 +80,7 @@ var SAdamchuk_Smser_Controller={
         frm.submit();
         this.model.reuseContact(this.model.channel,this.model.phoneNum);
         this.refreshContacts();
-        this.saveContacts();
-        this.persist.saveSenderName(this.view.senderName.value);
+        this.persistData();
         window.setTimeout('SAdamchuk_Smser_Controller.refreshCaptcha()', 2000);
     },
     
@@ -110,8 +116,8 @@ var SAdamchuk_Smser_Controller={
               r[(i<contactId)?i:i-1]=this.model.contacts[i];
             }
         this.model.contacts=r;
-        this.saveContacts();
-        this.refreshContacts();  
+        this.persistData();
+        this.refreshContacts();
     },
     
     editContact:function(contactId){
@@ -124,20 +130,29 @@ var SAdamchuk_Smser_Controller={
     
     modifyContactName:function(contactId){
         this.model.contacts[contactId].name=this.view.cntEditor.value;
-        this.saveContacts();
+        this.persistData();
         this.refreshContacts();
     },
     
-    saveContacts:function(){
+    persistData:function(){
         if(this.persist&&this.authorMode){
-            this.persist.saveContacts(this.model.contacts);
+            this.persist.save(this.model.contacts,this.model.sender,this.model.senderEmail);
         }
+    },
+
+    setGateType:function(gateType){
+    	this.model.gateType=gateType;
+        if(this.persist&&this.authorMode){
+            this.persist.saveGateType(gateType);
+        }
+    	this.view.setGateType(gateType);
     }
 }
 
 // ####### SAdamchuk_Smser_Model
 function SAdamchuk_Smser_Model(){
     this.channel=SAdamchuk_Smser_carriers.channels[0];
+    this.gateType=0;
 }
 
 SAdamchuk_Smser_Model.prototype.getCurrentCarrier=function(){
@@ -213,6 +228,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
     	this.textBlured(this.message);
     	this.textBlured(this.senderName);
     	this.textBlured(this.captcha);
+    	this.textBlured(this.emailInput);
     };
     
     res.textFocused=function(ctrl){
@@ -266,6 +282,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
 	    
 	    var table=document.createElement("table");
 	    table.width="100%";
+	    this.mainTable=table;
 	    
 	    var tr=table.insertRow(0);
         var td=tr.insertCell(0);
@@ -347,23 +364,26 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
 	    };
 	    this.senderName.onblur=function(){
             SAdamchuk_Smser_Controller.view.textBlured(SAdamchuk_Smser_Controller.view.senderName);
-	    };	    	    
+	    };
 	    td.appendChild(this.senderName);
     	
-	    tr=table.insertRow(3);
-        td=tr.insertCell(0);
-        td.style.overflow="hidden";
-        td.style.height="50px";
+	    this.gateRow=table.insertRow(3);
+	    this.gateRow.className="rowCaptcha";
+        td=this.gateRow.insertCell(0);
+        td.innerHTML="<small class='emailItem'>Ваш Email:</small>";
 	    this.captchaImg=document.createElement("img");
+	    this.captchaImg.className="captchaItem";
 	    this.captchaImg.style.cursor="pointer";
 	    this.captchaImg.alt="Код";
 	    td.appendChild(this.captchaImg);
     	
-	    td=tr.insertCell(1);
+	    td=this.gateRow.insertCell(1);
 	    td.align="right";
+	    el=document.createElement("div");
+	    el.className="captchaItem";
 	    this.captcha=document.createElement("input");
 	    this.captcha.type="text";
-	    this.captcha.name="ccode";	    
+	    this.captcha.name="ccode";
 	    this.captcha.className="textField";
 	    this.captcha.maxlength=5;
 	    this.captcha.onfocus=function(){
@@ -371,13 +391,26 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
 	    };
 	    this.captcha.onblur=function(){
             SAdamchuk_Smser_Controller.view.textBlured(SAdamchuk_Smser_Controller.view.captcha);
-	    };	    
-	    td.appendChild(this.captcha);
-	    
-	    res.refreshInputHints();
-                
+	    };
+	    el.appendChild(this.captcha);
+	    td.appendChild(el);
+
+		el=document.createElement("div");
+	    el.className="emailItem";
+		this.emailInput=document.createElement("input");
+	    this.emailInput.type="text";
+	    this.emailInput.name="emailinp";
+	    this.emailInput.className="textField";
+	    this.emailInput.onfocus=function(){
+            SAdamchuk_Smser_Controller.view.textFocused(SAdamchuk_Smser_Controller.view.emailInput);
+	    };
+	    this.emailInput.onblur=function(){
+            SAdamchuk_Smser_Controller.view.textBlured(SAdamchuk_Smser_Controller.view.emailInput);
+	    };
+	    el.appendChild(this.emailInput);
+	    td.appendChild(el);
+
         tr=table.insertRow(4);
-        
         td=tr.insertCell(0);
         td.colSpan=2;
         td.align="center";
@@ -406,8 +439,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
 	    var curDiv=document.createElement("div");
 	    curDiv.className="hiddenPage";
 	    curDiv.id="optPage";
-	    curDiv.innerHTML="Тут колись будуть опції :)";
-	            
+
         this.tabs[1].page=curDiv;
         
         return curDiv;
@@ -465,6 +497,9 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
         this.symbCounter=null;
         this.contactsTable=null;
         this.environment=null;
+		this.rowEmail=null;
+		this.emailInput=null;
+		this.gateRow=null;
     };
     
     res.setWaitingCaptcha=function(){
@@ -580,6 +615,13 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
         this.environment.Resize();
     };
     
+    res.setGateType=function(gateType){
+    	this.tabs[1].page.innerHTML="<p><input type=\"radio\""+((gateType==0)?" checked":"")+" name=\"gate\" onclick='SAdamchuk_Smser_Controller.setGateType(0)'/>Відправляти через сайти операторів</p>"+
+	    	"<p><input type=\"radio\""+((gateType==1)?" checked":"")+" name=\"gate\" onclick='SAdamchuk_Smser_Controller.setGateType(1)'/>Відправляти через email шлюз</p>";
+
+		this.gateRow.className=(gateType==0)?"rowCaptcha":"rowEmail";
+	};
+    
     res.currentTabId=0;
     
     return res;
@@ -636,15 +678,15 @@ var SAdamchuk_Smser_carriers={
 			{text:"Jeans (099)",carrier:0,value: "UMC099",code:"2",logo:"jeans.gif"},
 			{text:"Jeans (066)",carrier:0,value: "JEANS",code:"3",logo:"jeans.gif"},
 			{text:"Kyivstar (067)",carrier:1,value: "067",code:"4",logo:"kyivstar.gif"},
-			{text:"Kyivstar (096)",carrier:1,value: "096",code:"5",logo:"kyivstar.gif"},
-			{text:"Kyivstar (097)",carrier:1,value: "097",code:"6",logo:"kyivstar.gif"},
-			{text:"Kyivstar (098)",carrier:1,value: "098",code:"7",logo:"kyivstar.gif"},
-			{text:"GoldenTel1 (039)",carrier:1,value: "039",code:"8",logo:"gt.gif"},
-			{text:"Life (063)",carrier:1,value: "063",code:"9",logo:"life.gif"},
-			{text:"Life (093)",carrier:1,value: "093",code:"a",logo:"life.gif"},
-			{text:"GoldenTel2 (039)",carrier:0,value: "GT",code:"b",logo:"gt.gif"},
-			{text:"Welcome (068)",carrier:0,value: "WC",code:"c",logo:"beeline.gif"},
-			{text:"Beeline (068)",carrier:2,value: "38068",code:"d",logo:"beeline.gif"}),
+			{text:"DJuice (096)",carrier:1,value: "096",code:"5",logo:"djuice.gif"},
+			{text:"DJuice (097)",carrier:1,value: "097",code:"6",logo:"djuice.gif"},
+			{text:"DJuice (098)",carrier:1,value: "098",code:"7",logo:"djuice.gif"},
+			{text:"Life (063)",carrier:1,value: "063",code:"8",logo:"life.gif"},
+			{text:"Life (093)",carrier:1,value: "093",code:"9",logo:"life.gif"},
+			{text:"Beeline (068)",carrier:2,value: "38068",code:"a",logo:"beeline.gif"},
+			{text:"GoldenTel (039)",carrier:1,value: "039",code:"b",logo:"gt.gif"},
+			{text:"GoldenTel2 (039)",carrier:0,value: "GT",code:"c",logo:"gt.gif"},
+			{text:"Beeline2 (068)",carrier:0,value: "WC",code:"d",logo:"beeline.gif"}),
         
         getValueToString:function(v, arg){
             if (typeof(v)=="function") v = v(arg);
@@ -729,4 +771,19 @@ function SAdamchuk_Smser_TrimStr(txt,ch){
     var c=0;
     while(txt.charAt(c)==ch)c++;
     return txt.substr(c);
+}
+
+// Transliteration
+var SAdamchuk_Smser_Translit={
+	letters:"абвгґдеєжзиіїйклмнопрстуфхцчшщьюяАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯыъэёЫЪЭЁ",
+	translit:new Array("a","b","v","g","g","d","e","je","zh","z","y","i","ji","j","k","l","m","n","o","p","r","s","t","u","f","x","c","ch","w","wch","'","ju","ja","A","B","V","G","G","D","E","Je","Zh","Z","Y","I","Ji","J","K","L","M","N","O","P","R","S","T","U","F","X","C","Ch","W","Wch","'","Ju","Ja","y","","e","jo","Y","","E","Jo"),
+	translitString:function(s){
+		var res="";
+		for(var i=0;i<s.length;i++){
+			var f=false;
+			for(var z=0;z<this.letters.length;z++)if (this.letters.charAt(z)==s.charAt(i)){f=true;res+=this.translit.charAt(z);}
+			if(!f)res+=s.charAt(i);
+		}
+		return res;
+	}
 }

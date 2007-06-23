@@ -57,16 +57,30 @@ SAdamchuk_Smser_Persister.prototype.getContacts=function(){
     return SAdamchuk_Smser_DeserializeContacts(this.module.getPreference("cnt"));
 }
 
-SAdamchuk_Smser_Persister.prototype.saveContacts=function(contacts){
-    this.module.setPreference("cnt",SAdamchuk_Smser_SerializeContacts(contacts));
-}
-
 SAdamchuk_Smser_Persister.prototype.getSenderName=function(){
     var res=this.module.getPreference("snd");
-    if (!res)return "";
+    if(!res)return "";
     return res;
 }
 
-SAdamchuk_Smser_Persister.prototype.saveSenderName=function(senderName){
+SAdamchuk_Smser_Persister.prototype.getSenderEmail=function(){
+    var res=this.module.getPreference("eml");
+    if(!res)return "";
+    return res;
+}
+
+SAdamchuk_Smser_Persister.prototype.getGateType=function(){
+    var res=this.module.getPreference("gat");
+    if(!res)return 0;
+    return res;
+}
+
+SAdamchuk_Smser_Persister.prototype.save=function(contacts,senderName,senderEmail){
     this.module.setPreference("snd",senderName);
+    this.module.setPreference("cnt",SAdamchuk_Smser_SerializeContacts(contacts));
+    this.module.setPreference("eml",senderEmail);
+}
+
+SAdamchuk_Smser_Persister.prototype.saveGateType=function(gateType){
+	this.module.setPreference("gat",gateType);
 }
