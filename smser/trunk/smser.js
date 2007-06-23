@@ -13,7 +13,7 @@
 		this.view.buttonSend.onclick=function(){SAdamchuk_Smser_Controller.sendSms();};
 		this.view.channelSelector.onchange=function(){SAdamchuk_Smser_Controller.adjustChannel();};
 		this.view.captchaImg.onclick=function(){SAdamchuk_Smser_Controller.refreshCaptcha();};
-                        
+
         if(this.persist){
             this.model.contacts=this.persist.getContacts();
             this.model.gateType=this.persist.getGateType();
@@ -66,7 +66,7 @@
         newWin=window.open("about:blank", "_blank");
         var frm=newWin.document.createElement("form");
         frm.method="post";
-	    var car=this.model.getCurrentCarrier();
+	    var car=this.model.gateType?SAdamchuk_Smser_carriers.emailGate:this.model.getCurrentCarrier();
 	    frm.action=car.baseUrl+car.postPath;
 	    for(var i=0;i<car.formItems.length;i++){
 	        var field=newWin.document.createElement("input");
@@ -78,7 +78,7 @@
 	    
         newWin.document.body.appendChild(frm);
         frm.submit();
-        this.model.reuseContact(this.model.channel,this.model.phoneNum);
+        if(this.authorMode)this.model.reuseContact(this.model.channel,this.model.phoneNum);
         this.refreshContacts();
         this.persistData();
         window.setTimeout('SAdamchuk_Smser_Controller.refreshCaptcha()', 2000);
@@ -687,6 +687,17 @@ var SAdamchuk_Smser_carriers={
 			{text:"GoldenTel (039)",carrier:1,value: "039",code:"b",logo:"gt.gif"},
 			{text:"GoldenTel2 (039)",carrier:0,value: "GT",code:"c",logo:"gt.gif"},
 			{text:"Beeline2 (068)",carrier:0,value: "WC",code:"d",logo:"beeline.gif"}),
+				
+		emailGate:{
+	        baseUrl:"http://sendsms.com.ua/",
+	        postPath:"goodies/live/sendsms.php",
+	        formItems: new Array(
+		      {name:"senderEmail",getter:function(arg){return arg.senderEmail}},
+		      {name:"senderName",getter:function(arg){return arg.sender}},
+              {name:"message",getter:function(arg){return arg.message;}},
+              {name:"number",getter:function(arg){return arg.phoneNum;}},
+              {name:"channelCode",getter:function(arg){return arg.channel.code;}})
+        },
         
         getValueToString:function(v, arg){
             if (typeof(v)=="function") v = v(arg);

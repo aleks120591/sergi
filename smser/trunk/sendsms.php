@@ -21,6 +21,7 @@ $subject = "";
 $txt = $_POST["message"].$_POST["senderName"];
 $headers = "From: ".$_POST["senderEmail"];
 
+echo "<p align='center'>Відправляється повідомлення на адресу ".$to."</p>";
 if (mail($to,$subject,$txt,$headers))
   echo "<p align='center'>Ваше повідомлення успішно відіслано</p>";
 else
