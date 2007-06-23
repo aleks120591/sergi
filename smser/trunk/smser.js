@@ -19,6 +19,7 @@
             this.model.gateType=this.persist.getGateType();
             this.refreshContacts();
             this.view.senderName.value=this.persist.getSenderName();
+            this.view.emailInput.value=this.persist.getSenderEmail();
         }
         
         this.view.setGateType(this.model.gateType);
@@ -78,7 +79,7 @@
 	    
         newWin.document.body.appendChild(frm);
         frm.submit();
-        if(this.authorMode)this.model.reuseContact(this.model.channel,this.model.phoneNum);
+        if(this.authorMode)this.model.reuseContact(this.model.channel,this.model.phoneNum,this.model.gateType);
         this.refreshContacts();
         this.persistData();
         window.setTimeout('SAdamchuk_Smser_Controller.refreshCaptcha()', 2000);
@@ -89,7 +90,7 @@
         var url=car.baseUrl+car.captchaPath;
         url+=(url.indexOf("?")<0)?"?":"&";
         url+=("scomua="+Math.random());
-        this.view.captchaImg.src=url;        
+        this.view.captchaImg.src=url;
     },
     
     adjustChannel:function(){
@@ -104,6 +105,7 @@
         this.view.phoneNumber.value=c.number;
         if(c.channel)this.view.setChannel(c.channel.code);
         this.adjustChannel();
+        this.setGateType(c.gate);
         this.view.refreshInputHints();
         this.view.setTab(0);
         this.view.message.focus();
@@ -159,7 +161,7 @@ SAdamchuk_Smser_Model.prototype.getCurrentCarrier=function(){
     return SAdamchuk_Smser_carriers.carriers[this.channel.carrier];
 }
 
-SAdamchuk_Smser_Model.prototype.reuseContact=function(channel,number){
+SAdamchuk_Smser_Model.prototype.reuseContact=function(channel,number,gateType){
     var cnt=null;
     var step=255*(1-SAdamchuk_Smser_Forget);
     for(var i=0;i<this.contacts.length;i++){
@@ -179,6 +181,7 @@ SAdamchuk_Smser_Model.prototype.reuseContact=function(channel,number){
         cnt=new SAdamchuk_Smser_Contact(channel.code,number,Math.floor(step));
         if(newSize<SAdamchuk_Smser_MAX_Cont)newSize++;
     }
+    cnt.gate=gateType;
     
     var p=0;
     for(var i=0;i<newSize;i++){
@@ -792,7 +795,7 @@ var SAdamchuk_Smser_Translit={
 		var res="";
 		for(var i=0;i<s.length;i++){
 			var f=false;
-			for(var z=0;z<this.letters.length;z++)if (this.letters.charAt(z)==s.charAt(i)){f=true;res+=this.translit.charAt(z);}
+			for(var z=0;z<this.letters.length;z++)if (this.letters.charAt(z)==s.charAt(i)){f=true;res+=this.translit[z];}
 			if(!f)res+=s.charAt(i);
 		}
 		return res;
