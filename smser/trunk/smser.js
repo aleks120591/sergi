@@ -91,6 +91,7 @@
         url+=(url.indexOf("?")<0)?"?":"&";
         url+=("scomua="+Math.random());
         this.view.captchaImg.src=url;
+        alert(this.view.frame.contentDocument.getElementsByTagName("html")[0].innerHTML /*this.view.frame.contentWindow.document*/);
     },
     
     adjustChannel:function(){
