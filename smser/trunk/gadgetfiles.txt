@@ -8,3 +8,5 @@ tabhlp.gif
 tabmain.gif
 tabopt.gif
 wait30.gif
+images\*
+logos\*
