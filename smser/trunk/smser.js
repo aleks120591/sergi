@@ -53,7 +53,7 @@
         var errorM="";
         if(this.model.phoneNum=="")errorM+="номер одержувача, ";
         if(this.model.message=="")errorM+="повідомлення, ";
-        if((this.model.gateType==0)&&(this.model.captcha==""))errorM+="код, ";
+        if((this.model.gateType==0)&&(this.model.channel.carrier>=0)&&(this.model.captcha==""))errorM+="код, ";
         
         if (errorM!=""){
         	errorM=errorM.substr(0,errorM.length-2);
@@ -254,6 +254,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
         this.tabs[0]=document.createElement("img");
         this.tabs[0].className="activeTab";
         this.tabs[0].alt="Головна";
+        this.tabs[0].title="Головна";
         this.tabs[0].src=environment.resolveUrl("tabmain.gif");
         this.tabs[0].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(0);};
         curDiv.appendChild(this.tabs[0]);
@@ -261,6 +262,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
         this.tabs[1]=document.createElement("img");
         this.tabs[1].className="pageHeader";
         this.tabs[1].alt="Опції";
+        this.tabs[1].title="Опції";
         this.tabs[1].src=environment.resolveUrl("tabopt.gif");
         this.tabs[1].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(1);};
         curDiv.appendChild(this.tabs[1]);
@@ -268,6 +270,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
         this.tabs[2]=document.createElement("img");
         this.tabs[2].className="pageHeader";
         this.tabs[2].alt="Довідка";
+        this.tabs[2].title="Довідка";
         this.tabs[2].src=environment.resolveUrl("tabhlp.gif");
         this.tabs[2].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(2);};
         curDiv.appendChild(this.tabs[2]);
@@ -275,6 +278,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
         this.tabs[3]=document.createElement("img");
         this.tabs[3].className="pageHeader";
         this.tabs[3].alt="Контакти";
+        this.tabs[3].title="Контакти";
         this.tabs[3].src=environment.resolveUrl("tabcont.gif");
         this.tabs[3].onclick=function(){SAdamchuk_Smser_Controller.view.setTab(3);};
         curDiv.appendChild(this.tabs[3]);
@@ -285,6 +289,11 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
 	    var curDiv=document.createElement("div");
 	    curDiv.className="page";
 	    curDiv.id="mainPage";
+	    curDiv.onkeyup=function(e){
+            if(!e)e=event;
+            if((e.keyCode==13)&&e.ctrlKey){SAdamchuk_Smser_Controller.sendSms();return true;}
+            return false;
+        };
 	    
 	    var table=document.createElement("table");
 	    table.width="100%";
@@ -614,7 +623,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
     
     res.setGateType=function(gateType){
     	this.tabs[1].page.innerHTML="<p><input type=\"radio\""+((gateType==0)?" checked":"")+" name=\"gate\" onclick='SAdamchuk_Smser_Controller.setGateType(0)'/>Відправляти через сайти операторів</p>"+
-	    	"<p><input type=\"radio\""+((gateType==1)?" checked":"")+" name=\"gate\" onclick='SAdamchuk_Smser_Controller.setGateType(1)'/>Відправляти через <a href='http://uabest.org.ua' target='_blank'>uabest.org.ua</a></p>";
+	    	"<p><input type=\"radio\""+((gateType==1)?" checked":"")+" name=\"gate\" onclick='SAdamchuk_Smser_Controller.setGateType(1)'/>Відправляти через <a href='http://uabest.org.ua/sms.php' target='_blank'>uabest.org.ua</a></p>";
 	};
 	
 	res.showCaptchaControls=function(show){
