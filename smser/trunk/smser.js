@@ -91,14 +91,14 @@
         url+=(url.indexOf("?")<0)?"?":"&";
         url+=("scomua="+Math.random());
         this.view.captchaImg.src=url;
-        alert(this.view.frame.contentDocument.getElementsByTagName("html")[0].innerHTML /*this.view.frame.contentWindow.document*/);
+        //alert(this.view.frame.contentDocument.images /*this.view.frame.contentWindow.document*/);
     },
     
     adjustChannel:function(){
         var oldCarrierId=this.model.channel.carrier;
         this.model.channel=SAdamchuk_Smser_carriers.getChannelByCode(this.view.channelSelector.value);
         if(oldCarrierId!=this.model.channel.carrier)this.refreshCaptcha();
-        this.view.setCarrierLogo(this.model.channel.logo);
+        this.view.setCarrierLogo(this.model.channel);
     },
     
     setFieldsFromContact:function(contactId){
@@ -217,6 +217,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
         r.width=width;
         r.height="1px";
         r.alt=" ";
+        r.border=0;
         return r;
     };
     
@@ -291,12 +292,17 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
 	    var tr=table.insertRow(0);
         var td=tr.insertCell(0);
         
+        this.carSite=document.createElement("a");
+        this.carSite.target="_blank";
+        
         this.carLogo=document.createElement("img");
         this.carLogo.alt="Лого оператора";
-        td.appendChild(this.carLogo);
+        this.carLogo.border=0;
+        this.carSite.appendChild(this.carLogo);
         
-        td.appendChild(this.createSpace(3));
-    
+        this.carSite.appendChild(this.createSpace(3));
+        td.appendChild(this.carSite);
+        
         this.channelSelector=document.createElement("select");
         this.channelSelector.className="control";
         this.channelSelector.style.width="120px";
@@ -504,6 +510,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
 		this.rowEmail=null;
 		this.emailInput=null;
 		this.gateRow=null;
+		this.carSite=null;
     };
     
     res.setWaitingCaptcha=function(){
@@ -521,8 +528,9 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
         this.environment.Resize();
     };
     
-    res.setCarrierLogo=function(logoFile){
-        this.carLogo.src=environment.resolveUrl("logos/"+logoFile);
+    res.setCarrierLogo=function(channel){
+        this.carLogo.src=environment.resolveUrl("logos/"+channel.logo);
+        this.carSite.href=channel.site;
     };
     
     res.adjustSymbCounter=function(){
@@ -568,7 +576,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
     
     res.redrawContacts=function(contacts){
         if (contacts&&(contacts.length>0)){
-            this.tabs[3].page.innerHTML="";    	
+            this.tabs[3].page.innerHTML="";
     	    this.contactsTable=document.createElement("table");
 	        this.tabs[3].page.appendChild(this.contactsTable);
             for(var i=0;i<contacts.length;i++)this.insertContact(contacts[i],i);
@@ -648,20 +656,6 @@ var SAdamchuk_Smser_carriers={
               {name: "translit",getter: "1"},
               {name: "sender_name",getter: function(arg) {return arg.sender;}})
         },{
-            baseUrl:"http://www.kyivstar.net/",
-            cookRefreshPath:"_sms.html",
-            captchaPath:"sms_code_image.gif",
-            postPath:"_sms.html",
-            sendProcessor:"_sms.html",
-            formItems: new Array(
-                {name: "submitted",getter: "true"},
-                {name: "lang",getter: "ua"},
-                {name: "lat",getter: "1"},
-                {name: "mobcode",getter: function(arg) {return arg.channel.value;}},
-                {name: "number",getter: function(arg) {return arg.phoneNum;}},
-                {name: "message",getter: function(arg) {return arg.message+arg.sender;}},
-                {name: "antispam",getter: function(arg) {return arg.captcha;}})
-         },{
 	        baseUrl:"http://beesms.beeline.ua/",
 		    cookRefreshPath:"",
 		    captchaPath:"count.php?text=ri4ugo0jcevrh30sprik9s9s93&bgfg=F1C42E:001300",
@@ -677,20 +671,19 @@ var SAdamchuk_Smser_carriers={
         ),
         
         channels:new Array(
-			{text:"UMC (050)",carrier:0,value:"UMC",code:"0",logo:"umc.gif"},
-			{text:"UMC (095)",carrier:0,value: "UMC095",code:"1",logo:"umc.gif"},
-			{text:"Jeans (099)",carrier:0,value: "UMC099",code:"2",logo:"jeans.gif"},
-			{text:"Jeans (066)",carrier:0,value: "JEANS",code:"3",logo:"jeans.gif"},
-			{text:"Kyivstar (067)",carrier:1,value: "067",code:"4",logo:"kyivstar.gif"},
-			{text:"DJuice (096)",carrier:1,value: "096",code:"5",logo:"djuice.gif"},
-			{text:"DJuice (097)",carrier:1,value: "097",code:"6",logo:"djuice.gif"},
-			{text:"DJuice (098)",carrier:1,value: "098",code:"7",logo:"djuice.gif"},
-			{text:"Life (063)",carrier:1,value: "063",code:"8",logo:"life.gif"},
-			{text:"Life (093)",carrier:1,value: "093",code:"9",logo:"life.gif"},
-			{text:"Beeline (068)",carrier:2,value: "38068",code:"a",logo:"beeline.gif"},
-			{text:"GoldenTel (039)",carrier:1,value: "039",code:"b",logo:"gt.gif"},
-			{text:"GoldenTel2 (039)",carrier:0,value: "GT",code:"c",logo:"gt.gif"},
-			{text:"Beeline2 (068)",carrier:0,value: "WC",code:"d",logo:"beeline.gif"}),
+			{text:"UMC (050)",carrier:0,value:"UMC",code:"0",logo:"umc.gif",site:"http://www.umc.ua/ukr/sendsms.php"},
+			{text:"UMC (095)",carrier:0,value: "UMC095",code:"1",logo:"umc.gif",site:"http://www.umc.ua/ukr/sendsms.php"},
+			{text:"Jeans (099)",carrier:0,value: "UMC099",code:"2",logo:"jeans.gif",site:"http://www.jeans.com.ua/sms/"},
+			{text:"Jeans (066)",carrier:0,value: "JEANS",code:"3",logo:"jeans.gif",site:"http://www.jeans.com.ua/sms/"},
+			{text:"Kyivstar (067)",carrier:1,value: "067",code:"4",logo:"kyivstar.gif",site:"http://www.kyivstar.net/sms/"},
+			{text:"DJuice (096)",carrier:1,value: "096",code:"5",logo:"djuice.gif",site:"http://www.kyivstar.net/sms/"},
+			{text:"DJuice (097)",carrier:1,value: "097",code:"6",logo:"djuice.gif",site:"http://www.kyivstar.net/sms/"},
+			{text:"DJuice (098)",carrier:1,value: "098",code:"7",logo:"djuice.gif",site:"http://www.kyivstar.net/sms/"},
+			{text:"Life (063)",carrier:1,value: "063",code:"8",logo:"life.gif",site:"http://www.kyivstar.net/sms/"},
+			{text:"Life (093)",carrier:1,value: "093",code:"9",logo:"life.gif",site:"http://www.kyivstar.net/sms/"},
+			{text:"Beeline (068)",carrier:1,value: "38068",code:"a",logo:"beeline.gif",site:"http://beesms.beeline.ua/"},
+			{text:"GoldenTel (039)",carrier:0,value: "GT",code:"c",logo:"gt.gif",site:"http://gsm.goldentele.com/vat/sms_send.html"},
+			{text:"Beeline2 (068)",carrier:0,value: "WC",code:"d",logo:"beeline.gif",site:"http://beesms.beeline.ua/"}),
 				
 		emailGate:{
 	        baseUrl:"http://sendsms.com.ua/",
