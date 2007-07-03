@@ -19,7 +19,6 @@
             this.model.gateType=this.persist.getGateType();
             this.refreshContacts();
             this.view.senderName.value=this.persist.getSenderName();
-            this.view.emailInput.value=this.persist.getSenderEmail();
         }
         
         this.view.setGateType(this.model.gateType);
@@ -38,7 +37,7 @@
     },
 
     refreshCaptcha:function(){
-        if(this.model.gateType)return;
+        if((this.model.gateType)||(this.model.channel.carrier<0))return;
         this.view.frame.src="about:blank"; // Necessary for opera
         this.view.setWaitingCaptcha();
         var car=this.model.getCurrentCarrier();
@@ -50,13 +49,11 @@
         this.model.message=SAdamchuk_Smser_Translit.translitString(this.view.message.value);
         this.model.captcha=this.view.captcha.value;
         this.model.sender=SAdamchuk_Smser_Translit.translitString(this.view.senderName.value);
-        this.model.senderEmail=this.view.emailInput.value;
         
         var errorM="";
         if(this.model.phoneNum=="")errorM+="номер одержувача, ";
         if(this.model.message=="")errorM+="повідомлення, ";
         if((this.model.gateType==0)&&(this.model.captcha==""))errorM+="код, ";
-        if((this.model.gateType==1)&&(this.model.senderEmail==""))errorM+="ваш email, ";
         
         if (errorM!=""){
         	errorM=errorM.substr(0,errorM.length-2);
@@ -67,7 +64,7 @@
         newWin=window.open("about:blank", "_blank");
         var frm=newWin.document.createElement("form");
         frm.method="post";
-	    var car=this.model.gateType?SAdamchuk_Smser_carriers.emailGate:this.model.getCurrentCarrier();
+	    var car=(this.model.gateType||(this.model.channel.carrier<0))?SAdamchuk_Smser_carriers.emailGate:this.model.getCurrentCarrier();
 	    frm.action=car.baseUrl+car.postPath;
 	    for(var i=0;i<car.formItems.length;i++){
 	        var field=newWin.document.createElement("input");
@@ -91,12 +88,12 @@
         url+=(url.indexOf("?")<0)?"?":"&";
         url+=("scomua="+Math.random());
         this.view.captchaImg.src=url;
-        //alert(this.view.frame.contentDocument.images /*this.view.frame.contentWindow.document*/);
     },
     
     adjustChannel:function(){
         var oldCarrierId=this.model.channel.carrier;
         this.model.channel=SAdamchuk_Smser_carriers.getChannelByCode(this.view.channelSelector.value);
+    	this.adjustCaptchaControl();
         if(oldCarrierId!=this.model.channel.carrier)this.refreshCaptcha();
         this.view.setCarrierLogo(this.model.channel);
     },
@@ -139,7 +136,7 @@
     
     persistData:function(){
         if(this.persist&&this.authorMode){
-            this.persist.save(this.model.contacts,this.model.sender,this.model.senderEmail);
+            this.persist.save(this.model.contacts,this.model.sender);
         }
     },
 
@@ -149,6 +146,11 @@
             this.persist.saveGateType(gateType);
         }
     	this.view.setGateType(gateType);
+    	this.adjustCaptchaControl();
+    },
+
+    adjustCaptchaControl:function(){
+    	this.view.showCaptchaControls((this.model.gateType==0)&&(this.model.channel.carrier>=0));
     }
 }
 
@@ -233,7 +235,6 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
     	this.textBlured(this.message);
     	this.textBlured(this.senderName);
     	this.textBlured(this.captcha);
-    	this.textBlured(this.emailInput);
     };
     
     res.textFocused=function(ctrl){
@@ -380,7 +381,6 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
 	    this.gateRow=table.insertRow(3);
 	    this.gateRow.className="rowCaptcha";
         td=this.gateRow.insertCell(0);
-        td.innerHTML="<small class='emailItem'>Ваш Email:</small>";
 	    this.captchaImg=document.createElement("img");
 	    this.captchaImg.className="captchaItem";
 	    this.captchaImg.style.cursor="pointer";
@@ -405,22 +405,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
 	    el.appendChild(this.captcha);
 	    td.appendChild(el);
 
-		el=document.createElement("div");
-	    el.className="emailItem";
-		this.emailInput=document.createElement("input");
-	    this.emailInput.type="text";
-	    this.emailInput.name="emailinp";
-	    this.emailInput.className="textField";
-	    this.emailInput.onfocus=function(){
-            SAdamchuk_Smser_Controller.view.textFocused(SAdamchuk_Smser_Controller.view.emailInput);
-	    };
-	    this.emailInput.onblur=function(){
-            SAdamchuk_Smser_Controller.view.textBlured(SAdamchuk_Smser_Controller.view.emailInput);
-	    };
-	    el.appendChild(this.emailInput);
-	    td.appendChild(el);
-
-        tr=table.insertRow(4);
+		tr=table.insertRow(4);
         td=tr.insertCell(0);
         td.colSpan=2;
         td.align="center";
@@ -629,9 +614,11 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
     
     res.setGateType=function(gateType){
     	this.tabs[1].page.innerHTML="<p><input type=\"radio\""+((gateType==0)?" checked":"")+" name=\"gate\" onclick='SAdamchuk_Smser_Controller.setGateType(0)'/>Відправляти через сайти операторів</p>"+
-	    	"<p><input type=\"radio\""+((gateType==1)?" checked":"")+" name=\"gate\" onclick='SAdamchuk_Smser_Controller.setGateType(1)'/>Відправляти через email шлюз</p>";
-
-		this.gateRow.className=(gateType==0)?"rowCaptcha":"rowEmail";
+	    	"<p><input type=\"radio\""+((gateType==1)?" checked":"")+" name=\"gate\" onclick='SAdamchuk_Smser_Controller.setGateType(1)'/>Відправляти через <a href='http://uabest.org.ua' target='_blank'>uabest.org.ua</a></p>";
+	};
+	
+	res.showCaptchaControls=function(show){
+		this.gateRow.className=(show)?"rowCaptcha":"rowEmail";
 	};
     
     res.currentTabId=0;
@@ -679,21 +666,36 @@ var SAdamchuk_Smser_carriers={
 			{text:"DJuice (096)",carrier:1,value: "096",code:"5",logo:"djuice.gif",site:"http://www.kyivstar.net/sms/"},
 			{text:"DJuice (097)",carrier:1,value: "097",code:"6",logo:"djuice.gif",site:"http://www.kyivstar.net/sms/"},
 			{text:"DJuice (098)",carrier:1,value: "098",code:"7",logo:"djuice.gif",site:"http://www.kyivstar.net/sms/"},
-			{text:"Life (063)",carrier:1,value: "063",code:"8",logo:"life.gif",site:"http://www.kyivstar.net/sms/"},
-			{text:"Life (093)",carrier:1,value: "093",code:"9",logo:"life.gif",site:"http://www.kyivstar.net/sms/"},
+			{text:"Life (063)",carrier:-1,value: "063",code:"8",logo:"life.gif",site:"http://www.kyivstar.net/sms/"},
+			{text:"Life (093)",carrier:-1,value: "093",code:"9",logo:"life.gif",site:"http://www.kyivstar.net/sms/"},
 			{text:"Beeline (068)",carrier:1,value: "38068",code:"a",logo:"beeline.gif",site:"http://beesms.beeline.ua/"},
 			{text:"GoldenTel (039)",carrier:0,value: "GT",code:"c",logo:"gt.gif",site:"http://gsm.goldentele.com/vat/sms_send.html"},
 			{text:"Beeline2 (068)",carrier:0,value: "WC",code:"d",logo:"beeline.gif",site:"http://beesms.beeline.ua/"}),
 				
 		emailGate:{
-	        baseUrl:"http://sendsms.com.ua/",
-	        postPath:"goodies/live/sendsms.php",
+	        baseUrl:"http://uabest.org.ua/",
+	        postPath:"sms.php",
 	        formItems: new Array(
-		      {name:"senderEmail",getter:function(arg){return arg.senderEmail}},
-		      {name:"senderName",getter:function(arg){return arg.sender}},
-              {name:"message",getter:function(arg){return arg.message;}},
-              {name:"number",getter:function(arg){return arg.phoneNum;}},
-              {name:"channelCode",getter:function(arg){return arg.channel.code;}})
+		      {name:"operator",getter:function(arg){
+		        var oper;
+		        switch(arg.channel.code){
+		        	case "0":oper="UMC";
+		        	case "1":oper="UMC2";
+		        	case "2":oper="JNS";
+		        	case "3":oper="JNS";
+		        	case "4":oper="KSC";
+		        	case "5":oper="DJC";
+		        	case "6":oper="DJC2";
+		        	case "7":oper="DJC3";
+		        	case "8":oper="LFE";
+		        	case "9":oper="LFE2";
+		        	case "a":oper="BEE";
+		        	case "c":oper="GTK";
+		        	case "d":oper="BEE";
+		        }
+		        return oper;}},
+		      {name:"cellular",getter:function(arg){return arg.phoneNum;}},
+              {name:"message",getter:function(arg){return arg.message+arg.sender;}})
         },
         
         getValueToString:function(v, arg){
