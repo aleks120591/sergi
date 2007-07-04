@@ -297,6 +297,8 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
 	    
 	    var table=document.createElement("table");
 	    table.width="100%";
+	    table.cellPadding=0;
+	    table.cellSpacing=1;
 	    this.mainTable=table;
 	    
 	    var tr=table.insertRow(0);
@@ -346,7 +348,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
 	    this.message.className="control";
 	    this.message.name="msginp";
 	    this.message.cols=29;
-	    this.message.rows=4;
+	    this.message.rows=3;
 	    this.message.style.width="100%";
 	    this.message.onchange=this.message.onkeyup=function(){SAdamchuk_Smser_Controller.view.adjustSymbCounter();};
 	    this.message.onfocus=function(){

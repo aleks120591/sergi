@@ -41,8 +41,8 @@
 	border-color:blue;
 	padding-left:8px;
 	padding-right:8px;
-	padding-top:2px;
-	padding-bottom:2px;	
+	padding-top:1px;
+	padding-bottom:1px;
 }
 
 .SAdamchuk_MSGadgets_SmserGadget #helpPage{
@@ -92,6 +92,7 @@
 	background-image: url('images/buttonBlue.gif');
 	color: #0067a9;
 	border:solid 1px #000000;
+	height:18px;
 }
 
 .SAdamchuk_MSGadgets_SmserGadget .contactEditor{
