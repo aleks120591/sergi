@@ -32,7 +32,7 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
         var view=SAdamchuk_Smser_View(
             el,env,
             "ƒана верс≥€ іаджету не дозвол€Ї збер≥гати контакти, €кщо хочете щоб останн≥/найчаст≥ше використовуван≥ телефони запам'€товувались, будь ласка <a href=\"http://www.live.com/?add=http%3A//sendsms.com.ua/goodies/live/gadget.xml\" target=\"_blank\">про≥нсталюйте</a> іаджет на <a href=\"http://live.com\" target=\"_blank\">персонал≥зовану стор≥нку Live.com</a>",//null,
-            "якщо у вас виникли запитанн€ чи труднощ≥, будь ласка перейд≥ть на стор≥нку <a href=\"http://sendsms.com.ua/faq.htm\" target=\"_blank\">частих питань</a>.");
+            "якщо у вас виникли запитанн€ чи труднощ≥, будь ласка перейд≥ть на стор≥нку <a href=\"http://sendsms.com.ua/faq\" target=\"_blank\">частих питань</a>.");
         SAdamchuk_Smser_Controller.initialize(view,null,false);
 		//-->
 </script>

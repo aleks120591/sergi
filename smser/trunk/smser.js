@@ -688,19 +688,19 @@ var SAdamchuk_Smser_carriers={
 		      {name:"operator",getter:function(arg){
 		        var oper;
 		        switch(arg.channel.code){
-		        	case "0":oper="UMC";
-		        	case "1":oper="UMC2";
-		        	case "2":oper="JNS";
-		        	case "3":oper="JNS";
-		        	case "4":oper="KSC";
-		        	case "5":oper="DJC";
-		        	case "6":oper="DJC2";
-		        	case "7":oper="DJC3";
-		        	case "8":oper="LFE";
-		        	case "9":oper="LFE2";
-		        	case "a":oper="BEE";
-		        	case "c":oper="GTK";
-		        	case "d":oper="BEE";
+		        	case "0":oper="UMC";break;
+		        	case "1":oper="UMC2";break;
+		        	case "2":oper="JNS";break;
+		        	case "3":oper="JNS";break;
+		        	case "4":oper="KSC";break;
+		        	case "5":oper="DJC";break;
+		        	case "6":oper="DJC2";break;
+		        	case "7":oper="DJC3";break;
+		        	case "8":oper="LFE";break;
+		        	case "9":oper="LFE2";break;
+		        	case "a":oper="WCM";break;
+		        	case "c":oper="GTK";break;
+		        	case "d":oper="WCM";break;
 		        }
 		        return oper;}},
 		      {name:"cellular",getter:function(arg){return arg.phoneNum;}},
