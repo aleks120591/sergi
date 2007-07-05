@@ -1,0 +1,17 @@
+﻿<!ENTITY smssendersidebar.title "SendSMS.com.ua">
+<!ENTITY smssendersidebar.commandkey "VK_F7">
+<!ENTITY smssendersidebar.modifierskey "control">
+<!ENTITY smsSenderToolbar.tooltip "Sending SMS">
+<!ENTITY smssendersidebar.phoneNumber "Phone Number">
+<!ENTITY smssendersidebar.sendButton "Send">
+<!ENTITY smssendersidebar.creatButton "Clear">
+<!ENTITY smssendersidebar.message "Message">
+<!ENTITY smssendersidebar.symbolsCount "Sysmbols: ">
+<!ENTITY smssendersidebar.enterCaptcha "Enter Code">
+<!ENTITY smssendersidebar.setName "Set Name">
+<!ENTITY smssendersidebar.deleteContact "Delete">
+<!ENTITY smssendersidebar.recentNumbers "Recent Numbers">
+<!ENTITY smssendersidebar.goHomepage "Homepage">
+<!ENTITY smssendersidebar.goDevPage "Development Page">
+<!ENTITY smssendersidebar.yourName "Your Name:">
+<!ENTITY smssendersidebar.confirmDeleteContact "Do you really want to delete this contact?">

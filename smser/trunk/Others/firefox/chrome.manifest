@@ -1,0 +1,5 @@
+content     smssender    chrome/content/
+overlay 	chrome://browser/content/browser.xul chrome://smssender/content/sb.xul
+locale		smssender	en	locale/en-US/
+locale		smssender	uk	locale/uk-UA/
+locale		smssender	ru	locale/uk-UA/

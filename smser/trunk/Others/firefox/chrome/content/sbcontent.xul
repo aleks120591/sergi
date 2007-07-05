@@ -1,0 +1,75 @@
+﻿<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type"text/css" ?>
+<?xml-stylesheet href="chrome://browser/skin/browser.css" type="text/css" ?>
+<!DOCTYPE page SYSTEM "chrome://smssender/locale/main.dtd">
+<page id="sbSmsSender" 
+	title="&smssendersidebar.title;"
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    xmlns:html="http://www.w3.org/1999/xhtml">
+	
+	<script src="overlay.js"/>
+  <vbox flex="1">
+    <groupbox>
+    	<caption label="&smssendersidebar.phoneNumber;"/>
+	    <hbox>
+			<menulist id="smsse-channelSelector">
+			  <menupopup>
+			  </menupopup>
+			</menulist>
+	      	<textbox id="smsse-phoneNumber" width="75px"/>
+	    </hbox>
+    </groupbox>
+    <groupbox>
+    	<caption label="&smssendersidebar.message;"/>
+    	<textbox id="smsse-message" multiline="true" oninput="SmsSender.messageCannged()"/>
+    	<hbox align="center">
+    		<label control="smsse-symbolsCount" value="&smssendersidebar.symbolsCount;" width="60px"/>
+    		<description id="smsse-symbolsCount" readonly="true"/>
+    	</hbox>
+    	<hbox align="center">
+    		<label control="smsse-yourName" value="&smssendersidebar.yourName;" width="60px"/>
+    		<textbox id="smsse-yourName" oninput="SmsSender.messageCannged()"/>
+    	</hbox>
+    </groupbox>
+    <groupbox id="smsse-captchaBlock">
+    	<caption label="&smssendersidebar.enterCaptcha;"/>
+		<hbox>
+			<image id="smsse-captchaCodeImg" onclick="SmsSender.refreshCaptcha();" style="cursor:pointer;min-height:50px;min-width:120px"/>
+			<spacer flex="1"/>
+	      	<textbox id="smsse-captchaInput"/>
+	    </hbox>
+    </groupbox>
+	<groupbox>
+		<hbox>
+			<spacer flex="1"/>
+			<button
+			    id="buttonSend"
+			    label="   &smssendersidebar.sendButton;"
+			    disabled="false"
+			    accesskey="s"
+			    oncommand="SmsSender.sendSms();"
+			    image="send.gif"/>
+			<button
+			    id="buttonClear"
+			    label="   &smssendersidebar.creatButton;"
+			    disabled="false"
+			    accesskey="c"
+			    oncommand="SmsSender.clearFields();"
+			    image="erase.gif"/>
+			<spacer flex="1"/>
+	    </hbox>
+    </groupbox>
+    <groupbox>
+    	<caption label="&smssendersidebar.recentNumbers;"/>
+	    <listbox id="addressBook" seltype="single" height="120px" onselect="SmsSender.selectedAddress();">
+	    </listbox>
+	    <hbox id="smsse-changeName" hidden="true">
+	    	<textbox id="smsse-changeNameTxt" maxlength="15"/>
+	    	<toolbarbutton tooltiptext="&smssendersidebar.setName;" image="ico_edit.gif" oncommand="SmsSender.changeContactName();"/>
+	    	<toolbarbutton tooltiptext="&smssendersidebar.deleteContact;" image="delete.gif" oncommand="SmsSender.deleteContact();"/>
+	    </hbox>
+    </groupbox>
+    <label value="&smssendersidebar.goHomepage;" class="text-link" onclick="SmsSender.openUrlInNewTab('http://sendsms.com.ua/firefox')"/>
+    <label id="smsse-confirmDeleteContact" value="&smssendersidebar.confirmDeleteContact;" hidden="true"/>
+  </vbox>
+</page>

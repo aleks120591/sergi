@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE dialog SYSTEM "chrome://smssender/locale/main.dtd">
+<overlay id="sample" 
+	         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<menupopup id="viewSidebarMenu">
+		  <menuitem key="key_smsSenderSidebar"
+	            accesskey="&smssendersidebar.commandkey;"
+	            observes="viewSmsSenderSidebar"
+	            acceltext="Ctrl+F7"/>
+	</menupopup>
+	<keyset id="mainKeyset">
+   		<key id="smsSenderKey"
+	        keycode="&smssendersidebar.commandkey;"
+	        command="viewSmsSenderSidebar"
+	        modifiers="&smssendersidebar.modifierskey;" />
+ 	</keyset>
+	<broadcasterset id="mainBroadcasterSet">
+		<broadcaster id="viewSmsSenderSidebar"
+			autoCheck="false"
+			label="&smssendersidebar.title;"
+			type="checkbox" 
+			group="sidebar"
+			sidebarurl="chrome://smssender/content/sbcontent.xul"
+			sidebartitle="&smssendersidebar.title;"
+			oncommand="toggleSidebar('viewSmsSenderSidebar');"/>
+	</broadcasterset>
+	<toolbarpalette id="BrowserToolbarPalette">
+	  <toolbarbutton id="smssender-toolbar-button"
+	    label="SMSSender"
+	    tooltiptext="&smsSenderToolbar.tooltip;"
+	    oncommand="toggleSidebar('viewSmsSenderSidebar');"
+	    class="toolbarbutton-1 chromeclass-toolbar-additional"
+	    image="chrome://smssender/content/logo_umc24.png"/>
+	</toolbarpalette>
+</overlay>
