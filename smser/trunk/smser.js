@@ -37,8 +37,8 @@
     },
 
     refreshCaptcha:function(){
-        if((this.model.gateType)||(this.model.channel.carrier<0))return;
-        this.view.frame.src="about:blank"; // Necessary for opera
+        if(!this.model.needsCaptcha())return;
+        this.view.frame.src="about:blank"; // Necessary for Opera
         this.view.setWaitingCaptcha();
         var car=this.model.getCurrentCarrier();
         this.view.frame.src=car.baseUrl+car.cookRefreshPath;
@@ -53,7 +53,7 @@
         var errorM="";
         if(this.model.phoneNum=="")errorM+="номер одержувача, ";
         if(this.model.message=="")errorM+="повідомлення, ";
-        if((this.model.gateType==0)&&(this.model.channel.carrier>=0)&&(this.model.captcha==""))errorM+="код, ";
+        if((this.model.needsCaptcha())&&(this.model.captcha==""))errorM+="код, ";
         
         if (errorM!=""){
         	errorM=errorM.substr(0,errorM.length-2);
@@ -61,10 +61,10 @@
             return;
         }
         
-        newWin=window.open("about:blank", "_blank");
+        var newWin=window.open("about:blank", "_blank");
         var frm=newWin.document.createElement("form");
         frm.method="post";
-	    var car=(this.model.gateType||(this.model.channel.carrier<0))?SAdamchuk_Smser_carriers.emailGate:this.model.getCurrentCarrier();
+	    var car=this.model.getCurrentCarrier();
 	    frm.action=car.baseUrl+car.postPath;
 	    for(var i=0;i<car.formItems.length;i++){
 	        var field=newWin.document.createElement("input");
@@ -72,8 +72,8 @@
 	        field.name=car.formItems[i].name;
 	        field.value=SAdamchuk_Smser_carriers.getValueToString(car.formItems[i].getter,this.model);
 	        frm.appendChild(field);
+	        //frm.elements[frm.elements.length]=field;
 	    }
-	    
         newWin.document.body.appendChild(frm);
         frm.submit();
         if(this.authorMode)this.model.reuseContact(this.model.channel,this.model.phoneNum,this.model.gateType);
@@ -150,7 +150,7 @@
     },
 
     adjustCaptchaControl:function(){
-    	this.view.showCaptchaControls((this.model.gateType==0)&&(this.model.channel.carrier>=0));
+    	this.view.showCaptchaControls(this.model.needsCaptcha());
     }
 }
 
@@ -161,7 +161,11 @@ function SAdamchuk_Smser_Model(){
 }
 
 SAdamchuk_Smser_Model.prototype.getCurrentCarrier=function(){
-    return SAdamchuk_Smser_carriers.carriers[this.channel.carrier];
+    return SAdamchuk_Smser_carriers.carriers[this.gateType ? this.channel.carrier2 : this.channel.carrier];
+}
+
+SAdamchuk_Smser_Model.prototype.needsCaptcha=function(){
+    return (this.getCurrentCarrier().cookRefreshPath!=null);
 }
 
 SAdamchuk_Smser_Model.prototype.reuseContact=function(channel,number,gateType){
@@ -625,7 +629,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
     
     res.setGateType=function(gateType){
     	this.tabs[1].page.innerHTML="<p><input type=\"radio\""+((gateType==0)?" checked":"")+" name=\"gate\" onclick='SAdamchuk_Smser_Controller.setGateType(0)'/>Відправляти через сайти операторів</p>"+
-	    	"<p><input type=\"radio\""+((gateType==1)?" checked":"")+" name=\"gate\" onclick='SAdamchuk_Smser_Controller.setGateType(1)'/>Відправляти через <a href='http://uabest.org.ua/sms.php' target='_blank'>uabest.org.ua</a></p>";
+	    	"<p><input type=\"radio\""+((gateType==1)?" checked":"")+" name=\"gate\" onclick='SAdamchuk_Smser_Controller.setGateType(1)'/>Відправляти через інші сайти</p>";
 	};
 	
 	res.showCaptchaControls=function(show){
@@ -662,57 +666,52 @@ var SAdamchuk_Smser_carriers={
 		        {name:"op",getter: "send_sms"},
 		        {name:"dlina",getter: "142"},
 		        {name:"lg",getter: "latukr"},
-		        {name:"phone_num",getter: function(arg) {return arg.channel.value+arg.phoneNum;}},
+		        {name:"phone_num",getter: function(arg) {return arg.channel.net+arg.phoneNum;}},
 		        {name:"text_message",getter: function(arg) {return arg.message+arg.sender;}},
 		        {name:"code_form",getter: function(arg) {return arg.captcha;}})
-		  }
-        ),
-        
-        channels:new Array(
-			{text:"UMC (050)",carrier:0,value:"UMC",code:"0",logo:"umc.gif",site:"http://www.umc.ua/ukr/sendsms.php"},
-			{text:"UMC (095)",carrier:0,value: "UMC095",code:"1",logo:"umc.gif",site:"http://www.umc.ua/ukr/sendsms.php"},
-			{text:"Jeans (099)",carrier:0,value: "UMC099",code:"2",logo:"jeans.gif",site:"http://www.jeans.com.ua/sms/"},
-			{text:"Jeans (066)",carrier:0,value: "JEANS",code:"3",logo:"jeans.gif",site:"http://www.jeans.com.ua/sms/"},
-			{text:"Kyivstar (067)",carrier:1,value: "067",code:"4",logo:"kyivstar.gif",site:"http://www.kyivstar.net/sms/"},
-			{text:"DJuice (096)",carrier:1,value: "096",code:"5",logo:"djuice.gif",site:"http://www.kyivstar.net/sms/"},
-			{text:"DJuice (097)",carrier:1,value: "097",code:"6",logo:"djuice.gif",site:"http://www.kyivstar.net/sms/"},
-			{text:"DJuice (098)",carrier:1,value: "098",code:"7",logo:"djuice.gif",site:"http://www.kyivstar.net/sms/"},
-			{text:"Life (063)",carrier:-1,value: "063",code:"8",logo:"life.gif",site:"http://www.kyivstar.net/sms/"},
-			{text:"Life (093)",carrier:-1,value: "093",code:"9",logo:"life.gif",site:"http://www.kyivstar.net/sms/"},
-			{text:"Beeline (068)",carrier:1,value: "38068",code:"a",logo:"beeline.gif",site:"http://beesms.beeline.ua/"},
-			{text:"GoldenTel (039)",carrier:0,value: "GT",code:"c",logo:"gt.gif",site:"http://gsm.goldentele.com/vat/sms_send.html"},
-			{text:"Beeline2 (068)",carrier:0,value: "WC",code:"d",logo:"beeline.gif",site:"http://beesms.beeline.ua/"}),
-				
-		emailGate:{
+		  },{
 	        baseUrl:"http://uabest.org.ua/",
 	        postPath:"sms.php",
 	        formItems: new Array(
-		      {name:"operator",getter:function(arg){
-		        var oper;
-		        switch(arg.channel.code){
-		        	case "0":oper="UMC";break;
-		        	case "1":oper="UMC2";break;
-		        	case "2":oper="JNS";break;
-		        	case "3":oper="JNS";break;
-		        	case "4":oper="KSC";break;
-		        	case "5":oper="DJC";break;
-		        	case "6":oper="DJC2";break;
-		        	case "7":oper="DJC3";break;
-		        	case "8":oper="LFE";break;
-		        	case "9":oper="LFE2";break;
-		        	case "a":oper="WCM";break;
-		        	case "c":oper="GTK";break;
-		        	case "d":oper="WCM";break;
-		        }
-		        return oper;}},
+		      {name:"operator",getter:function(arg){return arg.channel.value2;}},
 		      {name:"cellular",getter:function(arg){return arg.phoneNum;}},
               {name:"message",getter:function(arg){return arg.message+arg.sender;}})
-        },
+          },{
+	        baseUrl:"http://sms.dn.ua/",
+	        postPath:"sendsms.php",
+	        formItems: new Array(
+		      {name:"oper",getter:function(arg){return "8"+arg.channel.net;}},
+		      {name:"n",getter:function(arg){return arg.phoneNum;}},
+              {name:"text",getter:function(arg){return arg.message+arg.sender;}})
+          },{
+	        baseUrl:"http://sendsms.org.ua/",
+	        postPath:"",
+	        formItems: new Array(
+		      {name:"mobcode",getter:function(arg){return arg.channel.net;}},
+		      {name:"number",getter:function(arg){return arg.phoneNum;}},
+              {name:"message",getter:function(arg){return arg.message+arg.sender;}})
+          }
+        ),
         
+        channels:new Array(
+			{text:"UMC (050)",net:"050",carrier:0,value:"UMC",code:"0",logo:"umc.gif",site:"http://www.umc.ua/ukr/sendsms.php",carrier2:2,value2:"UMC"},
+			{text:"UMC (095)",net:"095",carrier:0,value:"UMC095",code:"1",logo:"umc.gif",site:"http://www.umc.ua/ukr/sendsms.php",carrier2:2,value2:"UMC2"},
+			{text:"Jeans (099)",net:"099",carrier:0,value:"UMC099",code:"2",logo:"jeans.gif",site:"http://www.jeans.com.ua/sms/",carrier2:2,value2:"JNS"},
+			{text:"Jeans (066)",net:"066",carrier:0,value:"JEANS",code:"3",logo:"jeans.gif",site:"http://www.jeans.com.ua/sms/",carrier2:2,value2:"JNS"},
+			{text:"Kyivstar (067)",net:"067",carrier:1,code:"4",logo:"kyivstar.gif",site:"http://www.kyivstar.net/sms/",carrier2:2,value2:"KSC"},
+			{text:"DJuice (096)",net:"096",carrier:1,code:"5",logo:"djuice.gif",site:"http://www.kyivstar.net/sms/",carrier2:2,value2:"DJC"},
+			{text:"DJuice (097)",net:"097",carrier:1,code:"6",logo:"djuice.gif",site:"http://www.kyivstar.net/sms/",carrier2:2,value2:"DJC2"},
+			{text:"DJuice (098)",net:"098",carrier:1,code:"7",logo:"djuice.gif",site:"http://www.kyivstar.net/sms/",carrier2:2,value2:"DJC3"},
+			{text:"Life (063)",net:"063",carrier:3,code:"8",logo:"life.gif",site:"http://www.kyivstar.net/sms/",carrier2:2,value2:"LFE"},
+			{text:"Life (093)",net:"093",carrier:3,code:"9",logo:"life.gif",site:"http://www.kyivstar.net/sms/",carrier2:2,value2:"LFE2"},
+			{text:"Beeline (068)",net:"068",carrier:1,code:"a",logo:"beeline.gif",site:"http://beesms.beeline.ua/",carrier2:2,value2:"WCM"},
+			{text:"GoldenTel (039)",net:"039",carrier:0,value:"GT",code:"b",logo:"gt.gif",site:"http://gsm.goldentele.com/vat/sms_send.html",carrier2:2,value2:"GTK"}),
+
         getValueToString:function(v, arg){
             if (typeof(v)=="function") v = v(arg);
-            return v.toString();},
-            
+            return v.toString();
+        },
+
         getChannelByCode:function(code){
             for(var i=0;i<this.channels.length;i++)
                 if (code==this.channels[i].code)return this.channels[i];
