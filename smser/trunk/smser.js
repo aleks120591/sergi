@@ -74,7 +74,7 @@
 	    }
         newWin.document.body.appendChild(frm);
         frm.submit();
-        if(this.authorMode)this.model.reuseContact(this.model.channel,this.model.phoneNum,this.getGate().gateType);
+        if(this.authorMode)this.model.reuseContact(this.model.channel,this.model.phoneNum,this.getGate());
         this.refreshContacts();
         this.persistData();
         window.setTimeout('SAdamchuk_Smser_Controller.refreshCaptcha()', 2000);
