@@ -11,20 +11,18 @@
 	    else
 		    this.view.frame.onload=handler;
 		this.view.buttonSend.onclick=function(){SAdamchuk_Smser_Controller.sendSms();};
-		this.view.channelSelector.onchange=function(){SAdamchuk_Smser_Controller.adjustChannel();};
+		this.view.channelSelector.onchange=function(){SAdamchuk_Smser_Controller.setCarrier();};
 		this.view.captchaImg.onclick=function(){SAdamchuk_Smser_Controller.refreshCaptcha();};
 
         if(this.persist){
             this.model.contacts=this.persist.getContacts();
-            this.model.gateType=this.persist.getGateType();
+            this.view.gateSelector.selectedIndex=this.persist.getGateType();
             this.refreshContacts();
             this.view.senderName.value=this.persist.getSenderName();
         }
         
-        this.view.gateSelector.selectedIndex=this.model.gateType;
-        
+        this.setCarrier();
         this.refreshCaptcha();
-        this.adjustChannel();
         this.view.adjustSymbCounter();
         this.view.refreshInputHints();
     },
@@ -37,10 +35,9 @@
     },
 
     refreshCaptcha:function(){
-        if(!this.model.needsCaptcha())return;
         this.view.frame.src="about:blank"; // Necessary for Opera
         this.view.setWaitingCaptcha();
-        var car=this.model.getCurrentCarrier();
+        var car=this.model.carrier;
         this.view.frame.src=car.baseUrl+car.cookRefreshPath;
     },
     
@@ -49,11 +46,14 @@
         this.model.message=SAdamchuk_Smser_Translit.translitString(this.view.message.value);
         this.model.captcha=this.view.captcha.value;
         this.model.sender=SAdamchuk_Smser_Translit.translitString(this.view.senderName.value);
+
+	    var car=this.model.carrier;
+	    this.model.value=new SAdamchuk_Hashtable(car.values).data[this.model.channel.code];
         
         var errorM="";
         if(this.model.phoneNum=="")errorM+="номер одержувача, ";
         if(this.model.message=="")errorM+="повідомлення, ";
-        if((this.model.needsCaptcha())&&(this.model.captcha==""))errorM+="код, ";
+        if((car.cookRefreshPath!=null)&&(this.model.captcha==""))errorM+="код, ";
         
         if (errorM!=""){
         	errorM=errorM.substr(0,errorM.length-2);
@@ -64,8 +64,6 @@
         var newWin=window.open("about:blank", "_blank");
         var frm=newWin.document.createElement("form");
         frm.method="post";
-	    var car=this.model.getCurrentCarrier();
-	    this.model.value=new SAdamchuk_Hashtable(car.values).data[this.model.channel.code];
 	    frm.action=car.baseUrl+car.postPath;
 	    for(var i=0;i<car.formItems.length;i++){
 	        var field=newWin.document.createElement("input");
@@ -76,34 +74,26 @@
 	    }
         newWin.document.body.appendChild(frm);
         frm.submit();
-        if(this.authorMode)this.model.reuseContact(this.model.channel,this.model.phoneNum,this.model.gateType);
+        if(this.authorMode)this.model.reuseContact(this.model.channel,this.model.phoneNum,this.getGate().gateType);
         this.refreshContacts();
         this.persistData();
         window.setTimeout('SAdamchuk_Smser_Controller.refreshCaptcha()', 2000);
     },
     
     onNewCookies:function(){
-        var car=this.model.getCurrentCarrier();
+        var car=this.model.carrier;
         var url=car.baseUrl+car.captchaPath;
         url+=(url.indexOf("?")<0)?"?":"&";
         url+=("scomua="+Math.random());
         this.view.captchaImg.src=url;
     },
-    
-    adjustChannel:function(){
-        var car=this.model.getCurrentCarrier();
-        this.model.channel=SAdamchuk_Smser_carriers.getChannelByCode(this.view.channelSelector.value);
-        if(car.cookRefreshPath!=this.model.getCurrentCarrier().cookRefreshPath)this.refreshCaptcha();
-        this.view.setCarrierLogo(this.model.channel);
-        this.adjustCaptchaControl();
-    },
-    
+
     setFieldsFromContact:function(contactId){
         var c=this.model.contacts[contactId];
         this.view.phoneNumber.value=c.number;
+        this.view.gateSelector.selectedIndex=c.gate;
         if(c.channel)this.view.setChannel(c.channel.code);
-        this.setGate(c.gate);
-        this.adjustChannel();
+        this.setCarrier();
         this.view.refreshInputHints();
         this.view.setTab(0);
         this.view.message.focus();
@@ -140,18 +130,30 @@
         }
     },
 
-    setGate:function(gate){
-    	if(gate==null)gate=this.view.gateSelector.selectedIndex;
-    	else
-    	{
-    		this.view.gateSelector.selectedIndex=gate;
-    	}
-    	this.model.gateType=gate;
-    	this.adjustCaptchaControl();
+    onGateChanged:function(){
+    	if(this.persist&&this.authorMode)this.persist.saveGateType(this.view.gateSelector.selectedIndex);
+    	this.setCarrier();
     },
-
-    adjustCaptchaControl:function(){
-    	this.view.showCaptchaControls(this.model.needsCaptcha());
+    
+    setCarrier:function(){
+    	var gate=this.getGate();
+    	this.model.channel=SAdamchuk_Smser_carriers.getChannelByCode(this.view.channelSelector.value);
+    	
+    	var carId=(gate) ? SAdamchuk_Smser_carriers.gates[gate].carrier : this.model.channel.carrier;
+    	if(SAdamchuk_Smser_carriers.carriers[carId].values){
+		    var val=new SAdamchuk_Hashtable(SAdamchuk_Smser_carriers.carriers[carId].values).data[this.model.channel.code];
+		   	if(!val)carId=this.model.channel.carrier;
+		}
+		this.model.carrier=SAdamchuk_Smser_carriers.carriers[carId];
+		
+		this.view.showCaptchaControls(this.model.carrier.cookRefreshPath!=null);
+		this.view.setCarrierLogo(this.model.channel);
+		if((this.model.carrier.cookRefreshPath!=null)&&(this.currentCookPath!=this.model.carrier.cookRefreshPath))this.refreshCaptcha();
+		this.currentCookPath=this.model.carrier.cookRefreshPath;
+    },
+    	
+    getGate:function(){
+    	return this.view.gateSelector.selectedIndex;
     }
 }
 
@@ -159,19 +161,6 @@
 function SAdamchuk_Smser_Model(){
     this.channel=SAdamchuk_Smser_carriers.channels[0];
     this.gateType=0;
-}
-
-SAdamchuk_Smser_Model.prototype.getCurrentCarrier=function(){
-    var carId=(this.gateType) ? SAdamchuk_Smser_carriers.gates[this.gateType].carrier : this.channel.carrier;
-    if(SAdamchuk_Smser_carriers.carriers[carId].values){
-	    var val=new SAdamchuk_Hashtable(SAdamchuk_Smser_carriers.carriers[carId].values).data[this.channel.code];
-	   	if(!val)carId=this.channel.carrier;
-   	}
-    return SAdamchuk_Smser_carriers.carriers[carId];
-}
-
-SAdamchuk_Smser_Model.prototype.needsCaptcha=function(){
-	return (this.getCurrentCarrier().cookRefreshPath!=null);
 }
 
 SAdamchuk_Smser_Model.prototype.reuseContact=function(channel,number,gateType){
@@ -465,7 +454,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
             res.gateSelector.options[i]=opt;
 	    }
 	    curDiv.appendChild(this.gateSelector);
-		this.gateSelector.onchange=function(){SAdamchuk_Smser_Controller.setGate();};
+		this.gateSelector.onchange=function(){SAdamchuk_Smser_Controller.onGateChanged();};
 
         this.tabs[1].page=curDiv;
         
@@ -645,12 +634,6 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
         this.environment.Resize();
     };
     
-    res.setGateType=function(gateType){
-    	this.gateSelector.selectedIndex=gateType;
-    	/*this.tabs[1].page.innerHTML="<p><input type=\"radio\""+((gateType==0)?" checked":"")+" name=\"gate\" onclick='SAdamchuk_Smser_Controller.setGateType(0)'/>Відправляти через сайти операторів</p>"+
-	    	"<p><input type=\"radio\""+((gateType==1)?" checked":"")+" name=\"gate\" onclick='SAdamchuk_Smser_Controller.setGateType(1)'/>Відправляти через інші сайти</p>";*/
-	};
-	
 	res.showCaptchaControls=function(show){
 		this.gateRow.className=(show)?"rowCaptcha":"rowEmail";
 	};
@@ -666,7 +649,7 @@ var SAdamchuk_Smser_carriers={
 	        cookRefreshPath:"ukr/sendsms.php",
 	        captchaPath:"back/modules/sms/sms_picture2.php",
 	        postPath:"back/modules/sms/db_sms.php",
-	        values:"0=UMC,1=UMC095,2=UMC099,3-JEANS,b-GT",
+	        values:"0=UMC,1=UMC095,2=UMC099,3=JEANS,b=GT",
 	        formItems: new Array(
 		      {name: "PHPSESSID",getter: function(arg) {return ""/*arg.captInternal;*/}},
 		      {name: "script",getter: "/ukr/sendsms.php"},
@@ -693,7 +676,7 @@ var SAdamchuk_Smser_carriers={
 		  },{
 	        baseUrl:"http://uabest.org.ua/",
 	        postPath:"sms.php",
-		    values:"0-UMC,1-UMC2,3-JNS,4-KSC,5-DJC,6-DJC2,7-DJC3,8-LFE,9-LFE2,a-WCM,b-GT",
+		    values:"0=UMC,1=UMC2,3=JNS,4=KSC,5=DJC,6=DJC2,7=DJC3,8=LFE,9=LFE2,a=WCM,b=GT",
 	        formItems: new Array(
 		      {name:"operator",getter:function(arg){return arg.value;}},
 		      {name:"cellular",getter:function(arg){return arg.phoneNum;}},
