@@ -12,7 +12,7 @@
 		    this.view.frame.onload=handler;
 		this.view.buttonSend.onclick=function(){SAdamchuk_Smser_Controller.sendSms();};
 		this.view.channelSelector.onchange=function(){SAdamchuk_Smser_Controller.setCarrier();};
-		this.view.captchaImg.onclick=function(){SAdamchuk_Smser_Controller.refreshCaptcha();};
+		this.view.captchaImg.onclick=function(){SAdamchuk_Smser_Controller.invalidateCaptcha();SAdamchuk_Smser_Controller.refreshCaptcha();};
 
         if(this.persist){
             this.model.contacts=this.persist.getContacts();
@@ -35,10 +35,15 @@
     },
 
     refreshCaptcha:function(){
+        if((this.model.carrier.cookRefreshPath==null)||(this.currentCookPath==this.model.carrier.cookRefreshPath))return;
         this.view.frame.src="about:blank"; // Necessary for Opera
         this.view.setWaitingCaptcha();
         var car=this.model.carrier;
         this.view.frame.src=car.baseUrl+car.cookRefreshPath;
+    },
+    	
+    invalidateCaptcha:function(){
+    	this.currentCookPath=null;
     },
     
     sendSms:function(){
@@ -77,6 +82,7 @@
         if(this.authorMode)this.model.reuseContact(this.model.channel,this.model.phoneNum,this.getGate());
         this.refreshContacts();
         this.persistData();
+        this.invalidateCaptcha();
         window.setTimeout('SAdamchuk_Smser_Controller.refreshCaptcha()', 2000);
     },
     
@@ -148,7 +154,7 @@
 		
 		this.view.showCaptchaControls(this.model.carrier.cookRefreshPath!=null);
 		this.view.setCarrierLogo(this.model.channel);
-		if((this.model.carrier.cookRefreshPath!=null)&&(this.currentCookPath!=this.model.carrier.cookRefreshPath))this.refreshCaptcha();
+		this.refreshCaptcha();
 		this.currentCookPath=this.model.carrier.cookRefreshPath;
     },
     	
