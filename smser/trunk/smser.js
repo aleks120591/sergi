@@ -451,7 +451,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
 	    curDiv.className="hiddenPage";
 	    curDiv.id="optPage";
 	    
-	    curDiv.innerHTML="Ви можете вибрати альтернативний шлюз для відправки повідомлень.";
+	    curDiv.innerHTML="Ви можете вибрати альтернативний шлюз для відправки повідомлень.<br/>";
 	    
 	    this.gateSelector=document.createElement("select");
 	    for(var i=0;i<SAdamchuk_Smser_carriers.gates.length;i++){

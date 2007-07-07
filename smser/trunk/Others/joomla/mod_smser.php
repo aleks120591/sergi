@@ -31,7 +31,7 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
         var el=document.getElementById("smserGadgetHolder");
         var view=SAdamchuk_Smser_View(
             el,env,
-            "Дана версія ґаджету не дозволяє зберігати контакти, якщо хочете щоб останні/найчастіше використовувані телефони запам'ятовувались, будь ласка <a href=\"http://www.live.com/?add=http%3A//sendsms.com.ua/goodies/live/gadget.xml\" target=\"_blank\">проінсталюйте</a> ґаджет на <a href=\"http://live.com\" target=\"_blank\">персоналізовану сторінку Live.com</a>",//null,
+            "Дана версія ґаджету не дозволяє зберігати контакти. Хочете щоб останні/найчастіше використовувані телефони запам'ятовувались? Це просто та безкоштовно. <a href='http://sendsms.com.ua/persist' target='_blank'>Детальна інформація тут.</a>",//null,
             "Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://sendsms.com.ua/faq\" target=\"_blank\">частих питань</a>.");
         SAdamchuk_Smser_Controller.initialize(view,null,false);
 		//-->
