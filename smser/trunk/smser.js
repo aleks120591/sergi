@@ -425,20 +425,23 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
         td=tr.insertCell(0);
         td.colSpan=2;
         td.align="center";
+		el=document.createElement("div");
+		el.align="center";
         var but=document.createElement("input");
         but.className="button";
 	    but.type="button";
 	    but.value="Очистити";
 	    but.onclick=function(){SAdamchuk_Smser_Controller.view.clear();};
-	    td.appendChild(but);
+	    el.appendChild(but);
 	    
-	    td.appendChild(this.createSpace(5));
+	    el.appendChild(this.createSpace(5));
 
         this.buttonSend=document.createElement("input");
         this.buttonSend.className="button";
 	    this.buttonSend.type="button";
 	    this.buttonSend.value="Відправити";
-        td.appendChild(this.buttonSend);
+        el.appendChild(this.buttonSend);
+		td.appendChild(el);
         
         this.tabs[0].page=curDiv;
         curDiv.appendChild(table);
