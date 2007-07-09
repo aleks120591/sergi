@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:widget="http://www.netvibes.com/ns/"  >
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="Expires" content="" />
@@ -11,17 +9,19 @@
 	<meta name="apiVersion" content="1.0" />
 	<meta name="inline" content="true" />
 	<meta name="autoRefresh" content="0" />
-	<meta name="debugMode" content="false" />
-	<link rel="stylesheet" type="text/css" href="http://sendsms.com.ua/goodies/live/SmserGadget.css" />
+	<meta name="debugMode" content="true" />
 	<link rel="stylesheet" type="text/css" href="http://www.netvibes.com/themes/uwa/style.css" />
 	<script type="text/javascript" src="http://www.netvibes.com/js/UWA/load.js.php?env=Standalone"></script>
-	<script type="text/javascript" src="http://sendsms.com.ua/goodies/live/smser.js" charset="UTF-8" language="javascript"></script>
+	<script type="text/javascript" src="http://sendsms.com.ua/goodies/live/smser.js" charset="UTF-8"></script>
 	<title>SendSMS.com.ua</title>
 	<link rel="icon" type="image/ico" href="http://sendsms.com.ua/images/favicon.ico"/>
+	<widget:preferences/>
 	<script type="text/javascript">
+		<!--
 		var SAdamchuk_Smser_netvibes={};
 
 		SAdamchuk_Smser_netvibes.loadScript=function(){
+			alert("Request is sent");
 			UWA.Data.getText(
 				"http://sendsms.com.ua/goodies/live/smser.js",
 				SAdamchuk_Smser_netvibes.initGadget
@@ -29,7 +29,8 @@
 		};
 
 		SAdamchuk_Smser_netvibes.initGadget=function(response){
-			if(response)eval(response);
+			alert("Drawing gadget");
+			if(!SAdamchuk_Smser_netvibes)eval(response);
 			var env={resolveUrl:function(path){return "http://sendsms.com.ua/goodies/live/"+path;},Resize:function(){}};
 		  	var d=widget.createElement("div");
 		  	d.className="SAdamchuk_MSGadgets_SmserGadget";
@@ -42,17 +43,26 @@
 		};
 
 		widget.onLoad = function(){
+			if(SAdamchuk_Smser_netvibes.initialized)return;
 			if(SAdamchuk_Smser_Controller)
-				SAdamchuk_Smser_netvibes.initGadget(null)
+				SAdamchuk_Smser_netvibes.initGadget()
 			else
-				SAdamchuk_Smser_netvibes.loadScript();}
+				SAdamchuk_Smser_netvibes.loadScript();
+			SAdamchuk_Smser_netvibes.initialized=true;
+		}
+		// -->
 	</script>
+	<style type="text/css">
+		<!--
+		@import "http://sendsms.com.ua/goodies/live/SmserGadget.css";
+		// -->		
+	</style>
 </head>
   <body>
-  	<table widht="100%" align="center"><tr><td>
+  	<table width="100%"><tr><td align="center">
 		<div id="smserGadgetHolder" class="SAdamchuk_MSGadgets_SmserGadget">
 			Завантажується...
 		</div>
-	</table></td></tr>
+	</td></tr></table>
   </body>
 </html>
