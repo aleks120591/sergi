@@ -93,6 +93,7 @@
 	color: #0067a9;
 	border:solid 1px #000000;
 	height:18px;
+	font-size:x-small;
 }
 
 .SAdamchuk_MSGadgets_SmserGadget .contactEditor{
@@ -107,7 +108,7 @@
 
 .SAdamchuk_MSGadgets_SmserGadget .rowCaptcha{
 	overflow:hidden;
-	height:50px;
+	height:40px;
 }
 
 .SAdamchuk_MSGadgets_SmserGadget .rowCaptcha .emailItem,

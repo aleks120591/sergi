@@ -331,7 +331,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
 	    td.appendChild(this.channelSelector);
     	
 	    td=tr.insertCell(1);
-	    td.align="right";
+	    td.style.textAlign="right";
 	    this.phoneNumber=document.createElement("input");
 	    this.phoneNumber.type="text";
 	    this.phoneNumber.name="phnum";
@@ -379,7 +379,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
 	    td.appendChild(this.symbCounter);
     	
 	    td=tr.insertCell(1);
-	    td.align="right";
+	    td.style.textAlign="right";
 	    this.senderName=document.createElement("input");
 	    this.senderName.type="text";
 	    this.senderName.name="sender";
@@ -399,12 +399,14 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
         td=this.gateRow.insertCell(0);
 	    this.captchaImg=document.createElement("img");
 	    this.captchaImg.className="captchaItem";
+	    this.captchaImg.style.height="40px";
 	    this.captchaImg.style.cursor="pointer";
 	    this.captchaImg.alt="Код";
+	    this.captchaImg.title="Якщо ви не можете розбрати код, клікніть на ньмоу щоб завантажити інший.";
 	    td.appendChild(this.captchaImg);
     	
 	    td=this.gateRow.insertCell(1);
-	    td.align="right";
+	    td.style.textAlign="right";
 	    el=document.createElement("div");
 	    el.className="captchaItem";
 	    this.captcha=document.createElement("input");
@@ -424,24 +426,21 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
 		tr=table.insertRow(4);
         td=tr.insertCell(0);
         td.colSpan=2;
-        td.align="center";
-		el=document.createElement("div");
-		el.align="center";
+        td.style.textAlign="center";
         var but=document.createElement("input");
         but.className="button";
 	    but.type="button";
 	    but.value="Очистити";
 	    but.onclick=function(){SAdamchuk_Smser_Controller.view.clear();};
-	    el.appendChild(but);
+	    td.appendChild(but);
 	    
-	    el.appendChild(this.createSpace(5));
+	    td.appendChild(this.createSpace(5));
 
         this.buttonSend=document.createElement("input");
         this.buttonSend.className="button";
 	    this.buttonSend.type="button";
 	    this.buttonSend.value="Відправити";
-        el.appendChild(this.buttonSend);
-		td.appendChild(el);
+        td.appendChild(this.buttonSend);
         
         this.tabs[0].page=curDiv;
         curDiv.appendChild(table);
@@ -455,6 +454,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
 	    curDiv.id="optPage";
 	    
 	    curDiv.innerHTML="Ви можете вибрати альтернативний шлюз для відправки повідомлень.<br/>";
+	    curDiv.align="center";
 	    
 	    this.gateSelector=document.createElement("select");
 	    for(var i=0;i<SAdamchuk_Smser_carriers.gates.length;i++){
