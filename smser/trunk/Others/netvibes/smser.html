@@ -8,7 +8,7 @@
 	<meta name="description" content="Віджет для відправки СМС в Україні" />
 	<meta name="apiVersion" content="1.0" />
 	<meta name="inline" content="true" />
-	<meta name="autoRefresh" content="0" />
+	<meta name="autoRefresh" content="1000000" />
 	<meta name="debugMode" content="true" />
 	<link rel="stylesheet" type="text/css" href="http://www.netvibes.com/themes/uwa/style.css" />
 	<script type="text/javascript" src="http://www.netvibes.com/js/UWA/load.js.php?env=Standalone"></script>
@@ -19,9 +19,10 @@
 	<script type="text/javascript">
 		<!--
 		var SAdamchuk_Smser_netvibes={};
+		
+		SAdamchuk_Smser_netvibes.isLibraryLoaded=(typeof(window['SAdamchuk_Smser_Controller'])!="undefined");
 
 		SAdamchuk_Smser_netvibes.loadScript=function(){
-			alert("Request is sent");
 			UWA.Data.getText(
 				"http://sendsms.com.ua/goodies/live/smser.js",
 				SAdamchuk_Smser_netvibes.initGadget
@@ -29,8 +30,7 @@
 		};
 
 		SAdamchuk_Smser_netvibes.initGadget=function(response){
-			alert("Drawing gadget");
-			if(!SAdamchuk_Smser_netvibes)eval(response);
+			if(!SAdamchuk_Smser_netvibes.isLibraryLoaded)eval(response);
 			var env={resolveUrl:function(path){return "http://sendsms.com.ua/goodies/live/"+path;},Resize:function(){}};
 		  	var d=widget.createElement("div");
 		  	d.className="SAdamchuk_MSGadgets_SmserGadget";
@@ -41,22 +41,26 @@
 	        SAdamchuk_Smser_Controller.initialize(view,null,false);
 	        widget.setBody(d);
 		};
+		
+		SAdamchuk_Smser_netvibes.loadCss=function(){
+			var headID = document.getElementsByTagName("head")[0];
+			var cssNode = document.createElement('link');
+			cssNode.type = 'text/css';
+			cssNode.rel = 'stylesheet';
+			cssNode.href = 'http://sendsms.com.ua/goodies/live/SmserGadget.css';
+			cssNode.media = 'screen';
+			headID.appendChild(cssNode);
+		};
 
 		widget.onLoad = function(){
-			if(SAdamchuk_Smser_netvibes.initialized)return;
-			if(SAdamchuk_Smser_Controller)
+			SAdamchuk_Smser_netvibes.loadCss();
+			if(SAdamchuk_Smser_netvibes.isLibraryLoaded)
 				SAdamchuk_Smser_netvibes.initGadget()
 			else
 				SAdamchuk_Smser_netvibes.loadScript();
-			SAdamchuk_Smser_netvibes.initialized=true;
 		}
 		// -->
 	</script>
-	<style type="text/css">
-		<!--
-		@import "http://sendsms.com.ua/goodies/live/SmserGadget.css";
-		// -->		
-	</style>
 </head>
   <body>
   	<table width="100%"><tr><td align="center">
