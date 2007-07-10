@@ -697,6 +697,29 @@ var SAdamchuk_Smser_carriers={
 		      {name:"MN",getter:function(arg){return "+38"+arg.channel.net+arg.phoneNum;}},
 		      {name:"CS",getter:"s"},
               {name:"SM",getter:function(arg){return arg.message+arg.sender;}})
+          },{
+	        baseUrl:"http://sms.vasilek.info/",
+	        postPath:"",
+		    values:"0=1,1=2,3=3,4=5,5=4,a=10",
+	        formItems: new Array(
+		      {name:"operator",getter:function(arg){return arg.value;}},
+		      {name:"number",getter:function(arg){return arg.phoneNum;}},
+              {name:"nick",getter:function(arg){return arg.sender;}},
+              {name:"message",getter:function(arg){return arg.message;}},
+              {name:"delay",getter:"0"},
+              {name:"trans",getter:"0"},
+              {name:"lite",getter:"1"},
+              {name:"sent",getter:"1"})
+          },{
+	        baseUrl:"http://sms.itua.info/",
+	        postPath:"",
+		    values:"0=1,3=2,6=108,4=16,a=14,b=90",
+	        formItems: new Array(
+	          {name:"action",getter:"send"},
+		      {name:"oper",getter:function(arg){return arg.value;}},
+			  {name:"prefix",getter:function(arg){return "+38"+arg.channel.net;}},
+		      {name:"num",getter:function(arg){return arg.phoneNum;}},
+              {name:"text",getter:function(arg){return arg.message+arg.sender;}})
           }
         ),
         
@@ -718,7 +741,8 @@ var SAdamchuk_Smser_carriers={
 			{title:"За замовчуванням",carrier:1},
 			{title:"uabest.org.ua",carrier:2},
 			{title:"sms.gt.com.ua",carrier:3},
-			{title:"BeeLine",carrier:1}],
+			{title:"vasilek.info",carrier:4},
+			{title:"sms.itua.info",carrier:5}],
 
         getValueToString:function(v, arg){
             if(v==null)return null;
