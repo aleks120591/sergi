@@ -47,12 +47,13 @@
     },
     
     sendSms:function(){
-        this.model.phoneNum=this.view.phoneNumber.value;
-        this.model.message=SAdamchuk_Smser_Translit.translitString(this.view.message.value);
-        this.model.captcha=this.view.captcha.value;
-        this.model.sender=SAdamchuk_Smser_Translit.translitString(this.view.senderName.value);
-
 	    var car=this.model.carrier;
+
+        this.model.phoneNum=this.view.phoneNumber.value;
+        this.model.message=(car.dontTransliterate)?this.view.message.value:SAdamchuk_Smser_Translit.translitString(this.view.message.value);
+        this.model.captcha=this.view.captcha.value;
+        this.model.sender=(car.dontTransliterate)?this.view.message.value:SAdamchuk_Smser_Translit.translitString(this.view.senderName.value);
+
 	    this.model.value=new SAdamchuk_Hashtable(car.values).data[this.model.channel.code];
         
         var errorM="";
@@ -66,19 +67,32 @@
             return;
         }
         
-        var newWin=window.open("about:blank", "_blank");
-        var frm=newWin.document.createElement("form");
-        frm.method="post";
-	    frm.action=car.baseUrl+car.postPath;
-	    for(var i=0;i<car.formItems.length;i++){
-	        var field=newWin.document.createElement("input");
-	        field.type="hidden";
-	        field.name=car.formItems[i].name;
-	        field.value=SAdamchuk_Smser_carriers.getValueToString(car.formItems[i].getter,this.model);
-	        frm.appendChild(field);
-	    }
-        newWin.document.body.appendChild(frm);
-        frm.submit();
+        if (car.formName)
+        {
+        	var newWin=window.open(car.baseUrl+car.postPath, "_blank");
+        	var frm=newWin.document.forms[car.formName];
+		    for(var i=0;i<car.formItems.length;i++){
+		        var field=frm.elements[car.formItems[i].name];
+		        field.value=SAdamchuk_Smser_carriers.getValueToString(car.formItems[i].getter,this.model);
+		    }
+        }
+        else
+        {
+	        var newWin=window.open("about:blank", "_blank");
+	        var frm=newWin.document.createElement("form");
+	        frm.method="post";
+		    frm.action=car.baseUrl+car.postPath;
+		    for(var i=0;i<car.formItems.length;i++){
+		        var field=newWin.document.createElement("input");
+		        field.type="hidden";
+		        field.name=car.formItems[i].name;
+		        field.value=SAdamchuk_Smser_carriers.getValueToString(car.formItems[i].getter,this.model);
+		        frm.appendChild(field);
+		    }
+	        newWin.document.body.appendChild(frm);
+	        frm.submit();
+        }
+        
         if(this.authorMode)this.model.reuseContact(this.model.channel,this.model.phoneNum,this.getGate());
         this.refreshContacts();
         this.persistData();
@@ -720,6 +734,17 @@ var SAdamchuk_Smser_carriers={
 			  {name:"prefix",getter:function(arg){return "+38"+arg.channel.net;}},
 		      {name:"num",getter:function(arg){return arg.phoneNum;}},
               {name:"text",getter:function(arg){return arg.message+arg.sender;}})
+          },{
+	        dontTransliterate:true,
+	        baseUrl:"http://itware.com.ua/smsgate/",
+	        postPath:"send/",
+	        //postPath:"",
+	        formName:"sms",
+	        formItems: new Array(
+			  {name:"to_addr",getter:function(arg){return arg.channel.net+arg.phoneNum;}},
+		      {name:"num",getter:function(arg){return arg.phoneNum;}},
+              {name:"new_body",getter:function(arg){return arg.message+arg.sender;}},
+              {name:"testf",getter:"1"})
           }
         ),
         
@@ -742,7 +767,8 @@ var SAdamchuk_Smser_carriers={
 			{title:"uabest.org.ua",carrier:2},
 			{title:"sms.gt.com.ua",carrier:3},
 			{title:"vasilek.info",carrier:4},
-			{title:"sms.itua.info",carrier:5}],
+			{title:"sms.itua.info",carrier:5},
+			{title:"itware.com.ua",carrier:6}],
 
         getValueToString:function(v, arg){
             if(v==null)return null;
