@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Module>
-<ModulePrefs title="SendSMS.com.ua">
+<ModulePrefs 
+	title="SendSMS.com.ua"
+	description="Швидка відправка СМС на мобільні."
+	author="Sergi Adamchuk"
+	author_email="forspam@sendsms.com.ua"
+	screenshot="http://sendsms.com.ua/goodies/igoogle/smser.png"
+	thumbnail="http://sendsms.com.ua/goodies/igoogle/smserth.png"
+	author_location="Ukraine, Kyiv"
+	title_url="http://sendsms.com.ua"
+	author_photo="http://lh3.google.com/sergialb/Ri8u9Nbr7zI/AAAAAAAAAVI/ab1jU1-0zCM/s144/DSCN8465.JPG"
+	author_aboutme="Ukrainian Software developer"
+	author_link="http://sergi.volyn.net"
+	author_quote="Improve continously!">
 	<Require feature="dynamic-height" />
 </ModulePrefs>
 <Content type="html"><![CDATA[
