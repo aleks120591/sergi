@@ -10,7 +10,11 @@ SAdamchuk.MSGadgets.SmserGadget = function(p_elSource, p_args, p_namespace)
 	this.Output = function()
 	{	
 	    p_elSource.align="center";
-		m_view=SAdamchuk_Smser_View(p_elSource,p_args.module,null,"Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://sendsms.com.ua/faq.htm\" target=\"_blank\">частих питань</a>.");
+		m_view=SAdamchuk_Smser_View(
+			p_elSource,
+			p_args.module,
+			null,
+			"Для нормальної роботи в Internet Explorer вам потрібно <a href='http://sendsms.com.ua/content/view/18/28/#cookiesie' target='_blank'>дозволити кукі</a> для деяких сайтів.<br/>Для відправки повідомлень на Київстар через email шлюзи, абонентам потрібно <a href='http://www.kyivstar.net/faq/sms/' target='_blank'>активізувати послугу</a>.<br/>Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://sendsms.com.ua/faq.htm\" target=\"_blank\">частих питань</a>.");
 		
 		/*var txt=document.createElement("textarea");
 		txt.value=p_elSource.innerHTML;
