@@ -14,7 +14,7 @@
 		this.view.channelSelector.onchange=function(){SAdamchuk_Smser_Controller.setCarrier();};
 		this.view.captchaImg.onclick=function(){SAdamchuk_Smser_Controller.invalidateCaptcha();SAdamchuk_Smser_Controller.refreshCaptcha();};
 
-        if(this.persist){
+        if(this.persist&&this.authorMode){
             this.model.contacts=this.persist.getContacts();
             this.view.gateSelector.selectedIndex=this.persist.getGateType();
             this.refreshContacts();
