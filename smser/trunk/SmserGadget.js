@@ -9,19 +9,18 @@ SAdamchuk.MSGadgets.SmserGadget = function(p_elSource, p_args, p_namespace)
 	
 	this.Output = function()
 	{	
+	    var authorMode=p_args.module.getMode&&(p_args.module.getMode()==Web.Gadget.Mode.author);
+	    
 	    p_elSource.align="center";
 		m_view=SAdamchuk_Smser_View(
 			p_elSource,
 			p_args.module,
-			null,
+			authorMode?null:"Тут можуть зберігатись конатакти, якщо <a href='http://www.live.com/?add=http://download.gallery.start.com/d.dll/1~1~980~27040/gadget.xml&mkt=en-us' target='_blank'>проінсталювати</a> цей ґаджет на персоналізовану сторінку Live.com",
 			"Для нормальної роботи в Internet Explorer вам потрібно <a href='http://sendsms.com.ua/content/view/18/28/#cookiesie' target='_blank'>дозволити кукі</a> для деяких сайтів.<br/>Для відправки повідомлень на Київстар через email шлюзи, абонентам потрібно <a href='http://www.kyivstar.net/faq/sms/' target='_blank'>активізувати послугу</a>.<br/>Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://sendsms.com.ua/faq\" target=\"_blank\">частих питань</a>.");
 		
-		/*var txt=document.createElement("textarea");
-		txt.value=p_elSource.innerHTML;
-		p_elSource.appendChild(txt);*/
-		m_pers=new SAdamchuk_Smser_Persister(p_args.module);
-		SAdamchuk_Smser_Controller.initialize(m_view,m_pers,p_args.module.getMode()==Web.Gadget.Mode.author);
-		p_args.module.Resize()
+		m_pers=authorMode?new SAdamchuk_Smser_Persister(p_args.module):null;
+		SAdamchuk_Smser_Controller.initialize(m_view,m_pers,authorMode);
+		p_args.module.Resize();
 	}
 	SAdamchuk.MSGadgets.SmserGadget.registerBaseMethod(this, "Output");
 		

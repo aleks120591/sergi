@@ -4,7 +4,6 @@
         this.persist=persist;
         this.model=new SAdamchuk_Smser_Model();
         this.authorMode=authorMode;
-        
         var handler=function(){SAdamchuk_Smser_Controller.onNewCookies();};
         if (this.view.frame.attachEvent)
     		this.view.frame.attachEvent('onload',handler);
@@ -13,7 +12,7 @@
 		this.view.buttonSend.onclick=function(){SAdamchuk_Smser_Controller.sendSms();};
 		this.view.channelSelector.onchange=function(){SAdamchuk_Smser_Controller.setCarrier();};
 		this.view.captchaImg.onclick=function(){SAdamchuk_Smser_Controller.invalidateCaptcha();SAdamchuk_Smser_Controller.refreshCaptcha();};
-
+        
         if(this.persist&&this.authorMode){
             this.model.contacts=this.persist.getContacts();
             this.view.gateSelector.selectedIndex=this.persist.getGateType();
@@ -462,6 +461,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
             opt.value=i.toString();
             res.gateSelector.options[i]=opt;
 	    }
+	    this.gateSelector.selectedIndex=4;
 	    curDiv.appendChild(this.gateSelector);
 		this.gateSelector.onchange=function(){SAdamchuk_Smser_Controller.onGateChanged();};
 
@@ -763,7 +763,7 @@ function SAdamchuk_Smser_Contact(channelCode,number,rate){
     this.rate=rate;
     this.channel=SAdamchuk_Smser_carriers.getChannelByCode(channelCode);
     this.number=number;
-    this.gate=0; // 0 - site gate, 1 - email gate
+    this.gate=0;
 }
 
 SAdamchuk_Smser_Contact.prototype.getDisplayable=function(){
