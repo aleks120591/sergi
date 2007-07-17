@@ -316,8 +316,8 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
         this.carLogo.border=0;
         this.carSite.appendChild(this.carLogo);
         
-        this.carSite.appendChild(this.createSpace(3));
         td.appendChild(this.carSite);
+        td.appendChild(this.createSpace(3));
         
         this.channelSelector=document.createElement("select");
         this.channelSelector.className="control";
