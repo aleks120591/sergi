@@ -12,6 +12,21 @@
  * other free or open source software licenses.
  */
 
+if ($_POST["change"]) 
+{
+	$keys=array_keys($_POST);
+	switch ($keys[1])
+	{
+		case "gat":
+			$user = new stdClass;
+			$user->user_id = $my->id;
+			$user->gate = intval($_POST[1]);
+			$database->updateObject('#__smser_users', $user, 'user_id');
+			break;
+	}
+	return;
+}
+
 // no direct access
 defined( '_VALID_MOS' ) or die( 'Restricted access' );
 ?>
@@ -27,12 +42,63 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 <script type="text/javascript" src="http://sendsms.com.ua/goodies/live/smser.js" charset="UTF-8" language="javascript"></script>
 <script type="text/javascript" language="javascript">
 		<!--
+<?php if($my->id) { ?>
+			function SAdamchuk_Smser_CreateContact(channel,number,name,gate,rate){
+				var r=new SAdamchuk_Smser_Contact(channel,number,rate);
+				r.name=name;
+				r.gate=gate;
+				return r;
+			}
+			function SAdamchuk_Smser_Persister(){
+				<?php 
+					$database->setQuery( "SELECT `jos_smser_users`.`sender_name` , `jos_smser_users`.`gate` FROM `jos_smser_users` WHERE `jos_smser_users`.`user_id` = ".$my->id );
+					$user = NULL;
+  					$database->loadObject( $user );
+  					echo "this.senderName='$user->sender_name';";
+  					echo "this.gate=$user->gate;";
+				?>
+			}
+			SAdamchuk_Smser_Persister.prototype.getContacts=function(){
+			    return [
+				<?php
+			    	function creatorFunction($rec) 
+					{
+						return "SAdamchuk_Smser_CreateContact('$rec->channel','$rec->number','$rec->name',$rec->gate,$rec->rate)";
+					}
+			    	$database->setQuery( "SELECT `jos_smser_contacts`.`channel`, `jos_smser_contacts`.`number`, `jos_smser_contacts`.`name`, `jos_smser_contacts`.`gate`, `jos_smser_contacts`.`rate` FROM `jos_smser_contacts` WHERE `jos_smser_contacts`.`user_id` = ".$my->id." ORDER BY `jos_smser_contacts`.`rate` DESC" );
+					 $rows = $database->loadObjectList();
+				    echo join(",",array_map("creatorFunction",$rows));
+			    ?>
+			    ];
+			}
+			SAdamchuk_Smser_Persister.prototype.getSenderName=function(){
+			    return this.senderName;
+			}
+			SAdamchuk_Smser_Persister.prototype.getGateType=function(){
+			    return this.gate;
+			}
+			SAdamchuk_Smser_Persister.prototype.save=function(contacts,senderName){
+			    this.module.setPreference("snd",senderName);
+			    this.module.setPreference("cnt",SAdamchuk_Smser_SerializeContacts(contacts));
+			}
+			SAdamchuk_Smser_Persister.prototype.saveGateType=function(gateType){
+				this.postData("gat",gateType.toString());
+			}
+			SAdamchuk_Smser_Persister.prototype.postData=function(paramName,value){
+				var req=(window.XMLHttpRequest)?new XMLHttpRequest():new ActiveXObject("Msxml2.XMLHTTP");
+				req.open("POST", <?php echo "'".$mosConfig_live_site."/modules/mod_smser.php'"; ?>, true);
+				req.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+				req.send("change=1&".paramName+"="+escape(value));
+			}
+<?php } ?>
+	
 		var env={resolveUrl:function(path){return "http://sendsms.com.ua/goodies/live/"+path;},Resize:function(){}};
         var el=document.getElementById("smserGadgetHolder");
         var view=SAdamchuk_Smser_View(
             el,env,
-            "Дана версія ґаджету не дозволяє зберігати контакти. Хочете щоб останні/найчастіше використовувані телефони запам'ятовувались? Це просто та безкоштовно. <a href='http://sendsms.com.ua/persist' target='_blank'>Детальна інформація тут.</a>",//null,
-            "Для нормальної роботи в Internet Explorer вам потрібно <a href='http://sendsms.com.ua/content/view/18/28/#cookiesie' target='_blank'>дозволити кукі</a> для деяких сайтів.<br/>Для відправки повідомлень на Київстар через email шлюзи, абонентам потрібно <a href='http://www.kyivstar.net/faq/sms/' target='_blank'>активізувати послугу</a>.<br/>Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://sendsms.com.ua/faq\" target=\"_blank\">частих питань</a>.");
-        SAdamchuk_Smser_Controller.initialize(view,null,false);
+<?php if($my->id) { ?> "Тут будуть контакти" <?php } else { ?>
+            "Для того, щоб ваші контакти зберігались тут, вам потрібно авторизуватись на цьмоу сайті. <a href='index.php?option=com_registration&task=register'>Зареєструйтесь</a>, якщо ви ще не зареєстровані, якщо у вас вже є обліковий запис, будь ласка, авторизуйтесь." <?php } ?> ,
+            "Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://sendsms.com.ua/faq\" target=\"_blank\">частих питань</a>.");
+        SAdamchuk_Smser_Controller.initialize(view,<?php if($my->id) { ?> new SAdamchuk_Smser_Persister(),true <?php } else { ?> null,false <?php } ?>);
 		//-->
 </script>
