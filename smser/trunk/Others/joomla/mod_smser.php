@@ -11,20 +11,42 @@
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
  */
-
-if ($_POST["change"]) 
+if (count($_POST)>0) 
 {
+	// Set flag that this is a parent file
+	define( '_VALID_MOS', 1 );
+	
+	require( '../globals.php' );
+	require_once( '../configuration.php' );
+	// SSL check - $http_host returns <live site url>:<port number if it is 443>
+	$http_host = explode(':', $_SERVER['HTTP_HOST'] );
+	if( (!empty( $_SERVER['HTTPS'] ) && strtolower( $_SERVER['HTTPS'] ) != 'off' || isset( $http_host[1] ) && $http_host[1] == 443) && substr( $mosConfig_live_site, 0, 8 ) != 'https://' ) {
+		$mosConfig_live_site = 'https://'.substr( $mosConfig_live_site, 7 );
+	}
+
+	require_once( '../includes/joomla.php' );
+	
+	$mainframe = new mosMainFrame( $database, null, '.' );
+	$mainframe->initSession();
+	$my = $mainframe->getUser();
 	$keys=array_keys($_POST);
-	switch ($keys[1])
+	$theVal=$_POST[$keys[0]];
+	switch ($keys[0])
 	{
 		case "gat":
 			$user = new stdClass;
 			$user->user_id = $my->id;
-			$user->gate = intval($_POST[1]);
+			$user->gate = intval($theVal);
+			$database->updateObject('#__smser_users', $user, 'user_id');
+			break;
+		case "snd":
+			$user = new stdClass;
+			$user->user_id = $my->id;
+			$user->sender_name = $theVal;
 			$database->updateObject('#__smser_users', $user, 'user_id');
 			break;
 	}
-	return;
+	exit();
 }
 
 // no direct access
@@ -78,8 +100,8 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 			    return this.gate;
 			}
 			SAdamchuk_Smser_Persister.prototype.save=function(contacts,senderName){
-			    this.module.setPreference("snd",senderName);
-			    this.module.setPreference("cnt",SAdamchuk_Smser_SerializeContacts(contacts));
+			    this.postData("snd",senderName);
+			    this.postData("cnt",this.serializeContacts(contacts));
 			}
 			SAdamchuk_Smser_Persister.prototype.saveGateType=function(gateType){
 				this.postData("gat",gateType.toString());
@@ -88,7 +110,21 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 				var req=(window.XMLHttpRequest)?new XMLHttpRequest():new ActiveXObject("Msxml2.XMLHTTP");
 				req.open("POST", <?php echo "'".$mosConfig_live_site."/modules/mod_smser.php'"; ?>, true);
 				req.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-				req.send("change=1&".paramName+"="+escape(value));
+				req.send(paramName+"="+escape(value));
+			}
+			SAdamchuk_Smser_Persister.prototype.serializeContacts(contacts){
+				var res="<contacts>";
+				for(var i=0;i<contacts.length;i++){
+					var c=contacts[i];
+					res+="<contact channel=\""+
+					c.channel+
+					"\" name=\""+c.channel+
+					"\" rate=\""+c.rate+
+					"\" number=\""+c.number+
+					"\" gate=\""+c.gate+
+					"\"/>";
+				}
+				return res+"</contacts>";
 			}
 <?php } ?>
 	
