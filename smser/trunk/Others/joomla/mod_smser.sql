@@ -23,9 +23,10 @@ CREATE TABLE `jos_smser_contacts` (
   `user_id` int(11) NOT NULL,
   `channel` char(1) collate latin1_general_ci NOT NULL,
   `number` char(7) collate latin1_general_ci NOT NULL,
-  `name` varchar(10) collate latin1_general_ci NOT NULL default '''''',
+  `name` varchar(10) character set cp1251 collate cp1251_ukrainian_ci NOT NULL default '''''',
   `gate` int(11) NOT NULL,
-  `rate` int(11) NOT NULL
+  `rate` int(11) NOT NULL,
+  KEY `idx_user_id_rate` (`user_id`,`rate`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 -- --------------------------------------------------------
@@ -36,6 +37,7 @@ CREATE TABLE `jos_smser_contacts` (
 
 CREATE TABLE `jos_smser_users` (
   `user_id` int(11) NOT NULL,
-  `sender_name` varchar(20) collate latin1_general_ci default NULL,
-  `gate` int(11) NOT NULL default '0'
+  `sender_name` varchar(20) collate latin1_general_ci NOT NULL default '''''',
+  `gate` int(11) NOT NULL default '4',
+  PRIMARY KEY  (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;

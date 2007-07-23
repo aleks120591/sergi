@@ -125,6 +125,7 @@
     
     modifyContactName:function(contactId){
         this.model.contacts[contactId].name=this.view.cntEditor.value;
+        this.model.sender=SAdamchuk_Smser_Translit.translitString(this.view.senderName.value);
         this.persistData();
         this.refreshContacts();
     },

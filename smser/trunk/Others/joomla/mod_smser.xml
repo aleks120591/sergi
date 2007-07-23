@@ -6,7 +6,7 @@
 	<creationDate>June 2006</creationDate>
 	<authorEmail>sergi@sendsms.com.ua</authorEmail>
 	<authorUrl>http://sendsms.com.ua</authorUrl>
-    <description>Модуль дозволяє відправляти СМСки з вашого Joomla сайту.</description>
+    <description>Allows sending SMS from your Joomla powered site.</description>
     <files>
         <filename module="mod_smser">mod_smser.php</filename>
     </files>

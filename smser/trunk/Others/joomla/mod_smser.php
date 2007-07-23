@@ -11,6 +11,37 @@
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
  */
+function unicode_urldecode($url)
+{
+    preg_match_all('/%u([[:alnum:]]{4})/', $url, $a);
+   
+    foreach ($a[1] as $uniord)
+    {
+        $dec = hexdec($uniord);
+        $utf = '';
+       
+        if ($dec < 128)
+        {
+            $utf = chr($dec);
+        }
+        else if ($dec < 2048)
+        {
+            $utf = chr(192 + (($dec - ($dec % 64)) / 64));
+            $utf .= chr(128 + ($dec % 64));
+        }
+        else
+        {
+            $utf = chr(224 + (($dec - ($dec % 4096)) / 4096));
+            $utf .= chr(128 + ((($dec % 4096) - ($dec % 64)) / 64));
+            $utf .= chr(128 + ($dec % 64));
+        }
+       
+        $url = str_replace('%u'.$uniord, $utf, $url);
+    }
+   
+    return iconv("UTF-8", "WINDOWS-1251", urldecode($url));
+}
+ 
 if (count($_POST)>0) 
 {
 	// Set flag that this is a parent file
@@ -30,7 +61,7 @@ if (count($_POST)>0)
 	$mainframe->initSession();
 	$my = $mainframe->getUser();
 	$keys=array_keys($_POST);
-	$theVal=$_POST[$keys[0]];
+	$theVal=unicode_urldecode($_POST[$keys[0]]);
 	switch ($keys[0])
 	{
 		case "gat":
@@ -44,6 +75,40 @@ if (count($_POST)>0)
 			$user->user_id = $my->id;
 			$user->sender_name = $theVal;
 			$database->updateObject('#__smser_users', $user, 'user_id');
+			break;
+		case "cnt":
+			$query="DELETE FROM `jos_smser_contacts` WHERE `jos_smser_contacts`.`user_id` = ".$my->id.";";
+			$theVal=str_replace("\\","",$theVal);
+			error_log("Passed XML: ".$theVal);
+			$xml=simplexml_load_string($theVal);
+			foreach($xml->children() as $child)
+			{
+				$cnt = new stdClass;
+				foreach($child->attributes() as $key=>$val)
+				{
+		            switch($key)
+		            {
+		              case "channel":
+		              	  $cnt->channel=$val;
+		              	  break;
+		              case "name":
+		              	  $cnt->name=$val;
+		              	  break;
+		              case "rate":
+		              	  $cnt->rate=intval($val);
+		              	  break;
+		              case "number":
+		              	  $cnt->number=$val;
+		              	  break;
+		              case "gate":
+		              	  $cnt->gate=intval($val);
+		              	  break;
+		            }
+		        }
+		        $query=$query."INSERT INTO `jos_smser_contacts` VALUES (".$my->id.", '".$cnt->channel."', '".$cnt->number."', '".$cnt->name."', ".$cnt->gate.", ".$cnt->rate.");";
+			}
+			$database->setQuery($query);
+			$database->query_batch();
 			break;
 	}
 	exit();
@@ -73,11 +138,22 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 			}
 			function SAdamchuk_Smser_Persister(){
 				<?php 
+					
 					$database->setQuery( "SELECT `jos_smser_users`.`sender_name` , `jos_smser_users`.`gate` FROM `jos_smser_users` WHERE `jos_smser_users`.`user_id` = ".$my->id );
 					$user = NULL;
   					$database->loadObject( $user );
-  					echo "this.senderName='$user->sender_name';";
-  					echo "this.gate=$user->gate;";
+  					if ($user)
+  					{
+	  					echo "this.senderName='$user->sender_name';";
+	  					echo "this.gate=$user->gate;";
+  					}
+  					else
+  					{
+  					  	$database->setQuery( "INSERT jos_smser_users (user_id, sender_name, gate) VALUES (".$my->id.", DEFAULT, DEFAULT)");
+  					  	$database->query();
+  						echo "this.senderName='';";
+	  					echo "this.gate=4;";
+  					}
 				?>
 			}
 			SAdamchuk_Smser_Persister.prototype.getContacts=function(){
@@ -88,7 +164,7 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 						return "SAdamchuk_Smser_CreateContact('$rec->channel','$rec->number','$rec->name',$rec->gate,$rec->rate)";
 					}
 			    	$database->setQuery( "SELECT `jos_smser_contacts`.`channel`, `jos_smser_contacts`.`number`, `jos_smser_contacts`.`name`, `jos_smser_contacts`.`gate`, `jos_smser_contacts`.`rate` FROM `jos_smser_contacts` WHERE `jos_smser_contacts`.`user_id` = ".$my->id." ORDER BY `jos_smser_contacts`.`rate` DESC" );
-					 $rows = $database->loadObjectList();
+					$rows = $database->loadObjectList();
 				    echo join(",",array_map("creatorFunction",$rows));
 			    ?>
 			    ];
@@ -112,13 +188,13 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 				req.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 				req.send(paramName+"="+escape(value));
 			}
-			SAdamchuk_Smser_Persister.prototype.serializeContacts(contacts){
-				var res="<contacts>";
+			SAdamchuk_Smser_Persister.prototype.serializeContacts=function(contacts){
+				var res="<"+"?xml version=\"1.0\" encoding=\"UTF-8\"?"+"><contacts>";
 				for(var i=0;i<contacts.length;i++){
 					var c=contacts[i];
 					res+="<contact channel=\""+
-					c.channel+
-					"\" name=\""+c.channel+
+					c.channel.code+
+					"\" name=\""+unescape(c.name)+
 					"\" rate=\""+c.rate+
 					"\" number=\""+c.number+
 					"\" gate=\""+c.gate+
@@ -132,9 +208,10 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
         var el=document.getElementById("smserGadgetHolder");
         var view=SAdamchuk_Smser_View(
             el,env,
-<?php if($my->id) { ?> "Тут будуть контакти" <?php } else { ?>
+<?php if($my->id) { ?> "Поки що у вас немає контактів, коли ви будете відправляти повідомлення, нові номери автоматично додаватимуться до списку." <?php } else { ?>
             "Для того, щоб ваші контакти зберігались тут, вам потрібно авторизуватись на цьмоу сайті. <a href='index.php?option=com_registration&task=register'>Зареєструйтесь</a>, якщо ви ще не зареєстровані, якщо у вас вже є обліковий запис, будь ласка, авторизуйтесь." <?php } ?> ,
             "Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://sendsms.com.ua/faq\" target=\"_blank\">частих питань</a>.");
         SAdamchuk_Smser_Controller.initialize(view,<?php if($my->id) { ?> new SAdamchuk_Smser_Persister(),true <?php } else { ?> null,false <?php } ?>);
 		//-->
 </script>
+	
