@@ -22,6 +22,48 @@
 	</widget:preferences>
 	<script type="text/javascript">
 		<!--
+		var SAdamchuk_Smser_netvibes={};
+		
+		SAdamchuk_Smser_netvibes.isLibraryLoaded=(typeof(window['SAdamchuk_Smser_Controller'])!="undefined");
+
+		SAdamchuk_Smser_netvibes.loadScript=function(){
+			UWA.Data.getText(
+				"http://sendsms.com.ua/goodies/live/smser.js",
+				SAdamchuk_Smser_netvibes.initGadget
+			  );
+		};
+
+		SAdamchuk_Smser_netvibes.initGadget=function(response){
+			if(!SAdamchuk_Smser_netvibes.isLibraryLoaded){window.eval(response);}
+			var env={resolveUrl:function(path){return "http://sendsms.com.ua/goodies/live/"+path;},Resize:function(){}};
+		  	var d=widget.createElement("div");
+		  	d.className="SAdamchuk_MSGadgets_SmserGadget";
+	        var view=SAdamchuk_Smser_View(
+	            d,env,
+	            null,
+	            "Для нормальної роботи в Internet Explorer вам потрібно <a href='http://sendsms.com.ua/content/view/18/28/#cookiesie' target='_blank'>дозволити кукі</a> для деяких сайтів.<br/>Для відправки повідомлень на Київстар через email шлюзи, абонентам потрібно <a href='http://www.kyivstar.net/faq/sms/' target='_blank'>активізувати послугу</a>.<br/>Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://sendsms.com.ua/faq\" target=\"_blank\">частих питань</a>.");
+	        SAdamchuk_Smser_Controller.initialize(view,new SAdamchuk_Smser_Persister(),true);
+	        widget.setBody(d);
+		};
+		
+		SAdamchuk_Smser_netvibes.loadCss=function(){
+			var headID = document.getElementsByTagName("head")[0];
+			var cssNode = document.createElement('link');
+			cssNode.type = 'text/css';
+			cssNode.rel = 'stylesheet';
+			cssNode.href = 'http://sendsms.com.ua/goodies/live/SmserGadget.css';
+			cssNode.media = 'screen';
+			headID.appendChild(cssNode);
+		};
+		
+		widget.onLoad = function(){
+			SAdamchuk_Smser_netvibes.loadCss();
+			if(SAdamchuk_Smser_netvibes.isLibraryLoaded)
+				SAdamchuk_Smser_netvibes.initGadget()
+			else
+				SAdamchuk_Smser_netvibes.loadScript();
+		}
+		
 			function SAdamchuk_Smser_Persister(){}
 
 			SAdamchuk_Smser_Persister.prototype.getContacts=function(){
@@ -47,49 +89,7 @@
 
 			SAdamchuk_Smser_Persister.prototype.saveGateType=function(gateType){
 				widget.setValue("gate",gateType);
-			}		
-		
-		var SAdamchuk_Smser_netvibes={};
-		
-		SAdamchuk_Smser_netvibes.isLibraryLoaded=(typeof(window['SAdamchuk_Smser_Controller'])!="undefined");
-
-		SAdamchuk_Smser_netvibes.loadScript=function(){
-			UWA.Data.getText(
-				"http://sendsms.com.ua/goodies/live/smser.js",
-				SAdamchuk_Smser_netvibes.initGadget
-			  );
-		};
-
-		SAdamchuk_Smser_netvibes.initGadget=function(response){
-			if(!SAdamchuk_Smser_netvibes.isLibraryLoaded)eval(response);
-			var env={resolveUrl:function(path){return "http://sendsms.com.ua/goodies/live/"+path;},Resize:function(){}};
-		  	var d=widget.createElement("div");
-		  	d.className="SAdamchuk_MSGadgets_SmserGadget";
-	        var view=SAdamchuk_Smser_View(
-	            d,env,
-	            null,
-	            "Для нормальної роботи в Internet Explorer вам потрібно <a href='http://sendsms.com.ua/content/view/18/28/#cookiesie' target='_blank'>дозволити кукі</a> для деяких сайтів.<br/>Для відправки повідомлень на Київстар через email шлюзи, абонентам потрібно <a href='http://www.kyivstar.net/faq/sms/' target='_blank'>активізувати послугу</a>.<br/>Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://sendsms.com.ua/faq\" target=\"_blank\">частих питань</a>.");
-	        SAdamchuk_Smser_Controller.initialize(view,new SAdamchuk_Smser_Persister(),true);
-	        widget.setBody(d);
-		};
-		
-		SAdamchuk_Smser_netvibes.loadCss=function(){
-			var headID = document.getElementsByTagName("head")[0];
-			var cssNode = document.createElement('link');
-			cssNode.type = 'text/css';
-			cssNode.rel = 'stylesheet';
-			cssNode.href = 'http://sendsms.com.ua/goodies/live/SmserGadget.css';
-			cssNode.media = 'screen';
-			headID.appendChild(cssNode);
-		};
-
-		widget.onLoad = function(){
-			SAdamchuk_Smser_netvibes.loadCss();
-			if(SAdamchuk_Smser_netvibes.isLibraryLoaded)
-				SAdamchuk_Smser_netvibes.initGadget()
-			else
-				SAdamchuk_Smser_netvibes.loadScript();
-		}
+			}
 		// -->
 	</script>
 </head>
