@@ -77,9 +77,10 @@ if (count($_POST)>0)
 			$database->updateObject('#__smser_users', $user, 'user_id');
 			break;
 		case "cnt":
+			echo "Have contacts.";
 			$query="DELETE FROM `jos_smser_contacts` WHERE `jos_smser_contacts`.`user_id` = ".$my->id.";";
 			$theVal=str_replace("\\","",$theVal);
-			error_log("Passed XML: ".$theVal);
+			echo "Passed XML: ".$theVal;
 			$xml=simplexml_load_string($theVal);
 			foreach($xml->children() as $child)
 			{
@@ -107,8 +108,10 @@ if (count($_POST)>0)
 		        }
 		        $query=$query."INSERT INTO `jos_smser_contacts` VALUES (".$my->id.", '".$cnt->channel."', '".$cnt->number."', '".$cnt->name."', ".$cnt->gate.", ".$cnt->rate.");";
 			}
+			echo "Query: $query";
 			$database->setQuery($query);
 			$database->query_batch();
+			echo "Query executed.";
 			break;
 	}
 	exit();
@@ -182,10 +185,17 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 			SAdamchuk_Smser_Persister.prototype.saveGateType=function(gateType){
 				this.postData("gat",gateType.toString());
 			}
+			var req;
 			SAdamchuk_Smser_Persister.prototype.postData=function(paramName,value){
-				var req=(window.XMLHttpRequest)?new XMLHttpRequest():new ActiveXObject("Msxml2.XMLHTTP");
+				req=(window.XMLHttpRequest)?new XMLHttpRequest():new ActiveXObject("Msxml2.XMLHTTP");
+				/*req.onreadystatechange=function(){
+					if(req.readyState == 4 && req.status == 200) {
+						alert(req.responseText);
+					 }
+				};*/
 				req.open("POST", <?php echo "'".$mosConfig_live_site."/modules/mod_smser.php'"; ?>, true);
 				req.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+				
 				req.send(paramName+"="+escape(value));
 			}
 			SAdamchuk_Smser_Persister.prototype.serializeContacts=function(contacts){
