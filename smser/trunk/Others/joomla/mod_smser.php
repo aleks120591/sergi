@@ -56,6 +56,7 @@ if (count($_POST)>0)
 	}
 
 	require_once( '../includes/joomla.php' );
+	require_once( '../includes/domit/xml_domit_parser.php' );
 	
 	$mainframe = new mosMainFrame( $database, null, '.' );
 	$mainframe->initSession();
@@ -77,41 +78,26 @@ if (count($_POST)>0)
 			$database->updateObject('#__smser_users', $user, 'user_id');
 			break;
 		case "cnt":
-			echo "Have contacts.";
+			//echo "Have contacts.";
 			$query="DELETE FROM `jos_smser_contacts` WHERE `jos_smser_contacts`.`user_id` = ".$my->id.";";
 			$theVal=str_replace("\\","",$theVal);
-			echo "Passed XML: ".$theVal;
-			$xml=simplexml_load_string($theVal);
-			foreach($xml->children() as $child)
+			//echo "Passed XML: ".$theVal;
+			$xml = & new DOMIT_Document();
+			$xml->parseXML($theVal, true);
+			foreach($xml->documentElement->childNodes as $child)
 			{
 				$cnt = new stdClass;
-				foreach($child->attributes() as $key=>$val)
-				{
-		            switch($key)
-		            {
-		              case "channel":
-		              	  $cnt->channel=$val;
-		              	  break;
-		              case "name":
-		              	  $cnt->name=$val;
-		              	  break;
-		              case "rate":
-		              	  $cnt->rate=intval($val);
-		              	  break;
-		              case "number":
-		              	  $cnt->number=$val;
-		              	  break;
-		              case "gate":
-		              	  $cnt->gate=intval($val);
-		              	  break;
-		            }
-		        }
+				$cnt->channel=$child->getAttribute("channel");
+				$cnt->name=$child->getAttribute("name");
+				$cnt->rate=intval($child->getAttribute("rate"));
+				$cnt->number=$child->getAttribute("number");
+				$cnt->gate=intval($child->getAttribute("gate"));
 		        $query=$query."INSERT INTO `jos_smser_contacts` VALUES (".$my->id.", '".$cnt->channel."', '".$cnt->number."', '".$cnt->name."', ".$cnt->gate.", ".$cnt->rate.");";
 			}
-			echo "Query: $query";
+			//echo "Query: $query";
 			$database->setQuery($query);
 			$database->query_batch();
-			echo "Query executed.";
+			//echo "Query executed.";
 			break;
 	}
 	exit();
@@ -185,9 +171,8 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 			SAdamchuk_Smser_Persister.prototype.saveGateType=function(gateType){
 				this.postData("gat",gateType.toString());
 			}
-			var req;
 			SAdamchuk_Smser_Persister.prototype.postData=function(paramName,value){
-				req=(window.XMLHttpRequest)?new XMLHttpRequest():new ActiveXObject("Msxml2.XMLHTTP");
+				var req=(window.XMLHttpRequest)?new XMLHttpRequest():new ActiveXObject("Msxml2.XMLHTTP");
 				/*req.onreadystatechange=function(){
 					if(req.readyState == 4 && req.status == 200) {
 						alert(req.responseText);
