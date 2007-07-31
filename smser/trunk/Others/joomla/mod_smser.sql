@@ -1,33 +1,17 @@
--- phpMyAdmin SQL Dump
--- version 2.10.1
--- http://www.phpmyadmin.net
--- 
--- Host: localhost
--- Generation Time: Jul 19, 2007 at 06:35 PM
--- Server version: 5.0.41
--- PHP Version: 5.2.2
-
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-
--- 
--- Database: `sendsms`
--- 
-
--- --------------------------------------------------------
-
 -- 
 -- Table structure for table `jos_smser_contacts`
 -- 
 
-CREATE TABLE `jos_smser_contacts` (
-  `user_id` int(11) NOT NULL,
-  `channel` char(1) collate latin1_general_ci NOT NULL,
-  `number` char(7) collate latin1_general_ci NOT NULL,
-  `name` varchar(10) character set cp1251 collate cp1251_ukrainian_ci NOT NULL default '''''',
-  `gate` int(11) NOT NULL,
-  `rate` int(11) NOT NULL,
+DROP TABLE IF EXISTS `jos_smser_contacts`;
+CREATE TABLE IF NOT EXISTS `jos_smser_contacts` (
+  `user_id` int(11) NOT NULL default '0',
+  `channel` char(1) NOT NULL default '',
+  `number` varchar(7) NOT NULL default '',
+  `name` varchar(10) NOT NULL default '',
+  `gate` int(11) NOT NULL default '0',
+  `rate` int(11) NOT NULL default '0',
   KEY `idx_user_id_rate` (`user_id`,`rate`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) TYPE=MyISAM;
 
 -- --------------------------------------------------------
 
@@ -35,9 +19,10 @@ CREATE TABLE `jos_smser_contacts` (
 -- Table structure for table `jos_smser_users`
 -- 
 
-CREATE TABLE `jos_smser_users` (
-  `user_id` int(11) NOT NULL,
-  `sender_name` varchar(20) collate latin1_general_ci NOT NULL default '''''',
+DROP TABLE IF EXISTS `jos_smser_users`;
+CREATE TABLE IF NOT EXISTS `jos_smser_users` (
+  `user_id` int(11) NOT NULL default '0',
+  `sender_name` varchar(20) NOT NULL default '',
   `gate` int(11) NOT NULL default '4',
   PRIMARY KEY  (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) TYPE=MyISAM;
