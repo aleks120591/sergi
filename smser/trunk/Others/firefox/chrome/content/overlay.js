@@ -37,20 +37,20 @@ SmsSender.carriers = new Array();
 SmsSender.carriers[0] = {
 	name: "umc",
 	captchaProcessor : {
-		getUrl : "http://www.umc.ua/ukr/sendsms.php",
+		getUrl : "http://mts.com.ua/ukr/sendsms.php",
 		internalCodeExtractor: function(html){
 			var re = new RegExp("INPUT TYPE=\"hidden\" name=\"PHPSESSID\" value=\"([^\"]+)\"");
 			SmsSender.captchaInternalCode = html.match(re)[1];
 			SmsSender.getcaptchaCodeInput().value = "";
 		},
 		imageSourceBuilder: function(){
-			return "http://www.umc.ua/back/modules/sms/sms_picture2.php?PHPSESSID="+SmsSender.captchaInternalCode;
+			return "http://mts.com.ua/back/modules/sms/sms_picture2.php?PHPSESSID="+SmsSender.captchaInternalCode;
 		}
 	},
 	sendProcessor: 
 	{
 		type: "PostForm",
-		postFormUrl: "http://www.umc.ua/back/modules/sms/db_sms.php",
+		postFormUrl: "http://mts.com.ua/back/modules/sms/db_sms.php",
 		formItems: new Array(
 			{name: "PHPSESSID",
 			getter: function() {return SmsSender.captchaInternalCode;}

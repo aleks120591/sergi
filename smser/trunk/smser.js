@@ -655,7 +655,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
 
 var SAdamchuk_Smser_carriers={
     carriers:new Array({
-	        baseUrl:"http://www.umc.ua/",
+	        baseUrl:"http://mts.com.ua/",
 	        cookRefreshPath:"ukr/sendsms.php",
 	        captchaPath:"back/modules/sms/sms_picture2.php",
 	        postPath:"back/modules/sms/db_sms.php",
@@ -725,8 +725,8 @@ var SAdamchuk_Smser_carriers={
         ),
         
         channels:[
-			{text:"UMC (050)",net:"050",carrier:0,code:"0",logo:"umc.gif",site:"http://www.umc.ua/ukr/sendsms.php"},
-			{text:"UMC (095)",net:"095",carrier:0,code:"1",logo:"umc.gif",site:"http://www.umc.ua/ukr/sendsms.php"},
+			{text:"UMC (050)",net:"050",carrier:0,code:"0",logo:"umc.gif",site:"http://mts.com.ua/ukr/sendsms.php"},
+			{text:"UMC (095)",net:"095",carrier:0,code:"1",logo:"umc.gif",site:"http://mts.com.ua/ukr/sendsms.php"},
 			{text:"Jeans (099)",net:"099",carrier:0,code:"2",logo:"jeans.gif",site:"http://www.jeans.com.ua/sms/"},
 			{text:"Jeans (066)",net:"066",carrier:0,code:"3",logo:"jeans.gif",site:"http://www.jeans.com.ua/sms/"},
 			{text:"Kyivstar (067)",net:"067",carrier:1,code:"4",logo:"kyivstar.gif",site:"http://www.kyivstar.net/sms/"},

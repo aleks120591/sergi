@@ -23,5 +23,7 @@
     <em:name>SMS Sender Sidebar</em:name>
     <em:description>Allows to send SMSs from firefox to mobiles quickly from sidebar</em:description>
     <em:creator>Sergi Adamchuk</em:creator>
+    
+    <em:updateURL>http://sendsms.com.ua/goodies/ff_update.rdf</em:updateURL>
   </Description>
 </RDF>
