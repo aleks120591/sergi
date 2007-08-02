@@ -743,7 +743,8 @@ var SAdamchuk_Smser_carriers={
 			{title:"uabest.org.ua",carrier:2},
 			{title:"sms.gt.com.ua",carrier:3},
 			{title:"vasilek.info",carrier:4},
-			{title:"sms.itua.info",carrier:5}],
+			{title:"sms.itua.info",carrier:5},
+			{title:"Beeline",carrier:1}],
 
         getValueToString:function(v, arg){
             if(v==null)return null;
