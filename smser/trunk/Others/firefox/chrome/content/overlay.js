@@ -167,31 +167,31 @@ SmsSender.carriers[2] = {
 			value: "JEANS"},
 			
 			{text: "Kyivstar (067)",
-			carrier: SmsSender.carriers[1],
+			carrier: SmsSender.carriers[2],
 			value: "067"},
 			
 			{text: "Kyivstar (096)",
-			carrier: SmsSender.carriers[1],
+			carrier: SmsSender.carriers[2],
 			value: "096"},
 			
 			{text: "Kyivstar (097)",
-			carrier: SmsSender.carriers[1],
+			carrier: SmsSender.carriers[2],
 			value: "097"},
 			
 			{text: "Kyivstar (098)",
-			carrier: SmsSender.carriers[1],
+			carrier: SmsSender.carriers[2],
 			value: "098"},
 			
 			{text: "GoldenTel1 (039)",
-			carrier: SmsSender.carriers[1],
+			carrier: SmsSender.carriers[2],
 			value: "039"},
 			
 			{text: "Life (063)",
-			carrier: SmsSender.carriers[1],
+			carrier: SmsSender.carriers[2],
 			value: "063"},
 			
 			{text: "Life (093)",
-			carrier: SmsSender.carriers[1],
+			carrier: SmsSender.carriers[2],
 			value: "093"},
 			
 			{text: "GoldenTel2 (039)",
