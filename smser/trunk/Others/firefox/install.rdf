@@ -5,7 +5,7 @@
 
   <Description about="urn:mozilla:install-manifest">
     <em:id>{44F072D8-86A9-454B-80DC-86C34FA3B243}</em:id>
-    <em:version>0.4</em:version>
+    <em:version>0.5</em:version>
     <em:type>2</em:type>
     <em:aboutURL>chrome://smssender/content/about.xul</em:aboutURL>
     <em:iconURL>chrome://smssender/content/logo_umc.png</em:iconURL>

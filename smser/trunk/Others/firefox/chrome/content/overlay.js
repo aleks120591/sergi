@@ -204,7 +204,7 @@ SmsSender.carriers[2] = {
 			
 			{text: "Beeline (068)",
 			carrier: SmsSender.carriers[2],
-			value: "38068"}
+			value: "068"}
 		);
 		
 SmsSender.setChannel = function(newChannel){
