@@ -657,7 +657,7 @@ var SAdamchuk_Smser_carriers={
     carriers:new Array({
 	        baseUrl:"http://mts.com.ua/",
 	        cookRefreshPath:"ukr/sendsms.php",
-	        captchaPath:"back/modules/sms/sms_picture2.php",
+	        captchaPath:"back/modules/golden/captcha.php",
 	        postPath:"back/modules/sms/db_sms.php",
 	        values:"0=UMC,1=UMC095,2=UMC099,3=JEANS,b=GT",
 	        formItems: new Array(
