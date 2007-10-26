@@ -1,29 +1,22 @@
 <?xml version="1.0"?>
-
-<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:em="http://www.mozilla.org/2004/em-rdf#">
-
-  <Description about="urn:mozilla:install-manifest">
-    <em:id>{44F072D8-86A9-454B-80DC-86C34FA3B243}</em:id>
-    <em:version>0.5</em:version>
-    <em:type>2</em:type>
-    <em:aboutURL>chrome://smssender/content/about.xul</em:aboutURL>
-    <em:iconURL>chrome://smssender/content/logo_umc.png</em:iconURL>
-    <em:homepageURL>http://adamchuk.googlepages.com/smssender</em:homepageURL>
-   
-    <em:targetApplication>
-     <!-- Firefox -->
-     <Description>
-        <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
-        <em:minVersion>1.5</em:minVersion>
-        <em:maxVersion>3.0a5</em:maxVersion>
-      </Description>
-   </em:targetApplication>
-   
-    <em:name>SMS Sender Sidebar</em:name>
-    <em:description>Allows to send SMSs from firefox to mobiles quickly from sidebar</em:description>
-    <em:creator>Sergi Adamchuk</em:creator>
-    
-    <em:updateURL>http://sendsms.com.ua/goodies/ff_update.rdf</em:updateURL>
-  </Description>
-</RDF>
+<RDF:RDF xmlns:em="http://www.mozilla.org/2004/em-rdf#"
+         xmlns:NC="http://home.netscape.com/NC-rdf#"
+         xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <RDF:Description RDF:about="rdf:#$bMYcW3"
+                   em:id="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
+                   em:minVersion="1.5"
+                   em:maxVersion="3.0a5" />
+  <RDF:Description RDF:about="urn:mozilla:install-manifest"
+                   em:id="{44F072D8-86A9-454B-80DC-86C34FA3B243}"
+                   em:version="0.5"
+                   em:type="2"
+                   em:aboutURL="chrome://smssender/content/about.xul"
+                   em:iconURL="chrome://smssender/content/logo_umc.png"
+                   em:homepageURL="http://adamchuk.googlepages.com/smssender"
+                   em:name="SMS Sender Sidebar"
+                   em:description="Allows to send SMSs from firefox to mobiles quickly from sidebar"
+                   em:creator="Sergi Adamchuk"
+                   em:updateURL="http://sendsms.com.ua/goodies/ff_update.rdf">
+    <em:targetApplication RDF:resource="rdf:#$bMYcW3"/>
+  </RDF:Description>
+</RDF:RDF>
