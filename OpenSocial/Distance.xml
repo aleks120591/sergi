@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+	<ModulePrefs
+			title="Distances (Beta)"
+			directory_title="Distances (Beta)"
+			author="Sergi Adamchuk"
+			author_email="sergi79 at ukr dot net"
+			author_affiliation="Independant"
+			author_location="Kyiv, Ukraine"
+			author_link="http://sergi.volyn.net"
+			author_photo="http://adamchuk.googlepages.com/DSCN8465.JPG"
+			title_url="http://sergi.volyn.net"
+			thumbnail="http://adamchuk.googlepages.com/distances.png"
+			screenshot="http://adamchuk.googlepages.com/distances.png"
+			description="Allows to point your location on map and displays distance to your friends."
+			height="300">
+		<Require feature="opensocial-0.5"/>
+		<Require feature="tabs" />
+	</ModulePrefs>
+	<Content type="html">
+	<![CDATA[
+		<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAwfrO1p6v8eS-FdnoaB4OMBQrdQ4UluQef3Y-LDcBf0ZqUjaEjBSPSFttakXl6mHxi5mUvco6ZsmhZg"></script>
+		<script type="text/javascript">
+			var dist = {};
+			var gadget = {};
+			
+			function initGadget() {
+				google.load("maps", "2");
+				var tabs = new _IG_Tabs(__MODULE_ID__, "Map");
+				tabs.addTab("Map", "tabMap");
+				tabs.addTab("Distances", "tabDistances");
+				gadget.map = new google.maps.Map2(document.getElementById("mapCanvas"));
+				gadget.map.setCenter(new google.maps.LatLng(34,0), 2);
+				gadget.map.addControl(new google.maps.MapTypeControl());
+				gadget.map.addControl(new google.maps.SmallZoomControl());
+				google.maps.Event.addListener(gadget.map, "click", MapClicked);
+				
+				Load1();
+			}
+			
+			function Load1(){
+				var req = opensocial.newDataRequest();
+				req.add(req.newFetchPersonRequest(opensocial.DataRequest.PersonId.VIEWER, {"profileDetail": 'contact'}), "viewer");
+				req.add(req.newFetchPersonRequest(opensocial.DataRequest.PersonId.OWNER, {"profileDetail": 'contact'}), "owner");
+				req.add(req.newFetchPersonAppDataRequest(opensocial.DataRequest.PersonId.VIEWER, ["location"]), "location");
+				req.add(req.newFetchPeopleRequest(opensocial.DataRequest.Group.OWNER_FRIENDS), "friends");
+				req.add(req.newFetchPersonAppDataRequest(opensocial.DataRequest.Group.OWNER_FRIENDS, ["location"]), "owner_friends");
+				req.add(req.newFetchPeopleRequest(opensocial.DataRequest.Group.VIEWER_FRIENDS), "vfriends");
+				req.send(Load2);
+			}
+			
+			function Load2(data){
+				console.log("Viewer location", data.get("location").getData());
+				console.log("Owner friends' locations", data.get("owner_friends").getData());
+				
+				var viewer = data.get("viewer");
+				if (viewer.hadError()) {
+					console.log(viewer.getError());
+					return;
+				}
+				
+				dist.viewer = viewer.getData();
+				SetLocationForPerson(dist.viewer, data.get("location"));
+			    
+			    if (dist.viewer.location){
+			    	gadget.map.setCenter(dist.viewer.location, 5);
+			    	ShowOwnerMarker();
+			    }
+			    
+			    SetLocationButton();
+			    
+			    dist.owner = data.get("owner").getData();
+			    
+			    dist.friends = data.get('friends').getData().asArray().
+			    	concat(data.get('vfriends').getData().asArray()).
+			    	concat([dist.owner]).
+			    	filter(function(p){return p&&(p.getId()!=dist.viewer.getId());}).
+			    	compact(function(p1,p2){return p1.getId()==p2.getId();});
+			    
+			    
+			    var req = opensocial.newDataRequest();
+			    dist.friends.each2(function(p,idx){
+			    	req.add(req.newFetchPersonAppDataRequest(p.getId(), "location"), "loc"+idx);
+	    		});
+	    		req.send(Load3);
+			}
+			
+			function Load3(data){
+				dist.friends.each2(function(p,idx){
+					var d=data.get("loc"+idx);
+		    		SetLocationForPerson(p, d ? d.getData() : null);
+			    	if (p.location){
+			    		 p.distance = p.location.distanceFrom(dist.viewer.location);
+			    		 
+			    		var marker = CreateMarkerForPerson(p, "http://www.google.com/intl/en_us/mapfiles/ms/micons/"+(p.getId() == dist.owner.getId() ? "green" : "blue")+"-dot.png", false);
+			    		gadget.map.addOverlay(marker);
+			    	}
+	    		});
+	    		DrawDistanceTable();
+			}
+			
+			function DrawDistanceTable(){
+				var tbl = document.getElementById("tblFriends");
+				while(tbl.rows.length>0)tbl.deleteRow(0);
+				console.log(dist.friends.filter(function(p){return p.distance;}));
+				dist.friends.
+					filter(function(p){return p.distance;}).
+					sort(function(p1,p2){return p2.distance-p1.distance;}).
+					each2(function(p,idx){
+						console.log("Adding to table", p.getDisplayName());
+						var row = tbl.insertRow(-1);
+						if (idx%2) row.style.backgroundColor = "#043840";
+						var cell = row.insertCell(-1);
+						cell.innerHTML = "<img src='" + p.getField(opensocial.Person.Field.THUMBNAIL_URL) + "' alt='"+p.getDisplayName()+"' title='"+p.getDisplayName()+"'/>";
+						
+						cell = row.insertCell(-1);
+						cell.innerHTML = p.getDisplayName();
+						
+						cell = row.insertCell(-1);
+						cell.innerHTML = p.distance.toStringDistance();
+					});
+			}
+			
+			function SetLocationButton(){
+				document.getElementById("btnSetLocation").style.display = dist.viewer.location ? null: "none";
+			}
+			
+			function SetLocationForPerson(person,locData){
+				try{
+					var d=locData.getData();
+					person.location = d["15483875053207561407"].location.parseGLatLng();
+					//person.location = d.parseGLatLng();
+				}
+				catch(e){/*throw e;*/console.log(e);}
+				
+				if (!person.location)
+					try{
+						//console.log("Getting location from keywords.");
+						person.location = new google.maps.LatLng(person.obj_.Keywords[1].Value, person.obj_.Keywords[2].Value);
+						if ((person.location.lat() == 0)&&(person.location.lng()==0)) person.location=null;
+					}
+					catch(e){console.log(e);}
+					
+				//console.log("location for person ", person.getDisplayName(), person.location);
+			}
+			
+			function CreateMarkerForPerson(person,imageUrl,draggable){
+				var icon = new google.maps.Icon(G_DEFAULT_ICON);
+				if (imageUrl) icon.image = imageUrl;
+				var markerOptions = {icon:icon; draggable:draggable};
+				var marker = new google.maps.Marker(perosn.location, markerOptions);
+				marker.openInfoWindowHtml("<img src='"+person.getField(opensocial.Person.Field.THUMBNAIL_URL)+"'/>");
+				
+				return marker;
+			}
+			
+			function MapClicked(marker, point){
+				if (!dist.viewer.location){
+					dist.viewer.location = point;
+					ShowOwnerMarker();
+					SetLocationButton();
+					SaveOwnerLocation();
+				}
+			}
+			
+			function ShowOwnerMarker(){
+				if (dist.viewer.location){
+					if (gadget.myMarker){
+						//console.log("Changing marker location ", dist.viewer.location);
+						gadget.myMarker.setLatLng(dist.viewer.location);
+					}
+					else{
+						//console.log("Creating marker at ", dist.viewer.location);
+						gadget.myMarker = CreateMarkerForPerson(dist.viewer, null, true);
+						google.maps.Event.addListener(gadget.myMarker, "dragend", function() {
+  							dist.viewer.location = gadget.myMarker.getLatLng();
+  							SaveOwnerLocation();
+  						});
+			    		gadget.map.addOverlay(gadget.myMarker);
+					}
+					
+				}
+			}
+			
+			function SaveOwnerLocation(){
+				var req = opensocial.newDataRequest();
+				//console.log("Storing data ", dist.viewer.location.storeString());
+				req.add(req.newUpdatePersonAppDataRequest(opensocial.DataRequest.PersonId.VIEWER, "location", dist.viewer.location.storeString()));
+				req.send(function(d){
+					console.log(d.hadError() ? "An error occured while saving viewer's location" : "Location stored successfully");
+					});
+			}
+			
+			function btnSetLocation_clicked(){
+				dist.viewer.location=null;
+				SetLocationButton();
+			}
+			
+			String.prototype.parseGLatLng = function(){
+				var p = this.split(",");
+				return new google.maps.LatLng(parseFloat(p[0]),parseFloat(p[1]));
+			}
+			
+			GLatLng.prototype.storeString = function(){
+				return this.lat().toString()+","+this.lng().toString()
+			}
+			
+			Array.prototype.compact = function(conflictsWithFn){
+				var r = [];
+				for(var p=0;p<this.length;p++){
+					var conflicts = false;
+					for(var t=p+1;t<this.length;t++){
+						if (conflictsWithFn(this[p], this[t])){
+							conflicts = true;
+							break;
+						}
+					}
+					if (!conflicts) r.push(this[p]);
+				}
+				return r;
+			}
+			
+			Array.prototype.each2 = function(doFn){
+				for(var p=0;p<this.length;p++){
+					doFn(this[p], p, p == this.length-1);
+				}
+			}
+			
+			Array.prototype.filter = function(allowedItemFn){
+				var r = [];
+				for(var p=0;p<this.length;p++){
+					if (allowedItemFn(this[p])) r.push(this[p]);
+				}
+				return r;
+			}
+			
+			Number.prototype.toStringDistance = function(){
+				if (this<5000)
+					return this.toPrecision(0).toString()+"meters";
+				else
+					return (this/1000).toPrecision(0).toString()+"kilometers";
+			}
+			
+			_IG_RegisterOnloadHandler(initGadget);
+
+		</script>
+		<div id="tabMap">
+			<input id="btnSetLocation" type="button" value="Change your location" style="display:none" onclick="javascript:btnSetLocation_clicked();"/>
+			<div id="mapCanvas" style="height:100%;"/>
+		</div>
+		<div id="tabDistances" style="display:none">
+			<p style="text-align:center">
+				<table id="tblFriends" cellpadding="5" cellspacing="5"/>
+			</p>
+		</div>
+		]]>
+	</Content>
+</Module>
