@@ -21,11 +21,11 @@
 	<![CDATA[
 		<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAwfrO1p6v8eS-FdnoaB4OMBQrdQ4UluQef3Y-LDcBf0ZqUjaEjBSPSFttakXl6mHxi5mUvco6ZsmhZg"></script>
 		<script type="text/javascript">
+			google.load("maps", "2");
 			var dist = {};
 			var gadget = {};
 			
 			function initGadget() {
-				google.load("maps", "2");
 				var tabs = new _IG_Tabs(__MODULE_ID__, "Map");
 				tabs.addTab("Map", "tabMap");
 				tabs.addTab("Distances", "tabDistances");
@@ -42,17 +42,14 @@
 				var req = opensocial.newDataRequest();
 				req.add(req.newFetchPersonRequest(opensocial.DataRequest.PersonId.VIEWER, {"profileDetail": 'contact'}), "viewer");
 				req.add(req.newFetchPersonRequest(opensocial.DataRequest.PersonId.OWNER, {"profileDetail": 'contact'}), "owner");
-				req.add(req.newFetchPersonAppDataRequest(opensocial.DataRequest.PersonId.VIEWER, ["location"]), "location");
+				req.add(req.newFetchPersonAppDataRequest(opensocial.DataRequest.PersonId.VIEWER, "location"), "location");
+				req.add(req.newFetchPersonAppDataRequest(opensocial.DataRequest.Group.OWNER_FRIENDS, "location"), "flocation");
 				req.add(req.newFetchPeopleRequest(opensocial.DataRequest.Group.OWNER_FRIENDS), "friends");
-				req.add(req.newFetchPersonAppDataRequest(opensocial.DataRequest.Group.OWNER_FRIENDS, ["location"]), "owner_friends");
-				req.add(req.newFetchPeopleRequest(opensocial.DataRequest.Group.VIEWER_FRIENDS), "vfriends");
+				//req.add(req.newFetchPeopleRequest(opensocial.DataRequest.Group.VIEWER_FRIENDS), "vfriends");
 				req.send(Load2);
 			}
 			
 			function Load2(data){
-				console.log("Viewer location", data.get("location").getData());
-				console.log("Owner friends' locations", data.get("owner_friends").getData());
-				
 				var viewer = data.get("viewer");
 				if (viewer.hadError()) {
 					console.log(viewer.getError());
@@ -67,51 +64,67 @@
 			    	ShowOwnerMarker();
 			    }
 			    
-			    SetLocationButton();
-			    
 			    dist.owner = data.get("owner").getData();
 			    
 			    dist.friends = data.get('friends').getData().asArray().
-			    	concat(data.get('vfriends').getData().asArray()).
-			    	concat([dist.owner]).
+			    	//concat(data.get('vfriends').getData().asArray()).
+			    	//concat([dist.owner]).
 			    	filter(function(p){return p&&(p.getId()!=dist.viewer.getId());}).
 			    	compact(function(p1,p2){return p1.getId()==p2.getId();});
 			    
 			    
-			    var req = opensocial.newDataRequest();
-			    dist.friends.each2(function(p,idx){
-			    	req.add(req.newFetchPersonAppDataRequest(p.getId(), "location"), "loc"+idx);
-	    		});
-	    		req.send(Load3);
+//			    var req = opensocial.newDataRequest();
+//			    dist.friends.each2(function(p,idx){
+//			    	req.add(req.newFetchPersonAppDataRequest(/*p.getId()*/"OWNER", "location"), "loc"+idx);
+//	    		});
+//	    		req.send(Load3);
+
+				Load3(data);
 			}
 			
 			function Load3(data){
-				dist.friends.each2(function(p,idx){
-					var d=data.get("loc"+idx);
-		    		SetLocationForPerson(p, d ? d.getData() : null);
-			    	if (p.location){
-			    		 p.distance = p.location.distanceFrom(dist.viewer.location);
-			    		 
-			    		var marker = CreateMarkerForPerson(p, "http://www.google.com/intl/en_us/mapfiles/ms/micons/"+(p.getId() == dist.owner.getId() ? "green" : "blue")+"-dot.png", false);
-			    		gadget.map.addOverlay(marker);
-			    	}
-	    		});
-	    		DrawDistanceTable();
+				var d=data.get("flocation").getData();
+				console.log(d);
+				if (d){
+					/*dist.friends.each2(function(p,idx){
+			    		SetLocationForPerson(p, d ? d.getData() : null);
+				    	if (p.location){
+				    		 p.distance = p.location.distanceFrom(dist.viewer.location);
+				    		 
+				    		var marker = CreateMarkerForPerson(p, "http://www.google.com/intl/en_us/mapfiles/ms/micons/"+(p.getId() == dist.owner.getId() ? "green" : "blue")+"-dot.png", false);
+				    		gadget.map.addOverlay(marker);
+				    	}
+		    		});
+		    		DrawDistanceTable();*/
+	    		}
 			}
+			
+//			function Load3(data){
+//				dist.friends.each2(function(p,idx){
+//					var d=data.get("loc"+idx);
+//		    		SetLocationForPerson(p, d ? d.getData() : null);
+//			    	if (p.location){
+//			    		 p.distance = p.location.distanceFrom(dist.viewer.location);
+//			    		 
+//			    		var marker = CreateMarkerForPerson(p, "http://www.google.com/intl/en_us/mapfiles/ms/micons/"+(p.getId() == dist.owner.getId() ? "green" : "blue")+"-dot.png", false);
+//			    		gadget.map.addOverlay(marker);
+//			    	}
+//	    		});
+//	    		DrawDistanceTable();
+//			}
 			
 			function DrawDistanceTable(){
 				var tbl = document.getElementById("tblFriends");
 				while(tbl.rows.length>0)tbl.deleteRow(0);
-				console.log(dist.friends.filter(function(p){return p.distance;}));
 				dist.friends.
 					filter(function(p){return p.distance;}).
 					sort(function(p1,p2){return p2.distance-p1.distance;}).
 					each2(function(p,idx){
-						console.log("Adding to table", p.getDisplayName());
+						//console.log("Adding to table", p.getDisplayName());
 						var row = tbl.insertRow(-1);
-						if (idx%2) row.style.backgroundColor = "#043840";
+						if (idx%2) row.style.backgroundColor = "PaleTurquoise";
 						var cell = row.insertCell(-1);
-						cell.innerHTML = "<img src='" + p.getField(opensocial.Person.Field.THUMBNAIL_URL) + "' alt='"+p.getDisplayName()+"' title='"+p.getDisplayName()+"'/>";
+						cell.innerHTML = "<img src='" + getThumbnailUrl(p) + "' alt='"+p.getDisplayName()+"' title='"+p.getDisplayName()+"'/>";
 						
 						cell = row.insertCell(-1);
 						cell.innerHTML = p.getDisplayName();
@@ -121,15 +134,11 @@
 					});
 			}
 			
-			function SetLocationButton(){
-				document.getElementById("btnSetLocation").style.display = dist.viewer.location ? null: "none";
-			}
-			
 			function SetLocationForPerson(person,locData){
 				try{
 					var d=locData.getData();
-					person.location = d["15483875053207561407"].location.parseGLatLng();
-					//person.location = d.parseGLatLng();
+					person.location = d[person.getId()].location.parseGLatLng();
+					//person.location = d[person.getId()].location;
 				}
 				catch(e){/*throw e;*/console.log(e);}
 				
@@ -147,18 +156,18 @@
 			function CreateMarkerForPerson(person,imageUrl,draggable){
 				var icon = new google.maps.Icon(G_DEFAULT_ICON);
 				if (imageUrl) icon.image = imageUrl;
-				var markerOptions = {icon:icon; draggable:draggable};
-				var marker = new google.maps.Marker(perosn.location, markerOptions);
-				marker.openInfoWindowHtml("<img src='"+person.getField(opensocial.Person.Field.THUMBNAIL_URL)+"'/>");
-				
+				var markerOptions = {icon:icon, draggable:draggable};
+				var marker = new google.maps.Marker(person.location, markerOptions);
+				marker.htmlTextForPerson = "<a href='"+getProfileUrl(person)+"' target='_top'><img src='"+getThumbnailUrl(person)+"'/>&nbsp;"+person.getDisplayName()+"</a>";
 				return marker;
 			}
 			
 			function MapClicked(marker, point){
+				if (marker&&marker.openInfoWindowHtml) marker.openInfoWindowHtml(marker.htmlTextForPerson);
+				
 				if (!dist.viewer.location){
 					dist.viewer.location = point;
 					ShowOwnerMarker();
-					SetLocationButton();
 					SaveOwnerLocation();
 				}
 			}
@@ -185,24 +194,34 @@
 			function SaveOwnerLocation(){
 				var req = opensocial.newDataRequest();
 				//console.log("Storing data ", dist.viewer.location.storeString());
-				req.add(req.newUpdatePersonAppDataRequest(opensocial.DataRequest.PersonId.VIEWER, "location", dist.viewer.location.storeString()));
+				req.add(req.newUpdatePersonAppDataRequest(opensocial.DataRequest.PersonId.VIEWER, "location", LatLngStore(dist.viewer.location)/*dist.viewer.location*/));
 				req.send(function(d){
-					console.log(d.hadError() ? "An error occured while saving viewer's location" : "Location stored successfully");
+					//console.log(d.hadError() ? "An error occured while saving viewer's location" : "Location stored successfully");
 					});
 			}
 			
-			function btnSetLocation_clicked(){
-				dist.viewer.location=null;
-				SetLocationButton();
+			function LatLngStore(ll){
+				return ll.lat().toString()+","+ll.lng().toString();
+			}
+			
+			function getProfileUrl(p){
+				return p.getField(opensocial.Person.Field.PROFILE_URL);
+			}
+			
+			function getThumbnailUrl(p){
+				return p.getField(opensocial.Person.Field.THUMBNAIL_URL);
+			}
+			
+			function getPropertyValueByIdx(obj,idx){
+				var p=0;
+				for(var k in obj)
+					if (p == idx) return obj[k];
+				return null;
 			}
 			
 			String.prototype.parseGLatLng = function(){
 				var p = this.split(",");
 				return new google.maps.LatLng(parseFloat(p[0]),parseFloat(p[1]));
-			}
-			
-			GLatLng.prototype.storeString = function(){
-				return this.lat().toString()+","+this.lng().toString()
 			}
 			
 			Array.prototype.compact = function(conflictsWithFn){
@@ -236,16 +255,15 @@
 			
 			Number.prototype.toStringDistance = function(){
 				if (this<5000)
-					return this.toPrecision(0).toString()+"meters";
+					return this.toFixed()+" meters";
 				else
-					return (this/1000).toPrecision(0).toString()+"kilometers";
+					return (this/1000).toFixed()+" kilometers";
 			}
 			
 			_IG_RegisterOnloadHandler(initGadget);
 
 		</script>
 		<div id="tabMap">
-			<input id="btnSetLocation" type="button" value="Change your location" style="display:none" onclick="javascript:btnSetLocation_clicked();"/>
 			<div id="mapCanvas" style="height:100%;"/>
 		</div>
 		<div id="tabDistances" style="display:none">
