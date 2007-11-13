@@ -12,7 +12,7 @@
 			title_url="http://sergi.volyn.net"
 			thumbnail="http://adamchuk.googlepages.com/distances.png"
 			screenshot="http://adamchuk.googlepages.com/distances.png"
-			description="Allows to point your location on map and displays distance to your friends."
+			description="Allows to point your location on map and displays distances to your friends."
 			height="300">
 		<Require feature="opensocial-0.5"/>
 		<Require feature="tabs" />
@@ -21,6 +21,10 @@
 	<![CDATA[
 		<script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAAwfrO1p6v8eS-FdnoaB4OMBQrdQ4UluQef3Y-LDcBf0ZqUjaEjBSPSFttakXl6mHxi5mUvco6ZsmhZg"></script>
 		<script type="text/javascript">
+			if (!console){
+				var console = {log : function(){}};
+			}
+			
 			google.load("maps", "2");
 			var dist = {};
 			var gadget = {};
@@ -43,13 +47,16 @@
 				req.add(req.newFetchPersonRequest(opensocial.DataRequest.PersonId.VIEWER, {"profileDetail": 'contact'}), "viewer");
 				req.add(req.newFetchPersonRequest(opensocial.DataRequest.PersonId.OWNER, {"profileDetail": 'contact'}), "owner");
 				req.add(req.newFetchPersonAppDataRequest(opensocial.DataRequest.PersonId.VIEWER, "location"), "location");
-				req.add(req.newFetchPersonAppDataRequest(opensocial.DataRequest.Group.OWNER_FRIENDS, "location"), "flocation");
 				req.add(req.newFetchPeopleRequest(opensocial.DataRequest.Group.OWNER_FRIENDS), "friends");
-				//req.add(req.newFetchPeopleRequest(opensocial.DataRequest.Group.VIEWER_FRIENDS), "vfriends");
-				req.send(Load2);
+				req.add(req.newFetchPeopleRequest(opensocial.DataRequest.Group.VIEWER_FRIENDS), "vfriends");
+				req.add(req.newFetchPersonAppDataRequest(opensocial.DataRequest.Group.OWNER_FRIENDS, "location"), "flocation");
+				req.add(req.newFetchPersonAppDataRequest(opensocial.DataRequest.Group.VIEWER_FRIENDS, "location"), "vlocation");
+				req.add(req.newFetchPersonAppDataRequest(opensocial.DataRequest.PersonId.OWNER, "location"), "olocation");
+				req.send(DataLoaded);
 			}
 			
-			function Load2(data){
+			function DataLoaded(data){
+				//console.log("Server response",data);
 				var viewer = data.get("viewer");
 				if (viewer.hadError()) {
 					console.log(viewer.getError());
@@ -57,8 +64,7 @@
 				}
 				
 				dist.viewer = viewer.getData();
-				SetLocationForPerson(dist.viewer, data.get("location"));
-			    
+				SetLocationForPerson(dist.viewer, data.get("location").getData());
 			    if (dist.viewer.location){
 			    	gadget.map.setCenter(dist.viewer.location, 5);
 			    	ShowOwnerMarker();
@@ -67,58 +73,44 @@
 			    dist.owner = data.get("owner").getData();
 			    
 			    dist.friends = data.get('friends').getData().asArray().
-			    	//concat(data.get('vfriends').getData().asArray()).
-			    	//concat([dist.owner]).
+			    	concat(data.get('vfriends').getData().asArray()).
+			    	concat([dist.owner]).
 			    	filter(function(p){return p&&(p.getId()!=dist.viewer.getId());}).
 			    	compact(function(p1,p2){return p1.getId()==p2.getId();});
 			    
-			    
-//			    var req = opensocial.newDataRequest();
-//			    dist.friends.each2(function(p,idx){
-//			    	req.add(req.newFetchPersonAppDataRequest(/*p.getId()*/"OWNER", "location"), "loc"+idx);
-//	    		});
-//	    		req.send(Load3);
-
-				Load3(data);
+				AnalyzeUserData(
+					data.get("flocation").getData(), 
+					data.get("vlocation").getData(), 
+					data.get("olocation").getData());
 			}
 			
-			function Load3(data){
-				var d=data.get("flocation").getData();
-				console.log(d);
-				if (d){
-					/*dist.friends.each2(function(p,idx){
-			    		SetLocationForPerson(p, d ? d.getData() : null);
-				    	if (p.location){
-				    		 p.distance = p.location.distanceFrom(dist.viewer.location);
-				    		 
-				    		var marker = CreateMarkerForPerson(p, "http://www.google.com/intl/en_us/mapfiles/ms/micons/"+(p.getId() == dist.owner.getId() ? "green" : "blue")+"-dot.png", false);
-				    		gadget.map.addOverlay(marker);
-				    	}
-		    		});
-		    		DrawDistanceTable();*/
-	    		}
+			function AnalyzeUserData(d1, d2, d3){
+				dist.friends.each2(function(p,idx){
+		    		//console.log("Retrieving user's data", p);
+		    		SetLocationForPerson(p, d1, d2, d3);
+			    	if (p.location){
+			    		var marker = CreateMarkerForPerson(p, "http://www.google.com/intl/en_us/mapfiles/ms/micons/"+(p.getId() == dist.owner.getId() ? "green" : "blue")+"-dot.png", false);
+			    		gadget.map.addOverlay(marker);
+			    	}
+	    		});
+	    		RecalculateDistances();
 			}
 			
-//			function Load3(data){
-//				dist.friends.each2(function(p,idx){
-//					var d=data.get("loc"+idx);
-//		    		SetLocationForPerson(p, d ? d.getData() : null);
-//			    	if (p.location){
-//			    		 p.distance = p.location.distanceFrom(dist.viewer.location);
-//			    		 
-//			    		var marker = CreateMarkerForPerson(p, "http://www.google.com/intl/en_us/mapfiles/ms/micons/"+(p.getId() == dist.owner.getId() ? "green" : "blue")+"-dot.png", false);
-//			    		gadget.map.addOverlay(marker);
-//			    	}
-//	    		});
-//	    		DrawDistanceTable();
-//			}
+			function RecalculateDistances(){
+				dist.friends.each2(function(p,idx){
+			    	if (p.location){
+			    		 p.distance = p.location.distanceFrom(dist.viewer.location);
+			    	}
+	    		});
+	    		DrawDistanceTable();
+			}
 			
 			function DrawDistanceTable(){
 				var tbl = document.getElementById("tblFriends");
 				while(tbl.rows.length>0)tbl.deleteRow(0);
 				dist.friends.
 					filter(function(p){return p.distance;}).
-					sort(function(p1,p2){return p2.distance-p1.distance;}).
+					sort(function(p1,p2){return p1.distance-p2.distance;}).
 					each2(function(p,idx){
 						//console.log("Adding to table", p.getDisplayName());
 						var row = tbl.insertRow(-1);
@@ -134,23 +126,28 @@
 					});
 			}
 			
-			function SetLocationForPerson(person,locData){
-				try{
-					var d=locData.getData();
-					person.location = d[person.getId()].location.parseGLatLng();
-					//person.location = d[person.getId()].location;
+			function SetLocationForPerson(person){
+				var d = null, userId = person.getId();
+				//console.log("Calling SetLocationForPerson", person, arguments.length);
+				for(var idx = 1;idx<arguments.length;idx++){
+					var lst = arguments[idx];
+					//console.log(lst);
+					if (lst){
+						d = lst[userId];
+						if (d) break;
+					}
+					idx++;
 				}
-				catch(e){/*throw e;*/console.log(e);}
+				if (d) person.location = d.location.parseGLatLng();
 				
-				if (!person.location)
+				if (!person.location){
 					try{
 						//console.log("Getting location from keywords.");
 						person.location = new google.maps.LatLng(person.obj_.Keywords[1].Value, person.obj_.Keywords[2].Value);
 						if ((person.location.lat() == 0)&&(person.location.lng()==0)) person.location=null;
 					}
 					catch(e){console.log(e);}
-					
-				//console.log("location for person ", person.getDisplayName(), person.location);
+				}
 			}
 			
 			function CreateMarkerForPerson(person,imageUrl,draggable){
@@ -192,6 +189,7 @@
 			}
 			
 			function SaveOwnerLocation(){
+				RecalculateDistances();
 				var req = opensocial.newDataRequest();
 				//console.log("Storing data ", dist.viewer.location.storeString());
 				req.add(req.newUpdatePersonAppDataRequest(opensocial.DataRequest.PersonId.VIEWER, "location", LatLngStore(dist.viewer.location)/*dist.viewer.location*/));
@@ -259,6 +257,7 @@
 				else
 					return (this/1000).toFixed()+" kilometers";
 			}
+			
 			
 			_IG_RegisterOnloadHandler(initGadget);
 
