@@ -11,7 +11,7 @@
 			author_photo="http://adamchuk.googlepages.com/DSCN8465.JPG"
 			title_url="http://sergi.volyn.net"
 			thumbnail="http://adamchuk.googlepages.com/distances.png"
-			screenshot="http://adamchuk.googlepages.com/distances.png"
+			screenshot="http://adamchuk.googlepages.com/dist_screen.png"
 			description="Allows to point your location on map and displays distances to your friends."
 			height="300">
 		<Require feature="opensocial-0.5"/>
@@ -42,6 +42,14 @@
 				Load1();
 			}
 			
+			function unloadGadget(){
+				gadget.myMarker=null;
+				gadget.map = null;
+				dist=null;
+				gadget=null;
+				google.maps.Unload();
+			}
+			
 			function Load1(){
 				var req = opensocial.newDataRequest();
 				req.add(req.newFetchPersonRequest(opensocial.DataRequest.PersonId.VIEWER, {"profileDetail": 'contact'}), "viewer");
@@ -66,7 +74,7 @@
 				dist.viewer = viewer.getData();
 				SetLocationForPerson(dist.viewer, data.get("location").getData());
 			    if (dist.viewer.location){
-			    	gadget.map.setCenter(dist.viewer.location, 5);
+			    	gadget.map.setCenter(dist.viewer.location, 1);
 			    	ShowOwnerMarker();
 			    }
 			    
@@ -97,12 +105,14 @@
 			}
 			
 			function RecalculateDistances(){
-				dist.friends.each2(function(p,idx){
-			    	if (p.location){
-			    		 p.distance = p.location.distanceFrom(dist.viewer.location);
-			    	}
-	    		});
-	    		DrawDistanceTable();
+				if (dist.viewer.location){
+					dist.friends.each2(function(p,idx){
+				    	if (p.location){
+				    		 p.distance = p.location.distanceFrom(dist.viewer.location);
+				    	}
+		    		});
+		    		DrawDistanceTable();
+	    		}
 			}
 			
 			function DrawDistanceTable(){
@@ -180,7 +190,6 @@
 						gadget.myMarker = CreateMarkerForPerson(dist.viewer, null, true);
 						google.maps.Event.addListener(gadget.myMarker, "dragend", function() {
   							dist.viewer.location = gadget.myMarker.getLatLng();
-  							SaveOwnerLocation();
   						});
 			    		gadget.map.addOverlay(gadget.myMarker);
 					}
@@ -260,7 +269,7 @@
 			
 			
 			_IG_RegisterOnloadHandler(initGadget);
-
+			_IG_AddEventHandler("unload", unloadGadget); 
 		</script>
 		<div id="tabMap">
 			<div id="mapCanvas" style="height:100%;"/>
