@@ -190,6 +190,7 @@
 						gadget.myMarker = CreateMarkerForPerson(dist.viewer, null, true);
 						google.maps.Event.addListener(gadget.myMarker, "dragend", function() {
   							dist.viewer.location = gadget.myMarker.getLatLng();
+  							SaveOwnerLocation();
   						});
 			    		gadget.map.addOverlay(gadget.myMarker);
 					}
