@@ -1,3 +1,6 @@
+/**
+* @namespace basic namespace for all functionality
+*/
 var mashape = {
 	Registrar: {
 		/**
@@ -17,24 +20,63 @@ var mashape = {
 		/**
 		* Registers new protocol
 		* @param {String} name The name of protocol. This name will be used by client code in method mashape.Main.newRequest.
-		* @param {Class} reqClass Class that represents object which will be sent to a service.
-		* @param {Class} respClass Class that represents responce object from a service.
+		* @param {String} reqClassName Class that represents object which will be sent to a service. Can be null - means any json object is accepted.
+		* @param {String} respClassName Class that represents responce object from a service. Can be null - means any json object is accepted.
 		* @param {Adapter} [adapter] Optional adapter object.
 		*/
-		registerProtocol : function(name, reqClass, respClass, adapter){
+		registerProtocol : function(name, reqClassName, respClassName, adapter){
 			this._protocols[name] = {
-				reqC: reqClass, 
-				respC: respClass, 
+				reqC: reqClassName, 
+				respC: respClassName, 
 				adapter: adapter ? adapter : mashape.adapters.defaultAdapter};
 		},
-		registerSerializer : function(className, descriptor){
-			_serializers[className] = new mashape.Serializer(descriptor);
+		registerClassDesriptor : function(className, descriptor){
+			this._descriptors[className] = descriptor;
 		},
 		createInstance : function(className){
 			return eval("new "+className+"()");
 		},
+		/**
+		* Converts object to JSON
+		* @param {Object} obj Object for serialization.
+		* @param {String} [className] Full name of class.
+		*/
+		serialize : function(obj, className){
+			if (!className) return obj;
+			
+			if (className.charAt(0) == "["){
+				var ar = [];
+				for(var i in obj)
+					ar.push(this.serialize(className.substring(1,className.length-2), obj[i]));
+				return ar;
+			}
+			else{
+				var d = this._descriptors[className];
+				if (d){
+					var res = {};
+					for(var i in d){
+						var propName = d[i], 
+							pos = propName.indexOf(":");
+						if (pos<0){
+							res[propName] = obj[propName];
+						}
+						else{
+							var propClassName = propName.substr(pos+1);
+							propName = propName.substr(0, pos);
+							res[propName] = this.serialize(propClassName, obj[propClassName]);
+						}
+					}
+					return res;
+				}
+			}
+		},
+		deserialize : function(json, className){
+			if (!className) return json;
+			
+			
+		},
 		_protocols: {},
-		_serializers: {} 
+		_descriptors: {} 
 	},
 	
 	Main : {
@@ -49,12 +91,18 @@ var mashape = {
 
 		/**
 		* Sends a request to service(s)
-		* @param {Array} requests a list of requests.
+		* @param {Hash} requests a list of requests.
 		* @param {Function} [handler] A callback that handles server's response. The handler can be called many times.
 		*/		
 		sendRequests : function(requests, handler){
 			var cntx = new mashape.batchHandlers.RequestContext();
 			
+			for(var key in requests){
+				var r = requests[key];
+				var proName = r.protocolName;
+				var protocol = mashape.Registrar._protocols[proName]
+				mashape.Registrar._protocols[protocol]
+			}
 			throw mashape.exceptions.NOT_IMPLEMENTED;
 		}
 	},
@@ -123,8 +171,8 @@ mashape.batchHandlers = {};
 */
 mashape.batchHandlers.ContainerBatchHandler = function(){}
 
-mashape.batchHandlers.ContainerBatchHandler.prototype = new BatchRequestBuilder();
-mashape.batchHandlers.ContainerBatchHandler.prototype.constructor = ContainerBatchHandler;
+mashape.batchHandlers.ContainerBatchHandler.prototype = new mashape.BatchRequestBuilder();
+mashape.batchHandlers.ContainerBatchHandler.prototype.constructor = mashape.batchHandlers.ContainerBatchHandler;
 
 mashape.batchHandlers.ContainerBatchHandler.prototype.send = function(){
 	this.requests = new mashape.BatchRequestBuilder();
@@ -192,26 +240,4 @@ mashape.Request.prototype.to = function(serviceUrl){
 mashape.Request.prototype.adapt = function(adapter){
 	this.adapter = adapter;
 	return this;
-}
-
-/**
-* @constructor
-*/
-mashape.Serializer = function(descriptor){
-	this.descriptor = descriptor;
-}
-
-mashape.Serializer.getSerializer = function(className){
-	var s = mashape.Registrar._serializers[className];
-	if (!s){
-		s = this._cache[className] = 
-			 
-	}
-}
-
-mashape.Serializer.serialize = function(className, obj){
-	className = className.trim();
-	if (className.charAt(0) == "["){
-		var ar = [];
-	}
 }
