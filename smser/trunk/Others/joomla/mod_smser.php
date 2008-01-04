@@ -4,7 +4,7 @@
  * 
  * @package		SAdamchuk.Smser
  * @subpackage	JoomlaModule
- * @link		http://sendsms.com.ua
+ * @link		http://connect.co.ua/
  * @license		GNU/GPL, see LICENSE.php
  * mod_smser is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -109,13 +109,13 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
 <style type="text/css">
 	<!--
-	@import "http://sendsms.com.ua/goodies/live/SmserGadget.css";
+	@import "http://connect.co.ua/goodies/live/SmserGadget.css";
 	// -->
 </style>
 <table widht="100%" align="center"><tr><td>
 	<div id="smserGadgetHolder" class="SAdamchuk_MSGadgets_SmserGadget"/>
 </table></td></tr>
-<script type="text/javascript" src="http://sendsms.com.ua/goodies/live/smser.js" charset="UTF-8" language="javascript"></script>
+<script type="text/javascript" src="http://connect.co.ua/goodies/live/smser.js" charset="UTF-8" language="javascript"></script>
 <script type="text/javascript" language="javascript">
 		<!--
 <?php if($my->id) { ?>
@@ -199,13 +199,13 @@ defined( '_VALID_MOS' ) or die( 'Restricted access' );
 			}
 <?php } ?>
 	
-		var env={resolveUrl:function(path){return "http://sendsms.com.ua/goodies/live/"+path;},Resize:function(){}};
+		var env={resolveUrl:function(path){return "http://connect.co.ua/goodies/live/"+path;},Resize:function(){}};
         var el=document.getElementById("smserGadgetHolder");
         var view=SAdamchuk_Smser_View(
             el,env,
 <?php if($my->id) { ?> "Поки що у вас немає контактів, коли ви будете відправляти повідомлення, нові номери автоматично додаватимуться до списку." <?php } else { ?>
             "Для того, щоб ваші контакти зберігались тут, вам потрібно авторизуватись на цьмоу сайті. <a href='index.php?option=com_registration&task=register'>Зареєструйтесь</a>, якщо ви ще не зареєстровані, якщо у вас вже є обліковий запис, будь ласка, авторизуйтесь." <?php } ?> ,
-            "Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://sendsms.com.ua/faq\" target=\"_blank\">частих питань</a>.");
+            "Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://connect.co.ua/faq\" target=\"_blank\">частих питань</a>.");
         SAdamchuk_Smser_Controller.initialize(view,<?php if($my->id) { ?> new SAdamchuk_Smser_Persister(),true <?php } else { ?> null,false <?php } ?>);
 		//-->
 </script>

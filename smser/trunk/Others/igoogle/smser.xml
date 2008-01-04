@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Module>
 <ModulePrefs 
-	title="SendSMS.com.ua"
+	title="connect.co.ua"
 	description="Швидка відправка СМС на мобільні."
 	author="Sergi Adamchuk"
-	author_email="forspam@sendsms.com.ua"
-	screenshot="http://sendsms.com.ua/goodies/igoogle/smser.png"
-	thumbnail="http://sendsms.com.ua/goodies/igoogle/smserth.png"
+	author_email="forspam@connect.co.ua"
+	screenshot="http://connect.co.ua/goodies/igoogle/smser.png"
+	thumbnail="http://connect.co.ua/goodies/igoogle/smserth.png"
 	author_location="Ukraine, Kyiv"
-	title_url="http://sendsms.com.ua"
+	title_url="http://connect.co.ua"
 	author_photo="http://lh3.google.com/sergialb/Ri8u9Nbr7zI/AAAAAAAAAVI/ab1jU1-0zCM/s144/DSCN8465.JPG"
 	author_aboutme="Ukrainian Software developer"
 	author_link="http://sergi.volyn.net"
@@ -22,13 +22,13 @@
 <Content type="html"><![CDATA[
 	<style type="text/css">
 		<!--
-		@import "http://sendsms.com.ua/goodies/live/SmserGadget.css";
+		@import "http://connect.co.ua/goodies/live/SmserGadget.css";
 		// -->
 	</style>
 	<table widht="100%" align="center"><tr><td>
 		<div id="smserGadgetHolder" class="SAdamchuk_MSGadgets_SmserGadget"/>
 	</table></td></tr>
-	<script type="text/javascript" src="http://sendsms.com.ua/goodies/live/smser.js" charset="UTF-8" language="javascript"></script>
+	<script type="text/javascript" src="http://connect.co.ua/goodies/live/smser.js" charset="UTF-8" language="javascript"></script>
 	<script type="text/javascript" language="javascript">
 			<!--
 			function SAdamchuk_Smser_Persister(){
@@ -60,12 +60,12 @@
 				this.prefs.set("gate",gateType);
 			}
 			
-			var env={resolveUrl:function(path){return "http://sendsms.com.ua/goodies/live/"+path;},Resize:function(){_IG_AdjustIFrameHeight();}};
+			var env={resolveUrl:function(path){return "http://connect.co.ua/goodies/live/"+path;},Resize:function(){_IG_AdjustIFrameHeight();}};
 	        var el=_gel("smserGadgetHolder");
 	        var view=SAdamchuk_Smser_View(
 	            el,env,
 	            null,
-	            "Для нормальної роботи в Internet Explorer вам потрібно <a href='http://sendsms.com.ua/content/view/18/28/#cookiesie' target='_blank'>дозволити кукі</a> для деяких сайтів.<br/>Для відправки повідомлень на Київстар через email шлюзи, абонентам потрібно <a href='http://www.kyivstar.net/faq/sms/' target='_blank'>активізувати послугу</a>.<br/>Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://sendsms.com.ua/faq\" target=\"_blank\">частих питань</a>.");
+	            "Для нормальної роботи в Internet Explorer вам потрібно <a href='http://connect.co.ua/content/view/18/28/#cookiesie' target='_blank'>дозволити кукі</a> для деяких сайтів.<br/>Для відправки повідомлень на Київстар через email шлюзи, абонентам потрібно <a href='http://www.kyivstar.net/faq/sms/' target='_blank'>активізувати послугу</a>.<br/>Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://connect.co.ua/faq\" target=\"_blank\">частих питань</a>.");
 	        SAdamchuk_Smser_Controller.initialize(view,new SAdamchuk_Smser_Persister(),true);
 	        _IG_AdjustIFrameHeight();
 			//-->

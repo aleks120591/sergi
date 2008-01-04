@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mosinstall type="module">
-    <name>SendSMS.com.ua</name>
+    <name>Connect</name>
     <author>Sergi Adamchuk</author>
     <version>0.1</version>
 	<creationDate>June 2006</creationDate>
-	<authorEmail>sergi@sendsms.com.ua</authorEmail>
-	<authorUrl>http://sendsms.com.ua</authorUrl>
-    <description>Allows sending SMS from your Joomla powered site.</description>
+	<authorEmail>sergi@adamant.net</authorEmail>
+	<authorUrl>http://connect.co.ua/</authorUrl>
+    <description>Модуль дозволяє відправляти СМСки з вашого Joomla сайту.</description>
     <files>
         <filename module="mod_smser">mod_smser.php</filename>
     </files>

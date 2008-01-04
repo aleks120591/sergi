@@ -462,7 +462,7 @@ function SAdamchuk_Smser_View(div,environment,cntText,helpText){
             opt.value=i.toString();
             res.gateSelector.options[i]=opt;
 	    }
-	    this.gateSelector.selectedIndex=1;
+	    this.gateSelector.selectedIndex=5;
 	    curDiv.appendChild(this.gateSelector);
 		this.gateSelector.onchange=function(){SAdamchuk_Smser_Controller.onGateChanged();};
 

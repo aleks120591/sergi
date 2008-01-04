@@ -12,9 +12,9 @@
 	<meta name="debugMode" content="false" />
 	<link rel="stylesheet" type="text/css" href="http://www.netvibes.com/themes/uwa/style.css" />
 	<script type="text/javascript" src="http://www.netvibes.com/js/UWA/load.js.php?env=Standalone"></script>
-	<script type="text/javascript" src="http://sendsms.com.ua/goodies/live/smser.js" charset="UTF-8"></script>
-	<title>SendSMS.com.ua</title>
-	<link rel="icon" type="image/ico" href="http://sendsms.com.ua/images/favicon.ico"/>
+	<script type="text/javascript" src="http://connect.co.ua/goodies/live/smser.js" charset="UTF-8"></script>
+	<title>connect.co.ua</title>
+	<link rel="icon" type="image/ico" href="http://connect.co.ua/images/favicon.ico"/>
 	<widget:preferences>
 	  <preference name="contacts" type="hidden" defaultValue=""/>
 	  <preference name="gate" type="hidden" defaultValue="4"/>
@@ -28,20 +28,20 @@
 
 		SAdamchuk_Smser_netvibes.loadScript=function(){
 			UWA.Data.getText(
-				"http://sendsms.com.ua/goodies/live/smser.js",
+				"http://connect.co.ua/goodies/live/smser.js",
 				SAdamchuk_Smser_netvibes.initGadget
 			  );
 		};
 
 		SAdamchuk_Smser_netvibes.initGadget=function(response){
 			if(!SAdamchuk_Smser_netvibes.isLibraryLoaded){window.eval(response);}
-			var env={resolveUrl:function(path){return "http://sendsms.com.ua/goodies/live/"+path;},Resize:function(){}};
+			var env={resolveUrl:function(path){return "http://connect.co.ua/goodies/live/"+path;},Resize:function(){}};
 		  	var d=widget.createElement("div");
 		  	d.className="SAdamchuk_MSGadgets_SmserGadget";
 	        var view=SAdamchuk_Smser_View(
 	            d,env,
 	            null,
-	            "Для нормальної роботи в Internet Explorer вам потрібно <a href='http://sendsms.com.ua/content/view/18/28/#cookiesie' target='_blank'>дозволити кукі</a> для деяких сайтів.<br/>Для відправки повідомлень на Київстар через email шлюзи, абонентам потрібно <a href='http://www.kyivstar.net/faq/sms/' target='_blank'>активізувати послугу</a>.<br/>Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://sendsms.com.ua/faq\" target=\"_blank\">частих питань</a>.");
+	            "Для нормальної роботи в Internet Explorer вам потрібно <a href='http://connect.co.ua/content/view/18/28/#cookiesie' target='_blank'>дозволити кукі</a> для деяких сайтів.<br/>Для відправки повідомлень на Київстар через email шлюзи, абонентам потрібно <a href='http://www.kyivstar.net/faq/sms/' target='_blank'>активізувати послугу</a>.<br/>Якщо у вас виникли запитання чи труднощі, будь ласка перейдіть на сторінку <a href=\"http://connect.co.ua/faq\" target=\"_blank\">частих питань</a>.");
 	        SAdamchuk_Smser_Controller.initialize(view,new SAdamchuk_Smser_Persister(),true);
 	        widget.setBody(d);
 		};
@@ -51,7 +51,7 @@
 			var cssNode = document.createElement('link');
 			cssNode.type = 'text/css';
 			cssNode.rel = 'stylesheet';
-			cssNode.href = 'http://sendsms.com.ua/goodies/live/SmserGadget.css';
+			cssNode.href = 'http://connect.co.ua/goodies/live/SmserGadget.css';
 			cssNode.media = 'screen';
 			headID.appendChild(cssNode);
 		};
