@@ -224,8 +224,41 @@ mashape.exceptions.NOT_IMPLEMENTED = "The feature is not implemented.";
 mashape.exceptions.NOT_SUPPORTED = "The feature is not supported.";
 
 /*****************************************************************
-* mashape.Adapter
+* mashape.RequestContext
 ******************************************************************/
+mashape.RequestContext = function(){}
+
+mashape.RequestContext.prototype.hasItem = function(key){
+	return this[key] != undefined;
+}
+
+mashape.RequestContext.prototype.getItem = function(key){
+	return this[key].batch;
+}
+
+mashape.RequestContext.prototype.setItem = function(key, batch, callback){
+	this[key] = {batch : batch, sender : callback};
+}
+
+/*****************************************************************
+* mashape._Adapter
+******************************************************************/
+
+mashape._Adapter = function(){}
+
+mashape._Adapter.prototype.clone = function(){
+	var r = new mashape._Adapter();
+	for(var k in this)
+		r[k] = this[k];
+	return r;
+}
+
+mashape._Adapter.prototype.override = function(obj){
+	var r = this.clone();
+	for(var k in obj)
+		r[k] = obj[k];
+	return r;
+}
 
 /**
 * @name RequestHandler
@@ -248,8 +281,34 @@ mashape.exceptions.NOT_SUPPORTED = "The feature is not supported.";
 */
 
 /*****************************************************************
-* mashape.DefaultAdapter
+* mashape.adapter
 ******************************************************************/
+
+mashape.adapter = new mashape._Adapter();
+
+mashape.adapter.scope = "mashape.container";
+
+mashape.adapter.requesting = function(context, request, engine, key){
+	var batch, key = this.getBatchKey(request);
+	if (context.hasItem(key)){
+		batch = context.getItem(key);
+	}
+	else{
+		batch = this.createNewBatch();
+		context.setItem(key, batch, this.sending);
+	}
+	var protocol = engine._protocols[request.protocolName];
+	var data = engine.serialize(request.data, protocol.reqClass);
+	this.add(mashape.container.newRequestJson(data), key);
+}
+
+mashape.adapter.getBatchKey = function(req){
+	return this.scope+(req.serviceUrl ? req.serviceUrl : "");
+}
+
+mashape.adapter.createNewBatch = function(){
+	return new mashape.BatchRequest();
+}
 
 /**
 * @class Default adapter for requests
