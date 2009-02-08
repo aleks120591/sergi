@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Istota</title>
+    <script src="istota.js"></script>
+    <script language="javascript">
+		<!--
+		function Body_onLoad()
+		{
+			//window.makeCreature("Cool creature!");
+			for(var x=0;x<640;x++)
+				for(var y=0;y<480;y++)
+				 PlotPixel(x, y, (x+y)%1024);
+		}
+		
+		function PlotPixel(x,y,c){
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext("2d");
+			ctx.strokeStyle = "#"+c;
+			
+		   ctx.beginPath();
+			ctx.moveTo(x,y);
+			ctx.lineTo(x+1,y+1);
+			ctx.stroke();
+		}
+		//-->
+	</script>
+</head>
+
+<body onload="Body_onLoad();">
+	<canvas id="canvas" width="640" height="480"></canvas>
+</body>
+</html>
