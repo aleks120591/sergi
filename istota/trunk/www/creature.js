@@ -2,26 +2,28 @@ function Creature(dna, cellChangedCB)
 {
 	this.cells = new Array();
 	this.dna = dna;
-	var m = this.matrix = new Matrix(640, 480, );
+	this.matrix = new Matrix(640, 480);
+	me = this;
 	
-	m.itemMovedCB = function(idx, x, y) 
+	this.matrix.itemMovedCB = function(idx, x, y) 
 	{
 		if ((x==null)||(y==null))
 		{
-			m.ModifyEach(function(n) {return n>idx?(n-1):n;});
-			this.cells.splice(idx, 1);
+			var last = me.cells.pop();
+			me.matrix.setItem(last.x, last.y, idx, false);
+			me.cells[idx] = last;
 		}
 		else
 		{
-			if (cellChangedCB) cellChangedCB(x, y, this.cells[idx]);
-			this.cells[idx].x = x;
-			this.cells[idx].y = y;
+			if (cellChangedCB) cellChangedCB(x, y, me.cells[idx]);
+			me.cells[idx].x = x;
+			me.cells[idx].y = y;
 		}
 	}
 	
-	var start = new Cell(10, 0, 0, 0, 0);
+	var start = new Cell(10, 0, 0, 0, 0, 0);
 	this.cells.push(start);
-	this.matrix.setItem(320, 140, 0);
+	this.matrix.setItem(parseInt(this.matrix.getWidth()/2), parseInt(this.matrix.getHeigth()/2), 0);
 	
 	this.curIdx=0;
 	this.lastCellCount=1;
@@ -29,6 +31,7 @@ function Creature(dna, cellChangedCB)
 	this.curGeneIdx = 0;
 }
 
+// TODO: This method requires refactorisation
 Creature.prototype.growStep = function()
 {
 	var cell = this.cells[this.curIdx];
@@ -37,26 +40,25 @@ Creature.prototype.growStep = function()
 	{
 		if (cell.hayflickLimit > 1) this.finished = false;
 		
-		var amount = this.cells.lenght;
-		cell.hayflickLimit--;
+		var amount = this.cells.length;
 		var child = cell.clone();
 		var direction;
-		if (cell.lenght > 0)
+		if (cell.length > 0)
 		{
-			var l = cell.lenght;
-			cell.lenght = parseInt(l/3);
-			child.lenght = l-cell.lenght;
+			child.length--;
+			cell.length = 0;
 		}
 		else
 		{
-			if (this.curGeneIdx < dna.genes.lenght)
+			child.hayflickLimit--;
+			if (this.curGeneIdx < this.dna.genes.length)
 			{
-				var gene = dna.genes[this.curGeneIdx];
+				var gene = this.dna.genes[this.curGeneIdx];
 				child.vector = (child.vector+gene.getRotation())%256;
 				child.colorR = gene.getRColor();
 				child.colorG = gene.getGColor();
 				child.colorB = gene.getBColor();
-				child.lenght = gene.getLenght();
+				child.length = gene.getLength();
 				this.curGeneIdx++;
 			}
 			else
@@ -64,20 +66,9 @@ Creature.prototype.growStep = function()
 				child.vector = 64*(amount%4);
 			}
 		}
+		cell.hayflickLimit--;
 		
-		var s=0, d = Matrix.Direction.LEFT;
-		amount %= 256;
-		for(var q=0;q<4;q++)
-		{
-			var z = Math.sin(Math.PI*(64*q+child.vector)/128);
-			if (z<0) z = 0;
-			s += 256*z*z;
-			if (s > amount)
-			{
-				d = Matrix.Direction.ALL[q];
-				break;
-			}
-		}
+		var d = Direction.getRandomDirection(child.vector, amount);
 		
 		var x = cell.x+d[0], y = cell.y+d[1];
 		this.matrix.insertPixel(x, y, d);
@@ -86,22 +77,15 @@ Creature.prototype.growStep = function()
 		this.matrix.setItem(x, y, newSize-1);
 	}
 	
+	this.curIdx++;
+	
 	if (this.curIdx>=this.lastCellCount)
 	{
 		this.curIdx = 0;
-		this.lastCellCount = this.cells.lenght;
+		this.lastCellCount = this.cells.length;
 		if (this.finished) return false;
 		this.finished = true;
 	}
-	else
-		this.curIdx++;
 	
 	return true;
-}
-
-Creature.prototype.addCell = function(x,y,cell)
-{
-	this.matrix
-	this.matrix[y*Creature.width+x] = cell;
-	this.cells.push(cell);
 }

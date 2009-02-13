@@ -1,8 +1,8 @@
-function Gene(rotation, rColor, gColor, bColor, lenght)
+function Gene(rotation, rColor, gColor, bColor, length)
 {
 	this.getRotation = function(){return rotation;}
 	this.getRColor = function(){return rColor;}
 	this.getGColor = function(){return gColor;}
 	this.getBColor = function(){return bColor;}
-	this.getLenght = function(){return lenght;}
+	this.getLength = function(){return length;}
 }

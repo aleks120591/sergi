@@ -3,26 +3,46 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Istota</title>
-    <script src="istota.js"></script>
+	<script src="direction.js"></script>
+	<script src="gene.js"></script>
+	<script src="cell.js"></script>
+	<script src="matrix.js"></script>
+	<script src="dna.js"></script>
+	<script src="creature.js"></script>
     <script language="javascript">
 		<!--
+		var canvas, ctx, creature, intervalId;
+		
 		function Body_onLoad()
 		{
-			//window.makeCreature("Cool creature!");
-			for(var x=0;x<640;x++)
-				for(var y=0;y<480;y++)
-				 PlotPixel(x, y, (x+y)%1024);
+			canvas = document.getElementById("canvas");
+			ctx = canvas.getContext("2d");
+			var dna = new Dna("Sergi Adamchuk and Solvek are the same person. Blah Blah Blah");
+			creature = new Creature(dna, function(x, y, cell) {Istota_PlotPixel(x,y,cell.colorR,cell.colorG,cell.colorB);} );
+			
+			intervalId = window.setInterval(Istota_GrowBunch, 700);
 		}
 		
-		function PlotPixel(x,y,c){
-			var canvas = document.getElementById("canvas");
-			var ctx = canvas.getContext("2d");
-			ctx.strokeStyle = "#"+c;
-			
-		   ctx.beginPath();
+		function Istota_PlotPixel(x,y,cr,cg,cb){
+			ctx.strokeStyle = "rgb("+cr+","+cg+","+cb+")";
+
+			ctx.beginPath();
 			ctx.moveTo(x,y);
 			ctx.lineTo(x+1,y+1);
 			ctx.stroke();
+		}
+		
+		function Istota_GrowBunch()
+		{
+			for(var i=0;i<700;i++)
+			{
+				if (!creature.growStep())
+				{
+					window.clearInterval(intervalId);
+					alert("Compelted!");
+					break;
+				}
+			}
 		}
 		//-->
 	</script>

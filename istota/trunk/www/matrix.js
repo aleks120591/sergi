@@ -1,7 +1,7 @@
-function Matrix(width, height)
+function Matrix(width, heigth)
 {
 	this.getWidth = function(){return width;}
-	this.getHeight = function(){return height;}
+	this.getHeigth = function(){return heigth;}
 	this._d = new Array();
 }
 
@@ -16,11 +16,12 @@ Matrix.prototype.setItem = function(x,y,item)
 	if (this.itemMovedCB) this.itemMovedCB(item, x, y);
 }
 
-Matrix.prototype.insertPixel = function(x, y, d)
+Matrix.prototype.insertPixel = function(x, y, d, raiseEvent)
 {
+	if (raiseEvent != false) raiseEvent = true;
 	var curItem = this.getItem(x, y);
 	var cx = x+d[0], cy = y+d[1];
-	for (;(curItem!=null)&&cx>=0&&cx<this.getWidth()&&cy>=0&&cy<this.getHeight();)
+	for (;(curItem!=null)&&cx>=0&&cx<this.getWidth()&&cy>=0&&cy<this.getHeigth();)
 	{
 		var t = curItem;
 		curItem = this.getItem(cx, cy);
@@ -28,16 +29,5 @@ Matrix.prototype.insertPixel = function(x, y, d)
 		cx += d[0], cy += d[1];
 	}
 	
-	if ((curItem != null)&&this.itemMovedCB) this.itemMovedCB(curItem);
+	if (raiseEvent&&(curItem != null)&&this.itemMovedCB) this.itemMovedCB(curItem);
 }
-
-Matrix.prototype.modifyEach = function(fn)
-{
-	for(var idx=0;idx<this._d.lenght;idx++)
-	{
-		this._d[idx] = fn(this._d[idx]);
-	}
-}
-
-Matrix.Direction = {LEFT: [-1, 0], UP: [0, -1], RIGHT: [1, 0], DOWN: [0, 1]};
-Matrix.Direction.ALL = [Matrix.Direction.UP, Matrix.Direction.LEFT, Matrix.Direction.DOWN, Matrix.Direction.RIGHT];

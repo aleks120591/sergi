@@ -11,7 +11,7 @@ function GeneTest_testSimpleCration()
 	this.assertEquals(12, gene.getRColor());
 	this.assertEquals(87, gene.getGColor());
 	this.assertEquals(143, gene.getBColor());
-	this.assertEquals(20, gene.getLenght());
+	this.assertEquals(20, gene.getLength());
 }
 
 GeneTest.prototype = new TestCase();

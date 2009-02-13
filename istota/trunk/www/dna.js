@@ -7,8 +7,12 @@ function Dna(rawData)
 	
 	if (rawData.length % blockSize) l++;
 	
-	if (rawData instanceof String)
-		function getAsByte(idx){return rawData.charCodeAt(idx)%256;}
+	if (typeof(rawData) == "string")
+		function getAsByte(idx){
+			var t = rawData.charCodeAt(idx);
+			if (idx%2) t = ~t;
+		return t%256;
+		}
 	else
 		function getAsByte(idx){return rawData[idx];}
 	
@@ -20,7 +24,7 @@ function Dna(rawData)
 	
 	for(var i=0;i<l;i++)
 	{
-		var g = new Gene(getItem(i, 0), getItem(i, 1), getItem(i, 2), getItem(i, 3));
+		var g = new Gene(getItem(i, 0), getItem(i, 1), getItem(i, 2), getItem(i, 3), getItem(i, 4));
 		this.genes.push(g);
 	}
 }
