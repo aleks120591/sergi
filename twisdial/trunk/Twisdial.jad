@@ -1,8 +1,0 @@
-MIDlet-Version: 0.1.0
-MIDlet-Vendor: Solvek.com
-Nokia-MIDlet-Category: Game
-MIDlet-Jar-URL: Twisdial.jar
-MicroEdition-Configuration: CLDC-1.1
-MIDlet-1: TwisdialMidlet,,TwisdialMidlet
-MicroEdition-Profile: MIDP-1.0
-MIDlet-Name: Twisdial Midlet Suite
