@@ -9,7 +9,7 @@ http://sergi.googlecode.com/svn/twisdial/trunk/thumb.png
 
 = Download =
 
-[http://my.getjar.com/products/26703/Twisdial Installation page], here you can find approach for retreiving it directly to you phone.
+[http://www.getjar.com/products/26703/Twisdial Installation page], here you can find approach for retreiving it directly to you phone.
 
 = Sources =
 
