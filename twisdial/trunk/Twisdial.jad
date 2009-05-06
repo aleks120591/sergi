@@ -1,8 +1,11 @@
-MIDlet-Version: 0.1.0
-MIDlet-Vendor: Solvek.com
-Nokia-MIDlet-Category: Game
+MIDlet-1: TwisdialMidlet,/icon.png,com.solvek.twisdial.TwisdialMidlet
+MIDlet-Description: Dialer for Twister game
+MIDlet-Icon: /icon.png
+MIDlet-Info-URL: http://code.google.com/p/sergi/wiki/Twisdial
 MIDlet-Jar-URL: Twisdial.jar
-MicroEdition-Configuration: CLDC-1.1
-MIDlet-1: TwisdialMidlet,,TwisdialMidlet
+MIDlet-Name: Twisdial
+MIDlet-Vendor: Solvek.com
+MIDlet-Version: 0.3.0
+MicroEdition-Configuration: CLDC-1.0
 MicroEdition-Profile: MIDP-1.0
-MIDlet-Name: Twisdial Midlet Suite
+Nokia-MIDlet-Category: Game

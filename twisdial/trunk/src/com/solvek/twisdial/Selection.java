@@ -1,3 +1,5 @@
+package com.solvek.twisdial;
+
 public class Selection {
 	public Selection(int value)
 	{

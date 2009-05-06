@@ -1,3 +1,5 @@
+package com.solvek.twisdial;
+
 import java.util.Random;
 
 import javax.microedition.lcdui.Command;
@@ -11,7 +13,6 @@ import javax.microedition.midlet.MIDletStateChangeException;
 public class TwisdialMidlet extends MIDlet implements CommandListener {
 
 	public TwisdialMidlet() {
-		canvas = new TwisdialCanvas();
 		canvas.addCommand(exitCommand);
 		canvas.addCommand(nextCommand);
 		canvas.setCommandListener(this);
@@ -39,7 +40,7 @@ public class TwisdialMidlet extends MIDlet implements CommandListener {
 	
 	private void nextSelection()
 	{
-		Selection s = new Selection(random.nextInt(16));
+		Selection s = new Selection(Math.abs(random.nextInt()));
 		canvas.setSelection(s);
 		canvas.repaint();
 	}
@@ -53,7 +54,7 @@ public class TwisdialMidlet extends MIDlet implements CommandListener {
 		  }	
 	}
 	
-	private TwisdialCanvas canvas;
+	private TwisdialCanvas canvas = new TwisdialCanvas();
 	private Random random = new Random();
 	private Command nextCommand = new Command("Next", Command.SCREEN, 1);
 	private Command exitCommand = new Command("Exit", Command.EXIT, 99);
