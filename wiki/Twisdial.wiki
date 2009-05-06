@@ -1,0 +1,10 @@
+#summary Twisdial description
+
+= Introduction =
+Twisdial - is simple and very small dialer for Twister game. Should work for any Java enabled mobile device.
+
+= Screenshots =
+
+= Download =
+
+= Sources =
