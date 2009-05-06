@@ -13,4 +13,4 @@ http://sergi.googlecode.com/svn/twisdial/trunk/thumb.png
 
 = Sources =
 
-Sources a available [http://code.google.com/p/sergi/source/checkout here]
+Sources a available [http://code.google.com/p/sergi/source/browse/#svn/twisdial/trunk here]
