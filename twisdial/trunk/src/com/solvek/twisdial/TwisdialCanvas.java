@@ -7,6 +7,10 @@ import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
+
+
+
+
 public class TwisdialCanvas extends Canvas {
 
 	public void setSelection(Selection s)
@@ -25,17 +29,6 @@ public class TwisdialCanvas extends Canvas {
 		
 		int p1 = height/4, p2 = 3*p1;
 		
-		// Outputting text
-		Font font = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_BOLD, Font.SIZE_LARGE);
-	    int fontHeight = font.getHeight();
-	    String dirTxt =  this.sel.getDirection();
-	    int fontWidth = font.stringWidth(dirTxt);
-	    g.setColor(0, 0, 0);
-	    g.setFont(font);
-	    g.drawString(dirTxt, (width - fontWidth)/2,  
-	                  (p1 - fontHeight)/2,
-	                  Graphics.TOP|Graphics.LEFT);
-	    
 	    // Outputting part
 	    String fileName = "/part"+this.sel.getPart()+".png";
 	    Image part;
@@ -49,6 +42,17 @@ public class TwisdialCanvas extends Canvas {
                 p1+(p2 - p1 - part.getHeight())/2,
                 Graphics.TOP|Graphics.LEFT);
 				
+		// Outputting text
+		Font font = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_BOLD, Font.SIZE_LARGE);
+	    int fontHeight = font.getHeight();
+	    String dirTxt =  this.sel.getDirection();
+	    int fontWidth = font.stringWidth(dirTxt);
+	    g.setColor(0, 0, 0);
+	    g.setFont(font);
+	    g.drawString(dirTxt, (width - fontWidth)/2,  
+	                  (p1 - fontHeight)/2,
+	                  Graphics.TOP|Graphics.LEFT);
+	    
 		// Outputting color
 		g.setColor(this.sel.getColor());
 		g.fillRect(0, p2, width, p1);
