@@ -1,0 +1,244 @@
+/* instacalc.css -- (c) Kalid Azad, instacalc.com */
+
+* { padding: 0px; margin: 0px;}
+
+/* Structure */
+img {
+	vertical-align: middle;
+	border: 0px;
+}
+
+.spacer {
+clear: both;
+}
+
+a { 
+  text-decoration: none;
+  color: #0000CC;;
+}
+
+a:visited{
+  color: #0000CC;;
+}
+
+a:hover{
+  text-decoration: underline;
+}
+
+body { 
+	font:11px verdana, arial, helvetica, sans-serif;
+	xwidth: 425px;
+	xbackground: #FFF;
+    xpadding-left: 5px;
+	xbackground: url('images/graphpaper3.gif');
+	background: #fff;
+}
+
+#mainheader{
+  padding-left: 30px;
+  background: #fff;
+}
+
+#navbar{
+  padding-left: 30px;
+}
+.inputtextarea{
+   font-size: 22px;
+   font-family: verdana,arial,helvetica,sans-serif;
+   overflow-y: hidden;
+}
+
+.tagline{
+  color: white;
+  font-size: 10px;
+}
+
+/* body */
+
+#content{
+	xbackground: url('images/graphpaper3.gif');
+    background: url('../images/graphpaper3.gif');
+}
+
+/* header */
+
+/* description field */
+#description{
+  color: #000;
+  xborder-bottom: 1px solid #ccc;
+  padding-left: 0px;
+  xbackground: #fff;
+  font-size: 11px;
+}
+
+/* Cell Area  */ 
+
+#cellrows{
+   /*   margin-right: auto; */
+   overflow: hidden;
+   xwidth: 400px;  
+}
+
+/* table column widths */
+.col0 {
+padding-right: 3px;
+text-align: center;
+height: 20px;
+width: 10px;
+}
+
+.col1 {
+ width: 200px;
+ height: 20px;
+ font-size: 14px;
+ font-family: verdana,arial,helvetica,sans-serif;
+}
+.col2 {
+padding-left: 10px;
+overflow: hidden;}
+
+.number {
+display: block;
+float: left;
+width: 15px;
+font-size: 10px;
+text-align: center;
+padding-right: 5px;
+padding-top: 5px;
+color: #888;
+}
+
+/* status areas */
+#statusdiv{
+  text-align: left;
+  padding-left: 30px;
+  padding-top: 60px;
+}
+
+#statusarea{
+ padding-left: 25px;
+ padding-bottom: 10px;
+ padding-top: 0px;
+ font-size: 10px;
+}
+
+.tableheader {
+  border-bottom: 0px solid #aaa;
+  text-align: left;
+  font-size: 10px;
+  padding-left: 5px;
+  color: #999;
+  font-weight: 100;
+}
+
+.tablefooter, .tablefooter a{
+  font-size: 10px;
+  font-weight: 100;
+  text-decoration: none;
+}
+
+/* Cells: Inputs, Outputs, Titles and Comments */ 
+
+.inputArea { 
+	/*   margin: 2px; */
+     float: left;
+     border: 1px solid #888;
+     width: 100%;
+	 font-size: 14px;
+	 font-family: verdana,arial,helvetica,sans-serif;
+}
+
+.inputArea:hover, .titleArea:hover {
+	background-color:#fff7c0;
+}
+
+.titleArea{
+  font-size: 14px;
+  padding-right: 20px;
+  text-align: right;
+  margin-right: 0px;
+  /* border: 1px solid green; */
+  width: 100%;
+}
+
+.outputArea, .outputArea a {
+	    font-family: verdana,arial,helvetica,sans-serif;
+	    font-size: 14px;
+	    color: red;
+            text-decoration: none;
+            font-weight: 100;
+            display: inline;
+           /* border: 1px solid blue; */
+            width: 250px;
+}
+
+.outputArea { cursor: hand }
+.outputArea:hover, .outputComment:hover {background-color:#EEE;}
+
+.outputComment, .outputComment a {
+	    font-family: verdana,arial,helvetica,sans-serif;
+	    font-size: 14px;
+	    color: green;
+            text-decoration: none;
+            font-weight: 100;
+/*            border: 1px solid red; */
+            display: inline;
+}
+
+.outputCommentSpacer{
+  padding-left: 10px;
+}
+
+.selected { 
+	background: rgb(221, 238, 255) none repeat scroll 0% 50%;
+}
+
+#status {
+ color: #999;
+ xborder-bottom: 1px dotted red;
+ margin: 2px;
+}
+
+/* footers  */
+#footer {
+	/* background-color: #ececec; */
+	color: #666;
+	background: #fff;
+	border-top: 1px solid #ccc;
+	height: 20px;
+}
+
+#footerlinks{
+  padding-top: 5px;
+  display: table;
+}
+
+.footertext{
+  font-size: 11px;
+  text-align: center;
+}
+
+/* Javascript menu */
+.popitmenu{
+	position: absolute;
+	background-color: white;
+	border:1px solid black;
+	font: normal 10px Verdana;
+	line-height: 18px;
+	z-index: 100;
+	visibility: hidden;
+	text-align: left;
+	width: 140px;
+}
+
+.popitmenu a, .popitmenu a:visited{
+	text-decoration: none;
+	color: black;
+
+	padding-left: 6px;
+	display: block;
+}
+
+.popitmenu a:hover{ /*hover background color*/
+	background-color: #F9CA69;
+}
