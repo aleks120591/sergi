@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Instacalc for Google Wave by Solvek</title>
+    <script src="library.js"></script>
+</head>
+<body>
+	<div id="cellrows" style="xdisplay:none">
+	    <div class="tableWrapper" id="gridmode">
+	    <!-- content table -->
+	    <table id="myTable" style="xdisplay:none">
+	       <thead>
+	         <tr>
+	            <th></th>
+	                    <th class="tableheader"></th>
+
+	                    <th class="tableheader"></th>
+	         </tr>
+	       </thead>
+	       <tbody id="myTbody" valign="top">
+
+	       </tbody>
+	       <tr class="tablefooter">
+	               <td><a name="tf"></a></td>
+	               <td>
+
+	                       <div>
+	                                    <div style="float:left">
+	                                            <a href="javascript:void(0)" onClick="saveSettings(); addMultipleCells(5); restoreSettings();" title="Add 5 Cells">+5 Rows</a>
+	                                    </div>
+	                                    <div style="float:right">
+	                                            <a href="javascript:void(0)" onClick="performClear();" title="Clear all rows">Clear all</a>
+	                                            <span id="undo" style="display:none;"><a href="javascript:void(0)" onClick="undo();" title="Undo Clear">(Undo)</a></span>
+
+	                                    </div>
+	                            </div>
+	               </td>
+	               <td align="right">
+	               </td>
+	       </tr>
+	    </table>
+	    </div> <!-- end tablewrapper -->
+
+	</div> <!-- end cellrows -->
+</body>
+</html>
