@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+	<ModulePrefs title="InstaCalc Gadget" scrolling="true"/>
+	<Content type="html">
+		<![CDATA[
+			<link rel="stylesheet" href="http://sergi.googlecode.com/svn/instacalc/trunk/styles/instacalc.css" type="text/css" media="screen">
+  
+			<script src="http://sergi.googlecode.com/svn/instacalc/trunk/js/dropdown.js" type="text/javascript"></script>
+			<script src="http://sergi.googlecode.com/svn/instacalc/trunk/js/NumberFormat154.js" type="text/javascript"></script>
+			<script src="http://sergi.googlecode.com/svn/instacalc/trunk/js/general-utils.js" type="text/javascript"></script>
+			<script src="http://sergi.googlecode.com/svn/instacalc/trunk/js/encoders.js" type="text/javascript"></script>
+		    
+			<script src="http://sergi.googlecode.com/svn/instacalc/trunk/js/instacalc_globals.js" type="text/javascript"></script>
+			<script src="http://sergi.googlecode.com/svn/instacalc/trunk/js/instacalc.js" type="text/javascript"></script>
+			
+			
+			<div style="background: #fff; border-bottom: 1px solid #ccc;">
+					<table width="400px">
+					<tr style="font-size: 11px">
+						<td align="left">
+						<span style="color: #666; font-size: 10px">powered by</span> <span style="color: #333; font-weight: bold;"><a href="http://www.instacalc.com" target="top">InstaCalc</span>
+						<span style="color: #666; font-size: 10px">(gadget by</span> <span style="color: #333; font-weight: bold;"><a href="http://www.solvek.com/projects/instacalc" target="top">Solvek</a>)</span>
+						</td>
+						<td align="right">
+
+							<span style="padding-left: 0px;"><a href="javascript:editDescription()" title="Edit current description">Edit Note</a></span> | 
+							<a id="permalink" title="Create a permanent link for a blog post, email, or IM." href="http://www.instacalc.com" target= "top" onMouseOver="javascript:createURL(); this.href = InstaCalc.minipermalink;">Save Link</a>
+						</td>
+					</tr>
+					</table>
+				</div>
+				
+				
+				<div id="mainheader2" style="background: #fff; clear:both; display:none;">
+					  <div style="float:left;">
+
+							<span style="color: #666; font-size: 10px">powered by</span> <span style="color: #333; font-weight: bold;"><a href="http://www.instacalc.com" target="top">InstaCalc</span>
+					  </div>
+					  
+					  <div style="float:right;">
+					  <span style="padding-left: 0px;"><a href="javascript:editDescription()" title="Edit current description">Edit Note</a></span> | 
+							<a id="permalink" title="Create a permanent link for a blog post, email, or IM." href="http://www.instacalc.com" target= "top" onMouseOver="javascript:createURL(); this.href = InstaCalc.minipermalink;">Save Link</a>
+					   </div>
+
+				</div>
+				
+				<div id="description" style="">
+				<table CELLPADDING=0 CELLSPACING=0 style="" > <!-- IE6 Bug; need a table here. A div shows up partially hidden!? -->
+					  <tr> <!-- style="background: #fff; border-bottom: 1px solid #ccc; font-size: 10px;"  -->
+					  <td>
+							<span id="readdescription" style="">
+
+								<span id="descriptiontext" style="font-size: 11px; background: #fff;"></span>
+							</span>
+							<div id="editdescription" style="display:none; font-size: 11px;">
+								<form>
+									<textarea id="descriptiontextarea" style="font-size: 11px;" cols=50 rows=3 WRAP=SOFT></textarea>
+								</form>
+								<div>
+									<a href="javascript:updateDescription()" title="Update description with text above.">Save</a> - <a href="javascript:cancelDescription()" title="Cancel any changes and return to previous description.">Cancel</a>
+
+									- Tip: [a link](http://instacalc.com) becomes <a href="http://instacalc.com">a link</a>
+								</div>
+							</div>
+					  </td>
+					  </tr>
+				</table>
+				</div>
+				
+				<div id="content" style="">
+
+					
+				<div id="cellrows" style="xdisplay:none">
+					<div class="tableWrapper" id="gridmode">
+					<!-- content table -->
+					<table id="myTable" style="xdisplay:none">
+					   <thead>
+					     <tr>
+					        <th></th>
+							<th class="tableheader"></th>
+							<th class="tableheader"></th>
+
+					     </tr>
+					   </thead>
+					   <tbody id="myTbody" valign="top"></tbody>
+					   <tr class="tablefooter">
+						   <td></td>
+						   <td>
+							   <div style="display:none">
+									<div style="float:left">
+										<a href="javascript:void(0)" onClick="showAllInputs(); addMultipleCells(5);" title="Add 5 Cells">+5 Rows</a>
+
+									</div>
+									<div style="float:right">
+										<a href="javascript:void(0)" onClick="if ( confirmClick('This will erase all rows and notes. Continue?') == true ){ clearAllRows(); showAllInputs(); setDescription('');}" title="Clear all rows">Clear all</a>
+									</div>
+								</div>
+						   </td>
+						   <td align="right">
+						   </td>
+
+					   </tr>
+					</table>
+					</div> <!-- end tablewrapper -->
+					
+					<div id="statusdiv" style="">
+						<span id="status"></span><img src="images/spinner.gif"/> Loading, please wait. If this message persists, please try reloading the page.</span>
+					</div>
+
+				</div> <!-- end cellrows -->
+
+				
+				</div> <!-- end content-->
+
+			<script type="text/javascript">
+			  // globals needed by scripts
+			  var statusarea = document.getElementById("statusarea");
+			  var status = document.getElementById("status");
+			  
+			  InstaCalc.settings.embed = true;
+			  
+			  createPage(); //createPage(["(1 + 2) * 4,000", "6.6 billion"]);
+			  setStatus("Ready to go! Just type a calculation.");
+			  hideItem('editdescription');
+			  
+			  if (InstaCalc.description == ""){
+				if (InstaCalc.settings.embed){
+				   setDescription(""); 
+				   // no action - keep description empty;
+				   hideItem('description'); // hide note if empty
+				}
+				else{
+					setDescription("Enter an equation, e.g. '123 * 43' or 'x = 2 billion * 3'"); 
+					InstaCalc.description = ""; // keep description empty
+				}
+			  }
+			  else{
+			    setDescription(InstaCalc.description);
+			  }
+			  
+			  hideItem('statusdiv');
+			  showItem('description');
+			</script>
+		]]>
+	</Content>
+</Module>
