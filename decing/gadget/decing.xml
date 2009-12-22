@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+	<ModulePrefs title="Secret Vote Gadget" scrolling="true" height="300">
+		<Require feature="locked-domain"/>
+		<Require feature="wave-preview" />
+ 		<Require feature="dynamic-height"/>
+	</ModulePrefs>
+	<Content type="html">
+		<![CDATA[
+			<!-- {{min:decing.css -->
+			<link media="all" type="text/css" href="http://www.decing.com/css/ui.css" rel="Stylesheet" />
+    		<link media="all" type="text/css" href="http://www.decing.com/css/spinner.css" rel="Stylesheet" />
+    		<link media="all" type="text/css" href="http://www.decing.com/css/poll.css" rel="Stylesheet" />
+    		<!-- }} -->
+			
+			<div>
+				<img src="http://www.decing.com/img/logo16.png" alt="Decing small logo"/>
+				Please <a href="http://www.decing.com/#faq" target="_blank">check our FAQ</a> for security notices.
+			</div>
+			<div id="logger">
+			</div>
+			<div id="app_target" class="wave-gadget">
+				<img src='http://www.decing.com/img/loader.gif' alt='initialization..'/><span>Initialization...</span>
+			</div>
+			
+		    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+		    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+		    
+		    <!-- {{min:decing.js -->
+		    <script src="http://www.decing.com/js/jquery/json.js"></script>
+		    <script src="http://www.decing.com/js/jquery/spinner.js"></script>
+		    <script src="http://www.decing.com/js/jquery/blockUI.js"></script>
+		    
+		   
+		   	<script src="http://www.decing.com/js/app/boompoll.js"></script>
+		   	<script src="http://www.decing.com/js/app/templates.js"></script>
+		    <script src="http://www.decing.com/js/app/controllers/application.js"></script>
+			<script src="http://www.decing.com/js/app/utils/entities.js"></script>
+			<script src="http://www.decing.com/js/app/i18n/boompoll-en.js"></script> 	
+			<script src="http://www.decing.com/js/app/views/view_template.js"></script>
+			<script src="http://www.decing.com/js/app/utils/event_handler.js"></script>
+			<script src="http://www.decing.com/js/app/views/view_create.js"></script>
+			<script src="http://www.decing.com/js/app/views/view_display.js"></script>
+			<script src="http://www.decing.com/js/app/views/view_voting.js"></script>
+			<script src="http://www.decing.com/js/app/views/view_result.js"></script>
+			<script src="http://www.decing.com/js/app/views/view_save_result.js"></script>
+			<script src="http://www.decing.com/js/app/controllers/controller_create.js"></script>
+			<script src="http://www.decing.com/js/app/controllers/controller_display.js"></script>
+			<!-- }} -->
+			
+			<script src="http://www.decing.com/js/container.google.js"></script>
+			
+			
+			<script type="text/javascript">
+				var app_initialized = false;
+
+				function process(){
+					if (wave.getMode() == wave.Mode.UNKNOWN){
+						return;
+					}
+					if (!app_initialized){
+				    		var app = new boompoll.Application(
+								$('#app_target').get(0),
+								$('#logger'));
+							app.start();
+							app_initialized = true;
+					}
+					boompoll.container.syncAccessInfo();
+				}
+
+			    function init() {
+			      if (wave && wave.isInWaveContainer()) {
+			      	wave.setStateCallback(process);
+	    			//wave.setParticipantCallback(process);
+			      }
+			    }
+			    gadgets.util.registerOnLoadHandler(init);
+			</script>
+			
+			<script type="text/javascript">
+			var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+			document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+			</script>
+			<script type="text/javascript">
+			try {
+			var pageTracker = _gat._getTracker("UA-262497-9");
+			pageTracker._trackPageview();
+			} catch(err) {}</script>			
+		]]>
+	</Content>
+</Module>

@@ -1,0 +1,89 @@
+<div id="tabs">
+  <ul>
+    <li id="hdr_tab1"> <a href="#tabs-1">General</a> </li>
+    <li id="hdr_tab2"> <a href="#tabs-2">Options</a> </li>
+    <li id="hdr_tab3"> <a href="#tabs-3">Participants</a> </li>
+    <li id="hdr_tab4"> <a href="#tabs-4">Advanced</a> </li>
+  </ul>
+  <div id="tabs-1">
+    <label id="lbl_subject">Subject</label>
+    <br />
+    <textarea id="subject" rows="4" style="width:100%" class="ui-widget ui-widget-content"></textarea>
+    <div class="validator" id="tab1_validation"></div>
+  </div>
+  <div id="tabs-2">
+    <p>
+      <input type="checkbox" id="votersOptions" />
+      <label id="lbl_votersOptions" for="votersOptions">Use participants as options for this poll</label>
+    <div id="options_container">
+      <button id="add_option" class="ui-state-default ui-corner-all poll-button" type="submit"> <span class="poll-icon poll-icon-option-add"></span> Add Option</button>
+      <br>
+      <br>
+      <table id="options" class="ui-widget ui-widget-content" >
+        <thead>
+          <tr>
+            <td>&nbsp;</td>
+            <td><label id="lbl_options">Options</label>
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="column-delete"><div class="poll-icon poll-icon-option-del poll-button"></div></td>
+            <td><input type="text" size="50" maxlength="50" class="ui-widget ui-widget-content" />
+            </td>
+          </tr>
+          <tr>
+            <td class="column-delete"><div class="poll-icon poll-icon-option-del poll-button"></div></td>
+            <td><input type="text" size="50" maxlength="50" class="ui-widget ui-widget-content"/>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </p>
+    <div class="validator" id="tab2_validation"></div>
+  </div>
+  <div id="tabs-3">
+    <p>
+      <input id="showWeight" type="checkbox" checked="checked"/>
+      <label for="showWeight">Weight of a paritcipant's vote may vary</label>
+    <div id="participants_container">
+      <button id="add_user" class="ui-state-default ui-corner-all poll-button" type="submit"> <span class="poll-icon poll-icon-user-add"></span> Add Participant</button>
+      <br>
+      <div id="partic_multiselect">
+        <button id="select_all" class="ui-state-default ui-corner-all poll-button" type="submit"> <span class="poll-icon poll-icon-thumb-up"></span> Select All </button>
+        <button id="select_none" class="ui-state-default ui-corner-all poll-button" type="submit"> <span class="poll-icon poll-icon-thumb-down"></span> Select None </button>
+      </div>
+      <br/>
+      <table id="participants" class="ui-widget ui-widget-content">
+        <thead>
+          <tr>
+            <td class="column-delete">&nbsp;</td>
+            <td>Name</td>
+            <td class="poll-column-weight">Weight</td>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    </p>
+    <div class="validator" id="tab3_validation"></div>
+  </div>
+  <div id="tabs-4">
+    <p>
+		<input type="checkbox" id="use_gems" />
+		<label for="use_gems">Participants will distribute gems between options</label>
+		<div id="gems_count_container">
+		  <label for="gems_count">Number of Gems: </label>
+		  <input id="gems_count" type="text" size="8" maxlength="8" value="100" class="ui-widget ui-widget-content"/>
+		</div>
+    </p>
+    <div class="validator" id="tab4_validation"></div>
+  </div>
+  <div class="poll_command_bar">
+    <button id="button_save" class="ui-state-default ui-corner-all poll-button" type="submit"> <span class="poll-icon poll-icon-option-ok"></span> Save </button>
+    <button id="button_clear" class="ui-state-default ui-corner-all poll-button"> <span class="poll-icon poll-icon-delete"></span> Clear </button>
+  </div>
+</div>

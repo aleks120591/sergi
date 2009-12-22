@@ -1,0 +1,11 @@
+<extension 
+    name="Decing Gadget"
+    thumbnailUrl="http://www.decing.com/gadget/screenshot_decing.png"
+    description="Need to make a decision? Arrange a Secret and Private Vote inside of a wave. Participants' votes are not shared to others."
+    infoUrl="http://www.decing.com/#faq">
+  <author name="Decing.com"/> 
+  <menuHook location="toolbar" text="Add Secret Voting"
+      iconUrl="http://www.decing.com/gadget/icon_decing.png"> 
+    <insertGadget url="http://www.decing.com/gadget/decing.xml"/>
+  </menuHook> 
+</extension> 

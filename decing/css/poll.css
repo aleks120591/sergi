@@ -1,0 +1,131 @@
+body
+{
+	font-family: Arial;
+}
+
+label {
+	margin-right: .5em;
+	font-weight: bold;
+}
+
+td {
+border: 1px solid #a6c9e2;
+}
+
+input {
+	border-style:none;
+}
+
+.validator
+{
+	color: Red;
+}
+
+.poll-logo
+{
+	width: 32px; 
+	height: 32px; 
+	background-image: url(../img/poll/logo.png); 
+}
+
+table { width:100%;}
+/* Icons
+----------------------------------*/
+
+.poll-icon {
+	width: 16px;
+	height: 16px;
+	background-image: url(../img/poll/icons.png); 
+	background-repeat: no-repeat;
+	display:block;
+	float:left;
+	text-indent: -99999px;
+}
+
+.poll-icon-clipboard{background-position: 0 0;}
+.poll-icon-user-add{background-position: -16px 0;}
+.poll-icon-user-del{background-position: -32px 0;}
+.poll-icon-option-add{background-position: -48px 0;}
+.poll-icon-option-del{background-position: -64px 0;}
+.poll-icon-option-ok{background-position: -80px 0;}
+.poll-icon-add{background-position: -96px 0;}
+.poll-icon-thumb-up{background-position: 0 -16px;}
+.poll-icon-thumb-down{background-position: -16px -16px;}
+.poll-icon-delete{background-position: -32px -16px;}
+
+/* Buttons
+----------------------------------*/
+.poll-button{
+	cursor:pointer;
+}
+
+button.poll-button { 
+	outline: 0; 
+	margin:0 4px 0 0;
+	padding: .4em 1em .4em 2.1em;
+	text-decoration:none !important; 
+	position: relative; 
+	zoom: 1;
+}
+
+.poll_command_bar {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+	
+/* remove extra button width in IE */
+button.poll-button { width:auto; overflow:visible; }
+
+button.poll-button .ui-icon,
+button.poll-button .poll-icon
+{
+	position:absolute;
+	top: 50%;
+	margin-top: -8px; 
+	margin-left: 0;
+	left: .2em; 
+}
+
+/* Specific cases
+----------------------------------*/
+
+#app_target
+{
+	font: 80% "Trebuchet MS", sans-serif;
+	padding:8px; 
+}
+
+#subject{
+	font-family: 120% "Trebuchet MS", sans-serif;
+	font-weight: bold;
+	font-size:larger;
+	color: #4B8749;
+	}
+	
+#status{padding: 5px; margin-bottom:5px;}	
+#current{padding: 5px;}
+#button_save{margin-left:14px;}
+
+ul#icons {margin: 0; padding: 0;}
+ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
+ul#icons span.ui-icon {float: left; margin: 0 4px;}
+
+/* Participants editor
+----------------------------------*/
+#app_target.wave-gadget #add_user,
+#app_target.wave-gadget #participants_container .column-delete,
+#app_target.wave-gadget input.bp-input-participant,
+
+#app_target.site-gadget #partic_multiselect,
+#app_target.site-gadget .poll-cb-participant,
+#app_target.site-gadget .poll-span-participant
+{
+	display:none;
+}
+
+#display.poll-one-gem #gems_counter_container,
+#display.poll-one-gem .poll-selection
+{
+	display:none;
+}
