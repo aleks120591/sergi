@@ -1,0 +1,25 @@
+<div id="display" class="ui-widget">
+	<div id="status" class="ui-widget-content">
+		<label for="subject">Subject: </label>
+			<span id="subject"></span><br />
+		<h3>Participants:</h3>
+		<table id="participants" class="ui-widget ui-widget-content"></table>
+		<div id="voter_name">
+			<label for="voter">You are: </label>
+			<span id="voter"></span>
+		</div>
+	</div>	
+	<div id="current" class="ui-widget-content">
+		<img src='img/loader2.gif' alt='Loading'/><span>Loading...</span>
+	</div>
+    <div class="poll_command_bar">
+		<button id="button_vote" class="ui-state-default ui-corner-all poll-button" type="submit">
+           	<span class="poll-icon poll-icon-option-ok"></span>
+               Vote
+        </button>
+		<button id="button_create" class="ui-state-default ui-corner-all poll-button" type="submit">
+           	<span class="poll-icon poll-icon-add"></span>
+               Create New
+        </button>        
+    </div>	
+</div>

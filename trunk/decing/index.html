@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Secret and Private Voting Online</title>
+    <meta name="description" content="Online service for arrangement a simple Secret and Private votings for small teams"/>
+    <meta name="keywords" content="secret vote,online service,web 2.0,simple service,free,private vote,small team,google wave gadget"/>
+    <meta http-equiv="content-type" content="text-html; charset=utf-8"/>
+	
+	<link rel="SHORTCUT ICON" href="favicon.ico"/>
+	
+    <link media="all" type="text/css" href="css/site.css" rel="stylesheet"/>	
+	
+	<!-- {{min:decing.css -->
+	<link media="all" type="text/css" href="css/ui.css" rel="Stylesheet" />
+    <link media="all" type="text/css" href="css/spinner.css" rel="Stylesheet" />
+    <link media="all" type="text/css" href="css/poll.css" rel="Stylesheet" />
+    <!-- }} -->
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+    
+    <!-- {{min:decing.js -->
+    <script src="js/jquery/json.js"></script>
+    <script src="js/jquery/spinner.js"></script>
+    <script src="js/jquery/blockUI.js"></script>
+	   
+   	<script src="js/app/boompoll.js"></script>
+   	<script src="js/app/templates.js"></script>
+    <script src="js/app/controllers/application.js"></script>
+	<script src="js/app/utils/entities.js"></script>
+	<script src="js/app/i18n/boompoll-en.js"></script>
+	<script src="js/app/views/view_template.js"></script>
+	<script src="js/app/utils/event_handler.js"></script>
+	<script src="js/app/views/view_create.js"></script>
+	<script src="js/app/views/view_display.js"></script>
+	<script src="js/app/views/view_voting.js"></script>
+	<script src="js/app/views/view_result.js"></script>
+	<script src="js/app/views/view_save_result.js"></script>
+	<script src="js/app/controllers/controller_create.js"></script>
+	<script src="js/app/controllers/controller_display.js"></script>
+	<!-- }} -->
+	
+	<script src="js/container.jquery.js"></script>
+	
+	<script type="text/javascript">
+		<!--
+		var accessKeyEdited = false;
+		$(function(){
+				var app = new boompoll.Application(
+						$('#app_target').get(0),
+						$('#logger'));
+				app.start();
+
+				$("#search-text").focus(function(){
+					if (accessKeyEdited) return;
+					accessKeyEdited = true;
+					this.value = "";
+				});
+
+				$("#search form").submit(function(){
+					window.location.href = "/?"+$("#search-text").val();
+					return false;
+				});
+		});
+		window.google_analytics_uacct = "UA-262497-9";
+		// -->
+	</script>
+</head>
+	<body>
+		<div id="wrapper">
+			<div id="logo">
+				<h1>
+					<a href="/">Decing </a>
+				</h1>
+				<p>
+					<em>decisions through secret and private votes</em>
+				</p>
+			</div>
+			<hr />
+	<!-- end #logo -->
+			<div id="header">
+				<div id="menu">
+					<ul>
+						<li class="current_page_item">
+							<a href="/">Homepage </a>
+						</li>
+						<li>
+							<a href="#about">About </a>
+						</li>
+						<li>
+							<a href="#faq">FAQ </a>
+						</li>
+					</ul>
+				</div>
+		<!-- end #menu -->
+				<div id="search">
+					<form method="get" action="">
+						<fieldset>
+							<input type="text" name="s" id="search-text" size="15" value="Enter access key"/>
+							<input type="submit" id="search-submit" value="GO" /></fieldset>
+					</form>
+				</div>
+		<!-- end #search -->
+			</div>
+	<!-- end #header -->
+	<!-- end #header-wrapper -->
+			<div id="page">
+				<div id="page-bgtop">
+					<div id="content">
+						<div class="post" style="width:500px; margin-left:125px;">
+							<h2 class="title">Create and use voting</h2>
+							<div id="logger"></div>
+							<div id="app_target" class="site-gadget ui-widget ui-widget-content ui-corner-all">
+								<img src='img/loader2.gif' alt='initialization..'/><span>Initialization...</span>
+							</div>
+						</div>
+						<div class="post">
+							<h2 class="title"><a name="about">About Decing.com</a></h2>
+							<div class="entry">
+								<p>Decing ia a <strong>simple</strong> and 100% <strong>free</strong> online service for arranging a <strong>Secret</strong> and <strong>Private</strong> vote. The system is designed for small teams which should make a decision without disclosing individual participants' selections. Our service does not require registration. When creating a new vote you have to specify a subject the text that describes the purpose of voting, option names and the names of participants. Additionally you can set the weights for the participants, provide that options will be the participants - in this case participants cannot vote for themselves, in addition there is a possibility not just to choose one option but participants can distribute a fixed amount of Gems between options.</p>
+								<p>In addition to voting on our website, you can arrange a vote among Google Wave participants. To add a vote to a conversation just insert into the desired place our gadget. It can be installed <a href="gadget/">here</a> into your Wave profile.</p>
+							</div>
+						</div>
+						<div class="post">
+							<h2 class="title"><a name="faq">F.A.Q.</a></h2>
+							<div class="entry">
+								<p><strong>Q. How is this service different than similar?</strong></p>
+								<p>A. The most of poll services allow you to create a poll, place them on own site. Typically such votes are public participants' selections are not always kept in secret. Our service is aimed to decision-making. When a small team wants to make a decision based on the results of voting.</p>
+								<p><strong>Q. Will others see my vote?</strong></p>
+								<p>A. We never do disclose the selections of participants of voting. Preparing of result is performed by robot basing on participants' selections then this result is provided to participants (but not the selections of individual participants).</p>
+								<p><strong>Q. What will be the result if the number of votes will be the same for multiple options?</strong></p>
+								<p>A. The winner option will be chosen randomly, the probabilities of choosing for all options are equal.</p>
+								<p><strong>Q. What if somebody will know my Access Key?</strong></p>
+								<p>A. Access Key allows to vote in a poll as specified by this code participant. Typically creator knows keys for all participants. However this key does not allow to discover what was the selection of this participant. If one who knows your access key will vote instead of you it will be obviouse for you (because you did not voted actually) and this poll will be claimed invalid.</p>
+							</div>
+						</div>
+					</div>
+		<!-- end #content -->
+					<div id="sidebar">
+						<ul>
+							<li>
+								<h2><img src="img/wavelogo.png" alt="Wave Logo" style="float:left"/>&nbsp;Now in Google Wave </h2>
+								<p>Want to know who is the coolest participant of your wave? Just install our gadget and have some fun!
+								</p>
+								<br/>
+								<a href="gadget/" target="_blank">
+									<img src="gadget/install_button.png" alt="Istall Gadget"/>
+								</a>								
+							</li>
+							<li>
+								<center>
+								<script type="text/javascript"><!--
+									google_ad_client = "pub-8865856783388711";
+									/* 120x240, created 30.11.09 */
+									google_ad_slot = "4885406432";
+									google_ad_width = 120;
+									google_ad_height = 240;
+									//-->
+									</script>
+									<script type="text/javascript"
+									src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+								</script>
+								</center>
+							</li>
+						</ul>
+					</div>
+		<!-- end #sidebar -->
+					<div style="clear: both;">&nbsp; </div>
+				</div>
+			</div>
+	<!-- end #page -->
+			<div id="footer">
+				<p>Copyright (c) 2009 <a href="http://www.decing.com/">Decing.com</a>. All rights reserved. Design by 
+					<a href="http://www.freecsstemplates.org/">Free CSS Templates </a>.
+				</p>
+			</div>
+	<!-- end #footer -->
+		</div>
+			<script type="text/javascript">
+			var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+			document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+			</script>
+			<script type="text/javascript">
+			try {
+			var pageTracker = _gat._getTracker("UA-262497-9");
+			pageTracker._trackPageview();
+			} catch(err) {}</script>		
+	</body>
+</html>

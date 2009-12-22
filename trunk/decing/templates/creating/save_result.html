@@ -1,0 +1,27 @@
+<label for="VoteSuccCreate">Your vote is successfully created. Now send the links below for appropriate 
+participants individually.</label>
+<table id="tbl_saveResult" class="ui-widget ui-widget-content">
+	<thead>
+		<tr>
+			<th>Participant</th>
+			<th>Access Url</th>
+			<th>Copy</th>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+<div class="poll_command_bar">
+	<button id="button_create" class="ui-state-default ui-corner-all poll-button" type="submit">
+		<span class="poll-icon poll-icon-add"></span>
+		   Create New
+	</button>        
+</div>
+<div title="Copy Url" class="ui-helper-hidden" id="dlg-copy">
+	<span>Personal link for participant&nbsp;</span>
+	<b id="partName"></b>
+	<br/>
+	<input type="text" readonly="readonly" style="width:100%"/>
+	<br/>
+	<span>Press Cnrl+C to copy url to clipboard and send it to participant</span>
+</div>
