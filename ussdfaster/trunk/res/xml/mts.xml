@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	name = "МТС (Україна)">
+	<group
+		name = "Фінанси">
+		<command
+			name="Баланс"
+			description="Інформація про стан рахунку, термін дії послуги і тарифної моделі"
+			template="*101#">
+		</command>
+	</group>
+</carrier>
