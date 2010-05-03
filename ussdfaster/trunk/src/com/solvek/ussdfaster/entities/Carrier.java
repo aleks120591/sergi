@@ -1,13 +1,14 @@
 package com.solvek.ussdfaster.entities;
 
-public class Carrier {
-	private String name;
+public class Carrier extends NamedEntity {
+	
+	private Group[] groups;
 
-	public void setName(String name) {
-		this.name = name;
+	public void setGroups(Group[] groups) {
+		this.groups = groups;
 	}
 
-	public String getName() {
-		return name;
-	}	
+	public Group[] getGroups() {
+		return groups;
+	}
 }
