@@ -2,13 +2,13 @@ package com.solvek.ussdfaster.entities;
 
 public class Carrier extends NamedEntity {
 	
-	private Group[] groups;
+	private Iterable<Group> groups;
 
-	public void setGroups(Group[] groups) {
+	public void setGroups(Iterable<Group> groups) {
 		this.groups = groups;
 	}
 
-	public Group[] getGroups() {
+	public Iterable<Group> getGroups() {
 		return groups;
 	}
 }

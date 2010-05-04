@@ -8,5 +8,35 @@
 			description="Інформація про стан рахунку, термін дії послуги і тарифної моделі"
 			template="*101#">
 		</command>
+		<command
+			name="Фігня"
+			description="Запит, який завжди видає помилку"
+			template="*10156677#">
+		</command>
+	</group>
+	<group
+		name = "«Передзвони мені»">
+		<command
+			name="Запит"
+			description="Запит послуги «Передзвони мені»"
+			template="*104*{phone}#">
+
+			<field
+				name="Номер телефону"
+				description="Виберіть номер телефону для відправки запиту"
+				id="phone"
+				type="contact">
+			</field>
+		</command>
+		<command
+			name="Допомога"
+			description="Інструкція українською мовою"
+			template="*104#">
+		</command>
+		<command
+			name="Доступно запитів"
+			description="Інформація про кількість запитів, що залишилися, в рамках послуги «Передзвони мені»"
+			template="*104*0#">
+		</command>		
 	</group>
 </carrier>

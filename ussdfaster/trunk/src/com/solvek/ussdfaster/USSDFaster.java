@@ -1,17 +1,16 @@
 package com.solvek.ussdfaster;
 
-import com.solvek.ussdfaster.entities.Carrier;
-import com.solvek.ussdfaster.parsers.CarrierParser;
-
 import android.app.TabActivity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TabHost;
+
+import com.solvek.ussdfaster.entities.Carrier;
+import com.solvek.ussdfaster.entities.Group;
+import com.solvek.ussdfaster.parsers.CarrierParser;
 
 public class USSDFaster extends TabActivity {
 	static final private int MENU_QUIT = Menu.FIRST;
@@ -27,24 +26,26 @@ public class USSDFaster extends TabActivity {
         try {
 			c = parser.parse();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			finish();
+			throw new Error("Failed to read xml file", e);
 		}
 		
-		Resources res = getResources(); // Resource object to get Drawables
-	    TabHost tabHost = getTabHost();  // The activity TabHost
+	    TabHost tabHost = getTabHost();
+	    Intent intent;
+	    TabHost.TabSpec spec;
 
-	    // Create an Intent to launch an Activity for the tab (to be reused)
-	    Intent intent = new Intent().setClass(this, GroupActivity.class);
-
-	    // Initialize a TabSpec for each tab and add it to the TabHost
-	    TabHost.TabSpec spec = tabHost
-	    	.newTabSpec("artists")
-	    	.setIndicator("Finances", res.getDrawable(R.drawable.ic_tab_artists))
-	        .setContent(intent);
-	    tabHost.addTab(spec);
-
+	    int idx = 0;
+	    for(Group g: c.getGroups()){
+		    intent = new Intent()
+		    	.setClass(this, GroupActivity.class)
+		    	.putExtra("group", g);
+		    
+		    spec = tabHost
+		    	.newTabSpec("tab"+idx)
+		    	.setIndicator(g.getName())
+		        .setContent(intent);
+		    tabHost.addTab(spec);
+		    idx++;
+	    }
 	    tabHost.setCurrentTab(0);
     }
     
