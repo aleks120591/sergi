@@ -1,10 +1,5 @@
 package com.solvek.ussdfaster;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,7 +12,6 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.solvek.ussdfaster.entities.Command;
 import com.solvek.ussdfaster.entities.Group;
-import com.solvek.ussdfaster.fields.BaseField;
 
 public class GroupActivity extends ListActivity 
 		implements OnItemClickListener {    
@@ -38,23 +32,25 @@ public class GroupActivity extends ListActivity
 		Command cmd = adapter.getCommand(position);
 		
 		String tmpl = cmd.getTemplate();
-		
-		
-		if (cmd.getFields().size() > 0){
-			Form f = new Form(cmd);
-			
-			if (f.show()){
-				Map<String, String> rpl = f.getFormReplaces();
 				
-				for(Map.Entry<String, String> entry : rpl.entrySet()){
-					tmpl = tmpl.replace("{"+entry.getKey()+"}", entry.getValue());
-				}
-			}
+		if (cmd.getFields().size() > 0){
+			Form f = new Form(this, new DialogInterface.OnClickListener(){
+
+				public void onClick(DialogInterface dialog, int which) {
+					Form f = (Form)dialog; 
+					sendUssd(f.getFormReplaces());
+				}}, cmd);
+			
+			f.show();
 		}
-		
-		tmpl = tmpl.replace("#", Uri.encode("#"));
-		
-		call(tmpl);
+		else {
+			sendUssd(tmpl);
+		}
+	}
+	
+	private void sendUssd(String code){
+		code = code.replace("#", Uri.encode("#"));
+		call(code);
 	}
 
 	private void call(String phoneNumber) {
