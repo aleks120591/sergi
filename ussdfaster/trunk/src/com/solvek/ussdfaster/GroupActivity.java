@@ -1,6 +1,12 @@
 package com.solvek.ussdfaster;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +17,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.solvek.ussdfaster.entities.Command;
 import com.solvek.ussdfaster.entities.Group;
+import com.solvek.ussdfaster.fields.BaseField;
 
 public class GroupActivity extends ListActivity 
 		implements OnItemClickListener {    
@@ -30,14 +37,27 @@ public class GroupActivity extends ListActivity
 		CommandsAdapter adapter = (CommandsAdapter)parent.getAdapter();
 		Command cmd = adapter.getCommand(position);
 		
-		String tmpl = cmd
-			.getTemplate()
-			.replace("#", Uri.encode("#"));
+		String tmpl = cmd.getTemplate();
+		
+		
+		if (cmd.getFields().size() > 0){
+			Form f = new Form(cmd);
+			
+			if (f.show()){
+				Map<String, String> rpl = f.getFormReplaces();
+				
+				for(Map.Entry<String, String> entry : rpl.entrySet()){
+					tmpl = tmpl.replace("{"+entry.getKey()+"}", entry.getValue());
+				}
+			}
+		}
+		
+		tmpl = tmpl.replace("#", Uri.encode("#"));
 		
 		call(tmpl);
 	}
-	
-    protected void call(String phoneNumber) {
+
+	private void call(String phoneNumber) {
         startActivityForResult(new Intent("android.intent.action.CALL",
                        Uri.parse("tel:" + phoneNumber)), 1);
     }

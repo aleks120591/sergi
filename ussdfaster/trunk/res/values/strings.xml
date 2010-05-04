@@ -4,4 +4,6 @@
     <string name="app_name">USSD Faster</string>
 <string name="quit">Вийти</string>
 
+<string name="send">Відправити</string>
+<string name="cancel">Відмінити</string>
 </resources>

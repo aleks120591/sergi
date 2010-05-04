@@ -9,6 +9,8 @@ import org.xmlpull.v1.XmlPullParserException;
 import com.solvek.ussdfaster.entities.Carrier;
 import com.solvek.ussdfaster.entities.Command;
 import com.solvek.ussdfaster.entities.Group;
+import com.solvek.ussdfaster.fields.BaseField;
+import com.solvek.ussdfaster.fields.ContactField;
 
 public class CarrierParser {
 	final private XmlPullParser parser;
@@ -23,6 +25,8 @@ public class CarrierParser {
 		ArrayList<Group> groups = new ArrayList<Group>();
 		Command command = null;
 		ArrayList<Command> commands = null;
+		BaseField field = null;
+		ArrayList<BaseField> fields = null;
 		
 		int eventType = this.parser.getEventType();
         while (eventType != XmlPullParser.END_DOCUMENT) {
@@ -42,7 +46,22 @@ public class CarrierParser {
         		command.setName(parser.getAttributeValue(null, "name"));
         		command.setDescription(parser.getAttributeValue(null, "description"));
         		command.setTemplate(parser.getAttributeValue(null, "template"));
-        	}        	
+        		fields = new ArrayList<BaseField>();
+        	}
+        	if (this.parser.getName().equalsIgnoreCase("field")){
+        		String type = parser.getAttributeValue(null, "type");
+        		field = null;
+        		if (type.equalsIgnoreCase("contact")){
+        			field = new ContactField();
+        		}
+        		
+        		if (field == null){
+        			throw new Error("Unknown field type: "+type);
+        		}
+        		
+        		field.setName(parser.getAttributeValue(null, "name"));
+        		field.setDescription(parser.getAttributeValue(null, "description"));        		
+        	}
          }
          
          if(eventType == XmlPullParser.END_TAG) {
@@ -54,7 +73,11 @@ public class CarrierParser {
         		groups.add(group);
         	}
         	if (this.parser.getName().equalsIgnoreCase("command")){
+        		command.setFields(fields);
         		commands.add(command);
+        	}
+        	if (this.parser.getName().equalsIgnoreCase("field")){
+        		fields.add(field);
         	}
          }
          
