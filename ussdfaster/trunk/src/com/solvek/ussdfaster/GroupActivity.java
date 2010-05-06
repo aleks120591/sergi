@@ -1,10 +1,10 @@
 package com.solvek.ussdfaster;
 
 import android.app.ListActivity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -31,31 +31,33 @@ public class GroupActivity extends ListActivity
 		CommandsAdapter adapter = (CommandsAdapter)parent.getAdapter();
 		Command cmd = adapter.getCommand(position);
 		
-		String tmpl = cmd.getTemplate();
-				
 		if (cmd.getFields().size() > 0){
-			Form f = new Form(this, new DialogInterface.OnClickListener(){
+			/*Form f = new Form(this, new DialogInterface.OnClickListener(){
 
 				public void onClick(DialogInterface dialog, int which) {
 					Form f = (Form)dialog; 
 					sendUssd(f.getFormReplaces());
 				}}, cmd);
 			
-			f.show();
+			f.show();*/
+			Intent intent = new Intent().setClass(this, FormActivity.class);
+			startActivity(intent);
 		}
 		else {
-			sendUssd(tmpl);
+			sendUssd(cmd.getTemplate());
 		}
 	}
 	
 	private void sendUssd(String code){
+		Log.v(TAG, "Sending USSD: "+code);
 		code = code.replace("#", Uri.encode("#"));
 		call(code);
 	}
 
 	private void call(String phoneNumber) {
-        startActivityForResult(new Intent("android.intent.action.CALL",
-                       Uri.parse("tel:" + phoneNumber)), 1);
+        startActivity(new Intent(
+			"android.intent.action.CALL",
+            Uri.parse("tel:" + phoneNumber)));
     }
     
     /*protected void onActivityResult(
@@ -77,5 +79,7 @@ public class GroupActivity extends ListActivity
 			throw new Error("Failed to get extra data");
 		}
 		return (Group)extras.getSerializable("group");
-	}    
+	}
+	
+	private static final String TAG = "GroupActivity";
 }

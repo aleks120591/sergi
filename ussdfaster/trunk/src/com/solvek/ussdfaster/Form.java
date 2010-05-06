@@ -2,17 +2,20 @@ package com.solvek.ussdfaster;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.view.LayoutInflater;
+import android.content.Intent;
+import android.sax.StartElementListener;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.solvek.ussdfaster.entities.Command;
 import com.solvek.ussdfaster.fields.BaseField;
+import com.solvek.ussdfaster.fields.ContactFieldActivity;
 
 public final class Form extends AlertDialog {
 	private Command command;
@@ -48,8 +51,6 @@ public final class Form extends AlertDialog {
     	content.setOrientation(LinearLayout.VERTICAL);
     	this.setView(content);
     	
-    	//LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    	//vi.inflate(R.layout.mycustomlayout,this,true, null); 
     	for(BaseField field : fields){
     		fset.put(field.getName(), field);
     		
@@ -58,7 +59,10 @@ public final class Form extends AlertDialog {
     		
     		content.addView(label);
     		
-    		View editor = field.createView();
+    		View editor = field.createView(getContext());
+        	Intent intent = new Intent().setClass(context, ContactFieldActivity.class);
+        	context.startActivity(intent);    		
+    		
     		//content.addView(editor);
     		
     		views.put(field.getName(), editor);
@@ -66,12 +70,14 @@ public final class Form extends AlertDialog {
 	}
 	
 	public String getFormReplaces(){
-    	/*HashMap<String, String> res = new HashMap<String, String>(command.getFields().size());		
-		return res;*/
-		return this.command.getTemplate();
-	}
-	
-	private void createForm(){
-		
+		String tmpl = command.getTemplate();
+		for (Map.Entry<String, View> e : views.entrySet()){
+			String fieldName = e.getKey();
+			BaseField f = fset.get(fieldName);
+			
+			tmpl = tmpl.replace("{"+fieldName+"}", f.getValue(e.getValue()));
+		}
+
+		return tmpl;
 	}
 }

@@ -1,5 +1,6 @@
 package com.solvek.ussdfaster.fields;
 
+import android.content.Context;
 import android.view.View;
 
 import com.solvek.ussdfaster.entities.NamedEntity;
@@ -15,6 +16,6 @@ public abstract class BaseField extends NamedEntity {
 		return description;
 	}
 	
-	public abstract View createView();
-	public abstract String getValue();	
+	public abstract View createView(Context context);
+	public abstract String getValue(View view);	
 }
