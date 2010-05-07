@@ -2,12 +2,10 @@ package com.solvek.ussdfaster.entities;
 
 import java.util.List;
 
-import com.solvek.ussdfaster.fields.BaseField;
-
-public class Command extends NamedEntity {
+public class Command extends TitledEntity {
 	private String description;
 	private String template;
-	private List<BaseField> fields;
+	private List<Field> fields;
 
 	public void setDescription(String description) {
 		this.description = description;
@@ -25,11 +23,11 @@ public class Command extends NamedEntity {
 		return template;
 	}
 
-	public void setFields(List<BaseField> fields) {
+	public void setFields(List<Field> fields) {
 		this.fields = fields;
 	}
 
-	public List<BaseField> getFields() {
+	public List<Field> getFields() {
 		return fields;
 	}
 }

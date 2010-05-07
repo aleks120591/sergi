@@ -2,9 +2,7 @@ package com.solvek.ussdfaster;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -40,25 +38,20 @@ public class GroupActivity extends ListActivity
 				}}, cmd);
 			
 			f.show();*/
-			Intent intent = new Intent().setClass(this, FormActivity.class);
+			Intent intent = new Intent()
+				.setClass(this, FormActivity.class);
+			
+			ItemLookup
+				.getFromIntent(getIntent())
+				.createForCommand(position)
+				.putToIntent(intent);
+			
 			startActivity(intent);
 		}
 		else {
-			sendUssd(cmd.getTemplate());
+			UssdSender.sendUssd(this, cmd.getTemplate());
 		}
 	}
-	
-	private void sendUssd(String code){
-		Log.v(TAG, "Sending USSD: "+code);
-		code = code.replace("#", Uri.encode("#"));
-		call(code);
-	}
-
-	private void call(String phoneNumber) {
-        startActivity(new Intent(
-			"android.intent.action.CALL",
-            Uri.parse("tel:" + phoneNumber)));
-    }
     
     /*protected void onActivityResult(
     		int requestCode, 
@@ -72,14 +65,7 @@ public class GroupActivity extends ListActivity
     	alert.show();
     }*/
     
-	private Group getGroup(){
-		Bundle extras = getIntent().getExtras();
-		if(extras == null)
-		{
-			throw new Error("Failed to get extra data");
-		}
-		return (Group)extras.getSerializable("group");
+	private Group getGroup(){		
+		return Mediator.getGroup(ItemLookup.getFromIntent(getIntent()));
 	}
-	
-	private static final String TAG = "GroupActivity";
 }

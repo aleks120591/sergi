@@ -29,19 +29,21 @@ public class USSDFaster extends TabActivity {
 			throw new Error("Failed to read xml file", e);
 		}
 		
+		Mediator.setCarrier(c);
+		
 	    TabHost tabHost = getTabHost();
 	    Intent intent;
 	    TabHost.TabSpec spec;
 
 	    int idx = 0;
 	    for(Group g: c.getGroups()){
-		    intent = new Intent()
-		    	.setClass(this, GroupActivity.class)
-		    	.putExtra("group", g);
+		    intent = new Intent().setClass(this, GroupActivity.class);
+		    
+		    ItemLookup.createForGroup(idx).putToIntent(intent);
 		    
 		    spec = tabHost
 		    	.newTabSpec("tab"+idx)
-		    	.setIndicator(g.getName())
+		    	.setIndicator(g.getTitle())
 		        .setContent(intent);
 		    tabHost.addTab(spec);
 		    idx++;

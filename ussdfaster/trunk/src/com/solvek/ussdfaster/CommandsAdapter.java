@@ -41,7 +41,7 @@ public class CommandsAdapter extends BaseAdapter {
         	: (TextView) convertView;
         Command cmd = getCommand(position);
                 
-        view.setText(cmd.getName());
+        view.setText(cmd.getTitle());
  
         return view;
 	}
