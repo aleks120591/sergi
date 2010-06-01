@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "Теле2">
+	<group title = "Счет">
+		<command
+			title="Баланс"
+			description="Проверка остатка не счету"
+			template="*105#">
+		</command>	
+		<command
+			title="Кредит (30 р.)"
+			description="Запрос кредита на 30 рублей"
+			template="*122*1#">
+		</command>
+		<command
+			title="«Позвони мне»"
+			description="Отправить смс с просьбой перезвонить Вам"
+			template="*118*{phone}#">
+			<field
+				title="Номер телефона"
+				description="Кому отправить запрос"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="9030000000"
+				/>				
+			</field>			
+		</command>
+		<command
+			title="Перевести деньги"
+			description="Перевести деньги на другой номер"
+			template="*145*{phone}*{amount}#">
+			<field
+				title="Номер телефонf"
+				description="Кому перевести деньги"
+				tag="phone"
+				type="contact">
+			</field>			
+			<field
+				title="Сумма перевода"
+				description="Введите сумму перевода"
+				tag="amount"
+				type="digits">
+			</field>			
+		</command>		
+	</group>
+</carrier>
