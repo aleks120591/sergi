@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    
-    <string name="app_name">Solvek Faster</string>
-<string name="quit">Вийти</string>
-
-<string name="send">Відправити</string>
-<string name="cancel">Відмінити</string>
-</resources>
