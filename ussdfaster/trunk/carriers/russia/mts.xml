@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "МТС (Россия)">
+	<group
+		title = "Баланс"
+		icon="money">
+		<command
+			title="Баланс"
+			description="Запрос баланса"
+			template="*100#">
+		</command>
+		<command
+			title="Пополнить счет"
+			description="Пополнить собственный счет"
+			template="*116*{voucher}#">
+			<field
+				title="Код пополнения"
+				description="Введите код ваучера"
+				tag="voucher"
+				type="digits">
+			</field>
+		</command>
+	</group>
+	<group
+		title = "Услуги">
+		<command
+			title="«Перезвони мне»"
+			description="Абоненту будет отправлен СМС с просьбой перезвонить Вам"
+			template="*110*{phone}#">
+
+			<field
+				title="Номер телефона"
+				description="Выберите или введите номер телефона"
+				tag="phone"
+				type="contact">
+			</field>
+		</command>		
+		<command
+			title="Помощь"
+			description="Информация о USSD"
+			template="*111#">
+		</command>
+	</group>
+</carrier>
