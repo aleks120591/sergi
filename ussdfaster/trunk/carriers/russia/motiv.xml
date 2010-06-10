@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "Мотив">
+	<group title = "Счет">
+		<command
+			title="Баланс"
+			description="Проверка остатка не счету"
+			template="*102#">
+		</command>
+		<command
+			title="«Жду звонка»"
+			description="Отправить смс с просьбой перезвонить Вам"
+			template="*105*8{phone}#">
+			<field
+				title="Номер телефона"
+				description="Кому отправить запрос"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="3430000000"
+				/>
+			</field>
+		</command>
+		<command
+			title="Отложенный платеж"
+			description="Запросить отложенный платеж"
+			template="*103*103#">
+		</command>
+		<command
+			title="Проверка «Мобильного статуса»"
+			description="Проверить статус выбранного абонента"
+			template="*104*104*{phone}#">
+			<field
+				title="Номер телефона"
+				description="Кого проверить статус"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="3430000000"
+				/>
+			</field>
+		</command>
+		<command
+			title="Запрос «Выручай»"
+			description="Попросить пополнить Вам счет"
+			template="*104*106*8{phone}#">
+			<field
+				title="Номер телефона"
+				description="Кому отправить запрос"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="3430000000"
+				/>
+			</field>
+		</command>
+		<command
+			title="Мобильный перевод"
+			description="Перевести деньги на другой номер"
+			template="*104*108*{phone}*{amount}#">
+			<field
+				title="Номер телефона"
+				description="Кому перевести деньги"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="3430000000"
+				/>
+			</field>
+			<field
+				title="Сумма перевода"
+				description="Введите сумму перевода"
+				tag="amount"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="Голосовая почта"
+			description="Голосовая почта"
+			template="*104*47#">
+		</command>
+		<command
+			title="Ночной безлимит"
+			description="Услуга «Ночной GPRS безлимит»"
+			template="*104*49#">
+		</command>
+	</group>
+</carrier>

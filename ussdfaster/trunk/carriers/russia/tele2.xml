@@ -32,7 +32,7 @@
 			description="Перевести деньги на другой номер"
 			template="*145*{phone}*{amount}#">
 			<field
-				title="Номер телефонf"
+				title="Номер телефона"
 				description="Кому перевести деньги"
 				tag="phone"
 				type="contact">
