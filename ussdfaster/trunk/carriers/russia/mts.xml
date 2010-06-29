@@ -10,6 +10,11 @@
 			template="*100#">
 		</command>
 		<command
+			title="Баланс под контролем"
+			description="Переключить уведомление о стоимости звонка"
+			template="*111*152#">
+		</command>
+		<command
 			title="Пополнить счет"
 			description="Пополнить собственный счет"
 			template="*116*{voucher}#">
@@ -27,14 +32,40 @@
 			title="«Перезвони мне»"
 			description="Абоненту будет отправлен СМС с просьбой перезвонить Вам"
 			template="*110*{phone}#">
-
 			<field
 				title="Номер телефона"
 				description="Выберите или введите номер телефона"
 				tag="phone"
 				type="contact">
 			</field>
-		</command>		
+		</command>
+		<command
+			title="«Прямая передача»"
+			description="Напрямую пополнить счет абонента"
+			template="*112*{phone}*{sum}#">
+			<field
+				title="Номер телефона"
+				description="Выберите или введите номер телефона"
+				tag="phone"
+				type="contact">
+			</field>
+			<field
+				title="Сумма"
+				description="Сумма для перевода"
+				tag="sum"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="«Обещанный платеж»"
+			description="Обещанный платеж"
+			template="*110*32#">
+		</command>
+		<command
+			title="«Мой тарифный план»"
+			description="Узнать название своего ТП"
+			template="*111*59#">
+		</command>
 		<command
 			title="Помощь"
 			description="Информация о USSD"
