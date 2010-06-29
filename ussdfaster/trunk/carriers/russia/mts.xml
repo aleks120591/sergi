@@ -37,6 +37,7 @@
 				description="Выберите или введите номер телефона"
 				tag="phone"
 				type="contact">
+				<modifier type="complete" template="89100000000"/>
 			</field>
 		</command>
 		<command
@@ -48,6 +49,7 @@
 				description="Выберите или введите номер телефона"
 				tag="phone"
 				type="contact">
+				<modifier type="complete" template="9160000000"/>
 			</field>
 			<field
 				title="Сумма"
