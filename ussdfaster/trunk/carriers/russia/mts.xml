@@ -1,77 +1,77 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <carrier
 	title = "МТС (Россия)">
-  <group
+	<group
 		title = "Баланс"
 		icon="money">
-    <command
+		<command
 			title="Баланс"
 			description="Запрос баланса"
 			template="*100#">
-    </command>
-    <command
+		</command>
+		<command
 			title="Баланс под контролем"
 			description="Переключить уведомление о стоимости звонка"
 			template="*111*152#">
-    </command>
-    <command
+		</command>
+		<command
 			title="Пополнить счет"
 			description="Пополнить собственный счет"
 			template="*116*{voucher}#">
-      <field
+			<field
 				title="Код пополнения"
 				description="Введите код ваучера"
 				tag="voucher"
 				type="digits">
-      </field>
-    </command>
-  </group>
-  <group
+			</field>
+		</command>
+	</group>
+	<group
 		title = "Услуги">
-    <command
+		<command
 			title="«Перезвони мне»"
 			description="Абоненту будет отправлен СМС с просьбой перезвонить Вам"
 			template="*110*{phone}#">
-      <field
+			<field
 				title="Номер телефона"
 				description="Выберите или введите номер телефона"
 				tag="phone"
 				type="contact">
-        <modifier type="complete" template="89180000000"/>
-      </field>
-    </command>
-    <command
+				<modifier type="complete" template="89100000000"/>
+			</field>
+		</command>
+		<command
 			title="«Прямая передача»"
 			description="Напрямую пополнить счет абонента"
 			template="*112*{phone}*{sum}#">
-      <field
+			<field
 				title="Номер телефона"
 				description="Выберите или введите номер телефона"
 				tag="phone"
 				type="contact">
-        <modifier type="complete" template="9180000000"/>
-      </field>
-      <field
+				<modifier type="complete" template="9160000000"/>
+			</field>
+			<field
 				title="Сумма"
 				description="Сумма для перевода"
 				tag="sum"
 				type="digits">
-      </field>
-    </command>
-    <command
+			</field>
+		</command>
+		<command
 			title="«Обещанный платеж»"
 			description="Обещанный платеж"
 			template="*110*32#">
-    </command>
-    <command
+		</command>
+		<command
 			title="«Мой тарифный план»"
 			description="Узнать название своего ТП"
 			template="*111*59#">
-    </command>
-    <command
+		</command>
+		<command
 			title="Помощь"
 			description="Информация о USSD"
 			template="*111#">
-    </command>
-  </group>
+		</command>
+	</group>
 </carrier>
