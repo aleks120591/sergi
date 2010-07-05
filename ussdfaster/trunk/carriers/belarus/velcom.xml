@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "Велком">
+	<group title = "Счет">
+		<command
+			title="Баланс"
+			description="Проверка остатка не счету"
+			template="*100#">
+		</command>	
+		<command
+			title="Остатки"
+			description="Оставшиеся минуты, СМС, ММС и интернет-трафик"
+			template="*100*1#">
+		</command>
+		<command
+			title="Остаток предоплаты"
+			description="На экране появится уведомление об остатке предоплаты (менее 20%, более 20% либо полностью отсутствует)."
+			template="*100*2#">
+		</command>
+		<command
+			title="Перезвони мне"
+			description="Отправить смс с просьбой перезвонить Вам"
+			template="*131*{phone}#">
+			<field
+				title="Номер телефона"
+				description="Кому отправить запрос"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="0000000"
+				/>
+			</field>
+		</command>
+	</group>
+</carrier>
