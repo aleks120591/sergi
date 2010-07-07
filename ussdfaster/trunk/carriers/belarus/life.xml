@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "Life:)">
+	<group title = "Счет">
+		<command
+			title="Баланс"
+			description="Баланс лицевого счета, количество бонусов, остаток Интернет-трафика, количестве SMS"
+			template="*100#">
+		</command>	
+		<command
+			title="Интернет"
+			description="Остаток неиспользованного интернет-трафика и период действия"
+			template="*105*4#">
+		</command>
+		<command
+			title="Бонус"
+			description="Количество бонусов и период действия"
+			template="*105*9#">
+		</command>
+		<command
+			title="Тарифный план"
+			description="Ваш текущий тарифный план и номер телефона"
+			template="*115#">
+		</command>
+		<command
+			title="Перевод баланса"
+			description="Перевести деньги на счет другого абонента"
+			template="*120*1#">
+		</command>
+	</group>
+</carrier>
