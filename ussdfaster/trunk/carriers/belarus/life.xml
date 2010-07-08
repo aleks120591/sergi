@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <carrier
 	title = "Life:)">
-	<group title = "Счет">
+	<group title = "Info">
 		<command
 			title="Баланс"
 			description="Баланс лицевого счета, количество бонусов, остаток Интернет-трафика, количестве SMS"
@@ -22,10 +22,36 @@
 			description="Ваш текущий тарифный план и номер телефона"
 			template="*115#">
 		</command>
-		<command
+	</group>
+	<group title="Actions">
+	  <command
 			title="Перевод баланса"
 			description="Перевести деньги на счет другого абонента"
 			template="*120*1#">
+		</command>
+		<command
+			title="Пополнить баланс"
+			description="Пополнить лицевой счет с помощью скретч-карт"
+			template="*100*{card}#">
+			<field
+				title="Код пополнения счета с карточки"
+				tag="card"
+				type="digits">
+				<modifier
+					type="complete"
+					template="0000000000000000"
+				/>
+		  </field>
+		</command>
+		<command
+			title="Любимые номера"
+			description="Произвести операции с Любимыми номерами"
+			template="*150#">
+		</command>
+		<command
+			title="Пароль"
+			description="Установить/изменить пароль"
+			template="*120*9#">
 		</command>
 	</group>
 </carrier>
