@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "life:)">
+	<group
+		title = "Счет"
+		icon="money">
+		<command
+			title="Баланс"
+			description="Проверка остатка денег на счету"
+			template="*111#">
+		</command>	
+		<command
+			title="Перевести деньги"
+			description="Пополнить счет для выбранного номера"
+			template="*111*{phone}*{amount}#">
+			<field
+				title="Номер телефона"
+				description="Кому пополнить счет"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="380930000000"
+				/>				
+			</field>			
+			<field
+				title="Сумма перевода"
+				description="Сколько перевести?"
+				tag="amount"
+				type="digits">
+			</field>			
+		</command>
+	</group>
+</carrier>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "Киевстар">
+	<group
+		title = "Счет"
+		icon="money">
+		<command
+			title="Баланс"
+			description="Проверка остатка средств на счету"
+			template="*111#">
+		</command>
+		<command
+			title="Бонусы"
+			description="Количество накопленных бонусов"
+			template="*112#">
+		</command>
+		<command
+			title="Пополнить счет (свой)"
+			description="Пополнить свой счет с помощью ваучера"
+			template="*123*{voucher}#">
+			<field
+				title="Код из ваучера"
+				description="Введите код ваучера"
+				tag="voucher"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="Пополнить счет (кому-то)"
+			description="Попоплнить счет для выбранного контакта"
+			template="*126*{voucher}*{phone}#">
+			<field
+				title="Номер телефона"
+				description="Кому пополнить счет"
+				tag="phone"
+				type="contact">
+			</field>
+			<field
+				title="Код из ваучера"
+				description="Введите код из ваучера"
+				tag="voucher"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="Перевести деньги"
+			description="Перевести деньги другому абоненту"
+			template="*124*{amount}*{phone}#">
+			<field
+				title="Номер телефона"
+				description="Кому пополнить счет"
+				tag="phone"
+				type="contact">
+			</field>
+			<field
+				title="Сумма перевода"
+				description="Введите сумму перевода в грн."
+				tag="voucher"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="Трафик"
+			description="Получить остаток интернет трафика"
+			template="*121#">
+		</command>		
+	</group>
+	<group
+		title = "«Перезвоните мне»"
+		icon="callme">
+		<command
+			title="Запрос"
+			description="Запрос услуги «Перезвоните мне»"
+			template="*130*{phone}#">
+
+			<field
+				title="Номер телефона"
+				description="Выберите номер телефона для отправки запроса"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="380670000000"
+				/>
+			</field>
+		</command>
+		<command
+			title="Запрос (в роуминге)"
+			description="Запрос услуги «Перезвоните мне» в роуминге"
+			template="*131*{phone}#">
+		</command>
+	</group>
+</carrier>
