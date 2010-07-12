@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "Beeline">
+	<group title = "Рахунок">
+		<command
+			title="Баланс"
+			description="Перевірка залишку на рахунку"
+			template="*102#">
+		</command>	
+		<command
+			title="Довірчий платіж"
+			description="Довірчий платіж"
+			template="*141#">
+		</command>
+		<command
+			title="«Поповни мені рахунок»"
+			description="Відправити смс з проханням поповнити рахунок"
+			template="*143*{phone}#">
+			<field
+				title="Номер телефону"
+				description="Кому відправити запит"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="80680000000"
+				/>				
+			</field>			
+		</command>
+		<command
+			title="«Позвони мені»"
+			description="Відправити смс з проханням передзвонити Вам"
+			template="*144*{phone}#">
+			<field
+				title="Номер телефону"
+				description="Кому відправити запит"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="80680000000"
+				/>				
+			</field>			
+		</command>
+	</group>
+</carrier>

@@ -6,132 +6,127 @@
 		icon="money">
 		<command
 			title="Баланс"
-			description="Запрос баланса"
+			description="Запит балансу"
 			template="*110*10#">
 		</command>
 		<command
-			title="Остаток грн мин"
-			description="Пакетных минут-пакета услуг до конца мес."
+			title="Залишок грн хв"
+			description="Пакетних хвилин-пакету послуг до кінца місяця"
 			template="*110*20#">
 		</command>
 		<command
-			title="Бонусы"
-			description="Информация о количестве бонусов"
+			title="Бонуси"
+			description="Інформація про кількість бонусів"
 			template="*110*14#">
 		</command>
 		<command
-			title="Пополнить счет"
-			description="Пополнить собственный счет"
+			title="Поповнити рахунок"
+			description="Поповнити власний рахунок"
 			template="*100*{voucher}#">
 			<field
-				title="Код пополнения"
-				description="Введите код ваучера"
+				title="Код поповнення"
+				description="Введить код ваучера"
 				tag="voucher"
 				type="digits">
 			</field>
 		</command>
 	</group>
 	<group
-		title = "Услуги">
+		title = "Послуги">
 		<command
-			title="«Перезвони мне»"
-			description="Абоненту будет отправлен СМС с просьбой перезвонить Вам"
+			title="«Передзвоніть мені»"
+			description="Абоненту буде відправлено СМС з проханням передзвонити Вам"
 			template="*104*{phone}#">
 
 			<field
-				title="Номер телефона"
-				description="Выберите или введите номер телефона"
+				title="Номер телефону"
+				description="Виберите чи введіть номер телефону"
 				tag="phone"
 				type="contact">
 			</field>
 		</command>		
 		<command
-			title="Остаток «Перезвони мне»"
-			description="Информация об остатке СМС «Перезвони мне»"
+			title="Залишок «Передзвони мені»"
+			description="Інформація про кількість доступних СМС «Передзвони мені»"
 			template="*104*0#">
 		</command>
 		<command
-			title="Статус «Вам звонили»"
-			description="Проверка статуса услуги «Вам звонили»"
+			title="Статус «Вам дзвонили»"
+			description="Перевірка статусу послуги «Вам дзвонили»"
 			template="*120*1#">
 		</command>
 		<command
-			title="Активация «Вам звонили»"
-			description="Активация услуги «Вам звонили»"
+			title="Активація «Вам дзвонили»"
+			description="Активація послуги «Вам дзвонили»"
 			template="*120*11#">
 		</command>
 		<command
-			title="Деактивация «Вам звонили»"
-			description="Деактивация услуги «Вам звонили»"
+			title="Деактивація «Вам дзвонили»"
+			description="Деактивація послуги «Вам дзвонили»"
 			template="*120*12#">
 		</command>
 		<command
-			title="Статус «Есть связь»"
-			description="Проверка статуса услуги «Есть связь»"
+			title="Статус «Є зв'зок»"
+			description="Перевірка статусу послуги «Є зв'зок»"
 			template="*120*2#">
 		</command>
 		<command
-			title="Активация «Есть связь»"
-			description="Активация услуги «Есть связь»"
+			title="Активація «Є зв'зок»"
+			description="Активація послуги «Є зв'зок»"
 			template="*120*21#">
 		</command>
 		<command
-			title="Деактивация «Есть связь»"
-			description="Деактивация услуги «Есть связь»"
+			title="Деактивація «Є зв'зок»"
+			description="Деактивація послуги «Є зв'зок»"
 			template="*120*22#">
 		</command>
 		<command
-			title="Статус «Я на связи»"
-			description="Проверка статуса услуги «Я на связи»"
+			title="Статус «Я на зв'язку»"
+			description="Проверка статусу послуги «Я на зв'язку»"
 			template="*120*3#">
 		</command>
 		<command
-			title="Активация «Я на связи»"
-			description="Активация услуги «Я на связи»"
+			title="Активація «Я на зв'язку»"
+			description="Активація послуги «Я на зв'язку»"
 			template="*120*31#">
 		</command>
 		<command
-			title="Деактивация «Я на связи»"
-			description="Деактивация услуги «Я на связи»"
+			title="Деактивація «Я на зв'язку»"
+			description="Деактивація послуги «Я на зв'язку»"
 			template="*120*32#">
 		</command>
 	</group>
 	<group
-		title = "Переадресация"
+		title = "Переадресація"
 		icon="more">
 		<command
-			title="Отмена всего переадресаций"
-			description="Отмена всех видов переадресаций"
+			title="Скасування всіх переадресацій"
+			description="Скасування всіх видів переадресацій"
 			template="##002#">
 		</command>
 		<command
-			title="Отмена переадресации - «немедленно»"
-			description="Отмена безусловной переадресации всех звонков"
-			template="##21#">
-		</command>
-		<command
-			title="Активация переадресации - «немедленно»"
-			description="Активация безусловной переадресации всех звонков"
+			title="Активація переадресації - «негайно»"
+			description="Активація безумовної переадресації усіх дзвінків"
 			template="**21*{telephone}#">
 			<field
 				title="На номер"
-				description="Введите номер абонента"
+				description="Введіть номер абонента"
 				tag="telephone"
 				type="digits">
 			</field>
 		</command>
 		<command
-			title="Отмена переадресации - «вне зоны»"
-			description="Отмена переадресации, когда Вы находитесь вне зоны покрытия GSM либо Ваш телефон выключен"
+			title="Скасування переадресації - «поза зоною»"
+			description="Відміна переадресації, якщо Ви знаходитесь поза зоною покриття GSM або Ваш телефон вимкнено"
 			template="##62#">
 		</command>
 		<command
-			title="Активация переадресации - «вне зоны»"
-			description="Активация переадресации, когда Вы находитесь вне зоны покрытия GSM либо Ваш телефон выключен"
+			title="Активація переадресації - «поза зоною»"
+			description="Активація переадресації, якщо Ви знаходитесь поза зоною покриття GSM або Ваш телефон вимкнений"
 			template="**62*{telephone}#">
 			<field
 				title="На номер"
-				description="Введите номер абонента"
+				description="Введіть номер абонента"
 				tag="telephone"
 				type="digits">
 			</field>

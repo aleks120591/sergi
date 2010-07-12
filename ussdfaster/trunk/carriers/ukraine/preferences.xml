@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+	<Preference
+		android:dialogIcon="@drawable/ic_dialog_shopping"
+		android:key="carrier"
+		android:summary="@string/pref_carrier_summary"
+		android:title="@string/pref_carrier_title">
+	</Preference>
+	<CheckBoxPreference
+		android:key="useLeadingSharp"
+		android:summary="@string/pref_leading_sharp_summary"
+		android:defaultValue="false"
+		android:title="@string/pref_leading_sharp_title">
+	</CheckBoxPreference>
+</PreferenceScreen>

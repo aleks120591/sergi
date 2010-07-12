@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "МТС (Пріпейд)">
+	<group
+		title = "Фінанси"
+		icon="money">
+		<command
+			title="Баланс"
+			description="Інформація про стан рахунку, термін дії послуги і тарифної моделі"
+			template="*101#">
+		</command>
+		<command
+			title="Перевести гроші"
+			description="Запит на переведення грошей"
+			template="*150*{phone}*{amount}#">
+			<field
+				title="Кому перерахувати"
+				description="Виберіть номер телефону абонента, якому будуть перераховані гроші"
+				tag="phone"
+				type="contact">
+			</field>			
+			<field
+				title="Сума"
+				description="Сума в гривнях, має бути кратна 5 грн"
+				tag="amount"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="Керування рахунком"
+			description="Меню команд для управління рахунком"
+			template="*121#">
+		</command>	
+	</group>
+	<group
+		title = "«Передзвони мені»"
+		icon="callme">
+		<command
+			title="Запит"
+			description="Запит послуги «Передзвони мені»"
+			template="*104*{phone}#">
+
+			<field
+				title="Номер телефону"
+				description="Виберіть номер телефону для відправки запиту"
+				tag="phone"
+				type="contact">
+			</field>
+		</command>
+		<command
+			title="Допомога"
+			description="Інструкція українською мовою"
+			template="*104#">
+		</command>
+		<command
+			title="Доступно запитів"
+			description="Інформація про кількість запитів, що залишилися, в рамках послуги «Передзвони мені»"
+			template="*104*0#">
+		</command>		
+	</group>
+	<group
+		title = "Послуги"
+		icon="services">
+		<command
+			title="„Вам дзвонили”: Статус"
+			description="Перевірка статусу послуги „Вам дзвонили”"
+			template="*120*1#">
+		</command>
+		<command
+			title="„Вам дзвонили”: Активувати"
+			description="Активувати послугу „Вам дзвонили”"
+			template="*120*11#">
+		</command>
+		<command
+			title="„Вам дзвонили”: Деактивувати"
+			description="Деактивувати послугу „Вам дзвонили”"
+			template="*120*12#">
+		</command>
+		<command
+			title="„Є зв'язок”: Статус"
+			description="Перевірка статусу послуги „Є зв'язок”"
+			template="*120*2#">
+		</command>
+		<command
+			title="„Є зв'язок”: Активувати"
+			description="Активувати послугу „Є зв'язок”"
+			template="*120*21#">
+		</command>
+		<command
+			title="„Є зв'язок”: Деактивувати"
+			description="Деактивувати послугу „Є зв'язок”"
+			template="*120*22#">
+		</command>
+		<command
+			title="„Я на зв'язку”: Статус"
+			description="Перевірка статусу послуги „Я на зв'язку”"
+			template="*120*3#">
+		</command>
+		<command
+			title="„Я на зв'язку”: Активувати"
+			description="Активувати послугу „Я на зв'язку”"
+			template="*120*31#">
+		</command>
+		<command
+			title="„Я на зв'язку”: Деактивувати"
+			description="Деактивувати послугу „Я на зв'язку”"
+			template="*120*32#">
+		</command>
+		<!-- <command
+			title="IMEI код"
+			description="IMEI код телефону"
+			template="*#06#">
+		</command>-->		
+	</group>
+	<group
+		title = "Супер">
+		
+		<command
+			title="Бонуси"
+			description="Залишок безкоштовних хвилин "
+			template="*101*4#">
+		</command>
+		<command
+			title="Безкоштовний тиждень"
+			description="Термін дії послуги тиждень безк. хвилин"
+			template="*101*6#">
+		</command>
+		<command
+			title="Залишок поза регіоном"
+			description="Залишок хвилин та термін дії поза регіоном"
+			template="*101*44#">
+		</command>		
+		<command
+			title="Бонусний рахунок"
+			description="Залишок на бонусному грошовому рахунку"
+			template="*101*10#">
+		</command>
+		<command
+			title="Безкоштовні СМС"
+			description="Перевірка кількості безкоштовних СМС"
+			template="*101*3#">
+		</command>
+	</group>
+</carrier>
