@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "СМАРТС (Волгоград)">
+	<group
+	title = "Баланс"
+	icon="money">
+		<command
+			title="Баланс"
+			description="Запрос текущего баланса"
+			template="*123#">
+		</command>
+		<command
+			title="Проверка текущего состояния"
+			description="Проверка текущего состояния и получение подсказки по смс-информированию"
+			template="*103#">
+		</command>
+		<command
+			title="«Выручай деньгами»"
+			description="Просьба о пополнении счета абонента"
+			template="*119*{phone}*{sum}#">
+			<field
+				title="Номер телефона"
+				description="Выберите или введите номер телефона"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="9040000000"/>
+			</field>
+			<field
+				title="Сумма"
+				description="Сумма для перевода"
+				tag="sum"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="Баланс после звонка"
+			description="Присылать смс-сообщения о состоянии баланса после звонка"
+			template="*103*0#">
+		</command>
+		<command
+			title="Отказ от баланса после звонка"
+			description="Отказ от смс-сообщений о состояние баланса после звонка"
+			template="*103*1#">
+		</command>
+	</group>
+	<group
+	title = "Услуги"
+	icon="services">
+		<command
+			title="«SMS-чек» включение"
+			description="Подключение SMS-услуги уведомлений о зачислении платежа"
+			template="*108*1#">
+		</command>
+		<command
+			title="«SMS-чек» отключение"
+			description="Отключение услуги SMS-уведомлений о зачислении платежа"
+			template="*108*0#">
+		</command>
+		<command
+			title="USSD на кириллице"
+			description="Установить кириллицу при получении USSD"
+			template="*110*0#">
+		</command>
+		<command
+			title="USSD транслитерацией"
+			description="Установить транслитерацию при получении ussd-ответов"
+			template="*110*1#">
+		</command>
+		<command
+			title="«Мировой звонок» включение"
+			description="Подключение услуги «Мировой звонок»"
+			template="*115*1#">
+		</command>
+		<command
+			title="«Мировой звонок» отключение"
+			description="Отключение услуги «Мировой звонок»"
+			template="*115*0#">
+		</command>
+		<command
+			title="«Выручай!»"
+			description="Отправление просьбы «Перезвоните мне»"
+			template="*119*{phone}#">
+			<field
+				title="Номер телефона"
+				description="Выберите или введите номер телефона"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="9040000000"/>
+			</field>
+		</command>
+		<command
+			title="«Мобильная копилка»"
+			description="Информация о бонусах «Мобильной копилки»"
+			template="*125#">
+		</command>
+		<command
+			title="Подключение «АОН»"
+			description="Подключение услуги «АОН»"
+			template="*155*1#">
+		</command>
+		<command
+			title="Отключение «АОН»"
+			description="Отключение услуги «АОН»"
+			template="*155*0#">
+		</command>
+		<command
+			title="«Лёгкие деньги» подключение"
+			description="Подключение услуги «Лёгкие деньги»"
+			template="*143*1#">
+		</command>
+		<command
+			title="«Лёгкие деньги» отключение"
+			description="Отключение услуги «Лёгкие деньги»"
+			template="*143*0#">
+		</command>
+		<command
+			title="«Лёгкие деньги»"
+			description="Информация о состоянии услуги «Лёгкие деньги»"
+			template="*143#">
+		</command>
+	</group>
+	<group
+	title = "Интернет">
+		<command
+			title="«Ночной безлимитный Интернет»"
+			description="Подключение услуги «Ночной безлимитный Интернет»"
+			template="*104*1#">
+		</command>
+		<command
+			title="Добавление GPRS"
+			description="Добавление GPRS"
+			template="*107*1#">
+		</command>
+		<command
+			title="GPRS-Интернет без настроек»"
+			description="Подключение услуги «GPRS-Интернет без настроек»"
+			template="*109*1#">
+		</command>
+		<command
+			title="GPRS-Интернет без настроек»"
+			description="Отключение услуги «GPRS-Интернет без настроек»"
+			template="*109*0#">
+		</command>
+		<command
+			title="GPRS 24 unlim"
+			description="Подключение безлимитного GPRS на 24 часа"
+			template="*124*1#">
+		</command>
+		<command
+			title="Ночной безлимитный Интернет"
+			description="Подключение услуги «Ночной безлимитный Интернет»"
+			template="*104*1#">
+		</command>
+	</group>
+</carrier>
