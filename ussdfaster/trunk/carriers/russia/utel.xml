@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "U-tel">
+	<group title = "Счет">
+		<command
+			title="Баланс"
+			description="Проверка остатка не счету"
+			template="*102#">
+		</command>
+	</group>
+</carrier>
