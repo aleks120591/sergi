@@ -2,28 +2,28 @@
 <carrier
    title = "Beeline Russia">
    <group
-      title = "Баланс"
+      title = "Balans"
       icon="money">
       <command
-         title="Баланс"
-         description="Узнать текущий баланс"
+         title="Balans"
+         description="Zapros balansa"
          template="*102#">
       </command>
    </group>
    <group
-      title = "Услуги">
+      title = "Uslugi">
       <command
-         title="Доверительный платеж"
-         description="Попросить денег у Beeline"
+         title="Doveritelnui platej"
+         description="Poprosit deneg u Beeline"
          template="*141#">
       </command>
       <command
-         title="Пополни мне счет"
-         description="Отправить смс с просьбой пополнить вам счет"
+         title="Popolni mne schet"
+         description="Otpravit sms s prosboy popolnit schet"
          template="*143*{phone}#">
          <field
-            title="Номер телефона"
-            description="Кому отправить запрос"
+            title="Nomer telefona"
+            description="Komu otpravit zapros"
             tag="phone"
             type="contact">
             <modifier
@@ -33,12 +33,12 @@
          </field>         
       </command>
       <command
-         title="Позвони мне"
-         description="Отправить смс с просьбой позвонить вам"
+         title="Pozvoni mne"
+         description="Otpravit sms s prosboi pozvonit Vam"
          template="*144*{phone}#">
          <field
-            title="Номер телефона"
-            description="Кому отправить запрос"
+            title="Nomer telefona"
+            description="Komu otpravit zapros"
             tag="phone"
             type="contact">
             <modifier
@@ -48,12 +48,12 @@
          </field>         
       </command>
                 <command
-         title="Звонок за счет друга"
-         description="Позвонить за счет друга"
+         title="Zvonok za chet druga"
+         description="Pozvonit za schet druga"
          template="05050{phone}">
          <field
-            title="Номер телефона"
-            description="Кому будем звонить"
+            title="Nomer telefona"
+            description="Komu budem zvonit?"
             tag="phone"
             type="contact">
             <modifier
@@ -64,16 +64,16 @@
       </command>
    </group>
    <group
-      title="Разное"
+      title="Raznoe"
       icon="more">
       <command
-         title="Время"
-         description="Узнать точное время"
+         title="Vremya"
+         description="Uznat tochnoe vremya"
          template="100">
       </command>
       <command
-         title="Абонентская служба Beeline"
-         description="Звонок в сужбу поддержки Beeline"
+         title="Abonentskaya slujba Beeline"
+         description="Zvonok v slujbu podderjki klientov Beeline"
          template="0611">
        </command>
     </group>
