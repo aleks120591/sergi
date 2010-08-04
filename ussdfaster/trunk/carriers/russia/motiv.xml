@@ -88,5 +88,10 @@
 			description="Услуга «Ночной GPRS безлимит»"
 			template="*104*49#">
 		</command>
+		<command
+			title="Остаток траффика данных"
+			description="Баланс остака пакетов траффика данных"
+			template="*104*102#">
+		</command>
 	</group>
 </carrier>
