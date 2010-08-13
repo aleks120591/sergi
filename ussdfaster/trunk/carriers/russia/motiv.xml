@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <carrier
 	title = "Мотив">
-	<group title = "Счет">
+	<group title = "Счет" icon="money">
 		<command
 			title="Баланс"
 			description="Проверка остатка не счету"
@@ -12,7 +12,7 @@
 			description="Отправить смс с просьбой перезвонить Вам"
 			template="*105*8{phone}#">
 			<field
-				title="Номер телефона"
+				title="Номер телефона (10 цифр)"
 				description="Кому отправить запрос"
 				tag="phone"
 				type="contact">
@@ -24,30 +24,15 @@
 		</command>
 		<command
 			title="Отложенный платеж"
-			description="Запросить отложенный платеж"
+			description="Запросить отложенный платеж в размере 100 руб."
 			template="*103*103#">
-		</command>
-		<command
-			title="Проверка «Мобильного статуса»"
-			description="Проверить статус выбранного абонента"
-			template="*104*104*{phone}#">
-			<field
-				title="Номер телефона"
-				description="Кого проверить статус"
-				tag="phone"
-				type="contact">
-				<modifier
-					type="complete"
-					template="3430000000"
-				/>
-			</field>
 		</command>
 		<command
 			title="Запрос «Выручай»"
 			description="Попросить пополнить Вам счет"
 			template="*104*106*8{phone}#">
 			<field
-				title="Номер телефона"
+				title="Номер телефона (10 цифр)"
 				description="Кому отправить запрос"
 				tag="phone"
 				type="contact">
@@ -62,7 +47,7 @@
 			description="Перевести деньги на другой номер"
 			template="*104*108*{phone}*{amount}#">
 			<field
-				title="Номер телефона"
+				title="Номер телефона (10 фифр)"
 				description="Кому перевести деньги"
 				tag="phone"
 				type="contact">
@@ -78,20 +63,213 @@
 				type="digits">
 			</field>
 		</command>
-		<command
-			title="Голосовая почта"
-			description="Голосовая почта"
-			template="*104*47#">
+	</group>
+	<group title = "Пакеты" icon="more">
+                <command
+			title="Пакет услуг GPRS"
+			description="Услуга «Подключение GPRS»"
+			template="*104*18#">
 		</command>
 		<command
 			title="Ночной безлимит"
-			description="Услуга «Ночной GPRS безлимит»"
-			template="*104*49#">
+			description="Услуга «Ночной GPRS безлимит»: с 01:00 до 08:00 БЕСПЛАТНО"
+			template="*104*29#">
 		</command>
 		<command
-			title="Остаток траффика данных"
-			description="Баланс остака пакетов траффика данных"
+			title="GPRS: 10 Мб"
+			description="Бесплатно 10 Мб GPRS"
+			template="*104*123#">
+		</command>
+		<command
+			title="GPRS: 30 Мб"
+			description="Бесплатно 30 Мб GPRS"
+			template="*104*124#">
+		</command>
+		<command
+			title="GPRS: 100 Мб"
+			description="Бесплатно 100 Мб GPRS"
+			template="*104*129#">
+		</command>
+		<command
+			title="GPRS-WAP: 5 Мб"
+			description="Бесплатно 5 Мб GPRS-WAP"
+			template="*104*125#">
+		</command>
+		<command
+			title="Интернет на час"
+			description="Безлимитный интернет на один час в сутки. Отключение услуги не предусмотрено."
+			template="*104*68#">
+		</command>
+		<command
+			title="Роуминг НОН-СТОП"
+			description="услуга, позволяет снизить стоимость всех входящих вызовов при нахождении абонента в национальном и международном роуминге"
+			template="*104*24#">
+		</command>
+		<command
+			title="100 минут"
+			description="Позволяет экономить на местные номера"
+			template="*104*134#">
+		</command>
+		<command
+			title="Тайм-аут"
+			description="Скидка на исходящие с 23:00 до 08:00 в размере 50% или 15% от стоимости"
+			template="*104*20#">
+		</command>
+		<command
+			title="100 SMS"
+			description="100 SMS БЕСПЛАТНО"
+			template="*104*122#">
+		</command>
+		<command
+			title="200 SMS"
+			description="200 SMS БЕСПЛАТНО"
+			template="*104*128#">
+		</command>
+		<command
+			title="Супер SMS"
+			description="Платите всего 35 коп. за SMS"
+			template="*104*19#">
+		</command>
+		<command
+			title="Пакет 15 MMS"
+			description="Экономим при отправке MMS"
+			template="*104*126#">
+		</command>
+		<command
+			title="Пакет 30 MMS"
+			description="Экономим при отправке MMS"
+			template="*104*127#">
+		</command>
+		<command
+			title="Проверка единиц из пакета"
+			description="Проверка количества SMS, MMS, Мб или минут в пакете"
 			template="*104*102#">
+		</command>
+	</group>
+	<group title = "Абонементы" icon="more">
+		<command
+			title="Абонемент «10 Мб GPRS»"
+			description="10 Мегабай оптом по более выгодным ценам"
+			template="*104*143*123#">
+		</command>
+		<command
+			title="Абонемент «30 Мб GPRS»"
+			description="30 Мегабай оптом по более выгодным ценам"
+			template="*104*143*124#">
+		</command>
+		<command
+			title="Абонемент «100 Мб GPRS»"
+			description="100 Мегабай оптом по более выгодным ценам"
+			template="*104*143*129#">
+		</command>
+		<command
+			title="Абонемент «5 Мб GPRS-WAP»"
+			description="5 Мб GPRS-WAP оптом по более выгодным ценам"
+			template="*104*143*125#">
+		</command>
+		<command
+			title="Абонемент «100 минут»"
+			description="100 минут оптом по более выгодным ценам"
+			template="*104*143*134#">
+		</command>
+		<command
+			title="Абонемент «50 SMS»"
+			description="50 SMS оптом по более выгодным ценам"
+			template="*104*143*121#">
+		</command>
+		<command
+			title="Абонемент «100 SMS»"
+			description="100 SMS оптом по более выгодным ценам"
+			template="*104*143*122#">
+		</command>
+		<command
+			title="Абонемент «200 SMS»"
+			description="200 SMS оптом по более выгодным ценам"
+			template="*104*143*128#">
+		</command>
+		<command
+			title="Абонемент «15 MMS»"
+			description="*12 MMS оптом по более выгодным ценам"
+			template="*104*143*126#">
+		</command>
+		<command
+			title="Абонемент «30 MMS»"
+			description="*30 MMS оптом по более выгодным ценам"
+			template="*104*143*127#">
+		</command>
+		<command
+			title="Проверка единиц из Абонементов"
+			description="Проверка количества SMS, MMS, Мб или минут в Абонементе"
+			template="*104*102#">
+		</command>
+	</group>
+        <group title = "Услуги" icon="service">
+		<command
+			title="Пропущенный вызов"
+			description="Оповещение о пропущенных вызовах, если Ваш телефон был выключен или вне зоны действия сети"
+			template="*104*17#">
+		</command>
+		<command
+			title="Проверка «Мобильного статуса»"
+			description="Проверить статус выбранного абонента"
+			template="*104*104*{phone}#">
+			<field
+				title="Номер телефона (10 цифр)"
+				description="Кого проверить статус"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="3430000000"
+				/>
+			</field>
+		</command>
+                <command
+			title="Голосовая почта"
+			description="Голосовая почта"
+			template="*104*27#">
+		</command>
+		<command
+			title="Запрет АОН"
+			description="Позволяет скрыть свой номер телефона при исходящем вызове"
+			template="*104*13#">
+		</command>
+		<command
+			title="Переадресация вызова"
+			description="Переадресация входящих вызовов на другой номер"
+			template="*103*14#">
+		</command>
+	</group>
+       <group title = "Тарификация" icon="callme">
+		<command
+			title="Узнай свой тариф"
+			description="Услуга, позволяющая узнать, на каком тарифном плане (тарификации) Вы обслуживаетесь в настоящее время. Стоимость запроса 1,20 руб."
+			template="*104*28#">
+		</command>
+		<command
+			title="По рублю"
+			description="Экономим на звонках, SMS на номера Свердловской области"
+			template="*104*50#">
+		</command>
+		<command
+			title="Внутрисетище"
+			description="Экономим на звонках, SMS на номера абонентов МОТИВ"
+			template="*104*60#">
+		</command>
+		<command
+			title="Разговорище"
+			description="Экономим на звонках на номера Свердловской области, начиная со 2 минуты"
+			template="*104*58#">
+		</command>
+		<command
+			title="Эсэмэсище"
+			description="Экономим на передаче SMS"
+			template="*104*57#">
+		</command>
+		<command
+			title="Интернетище"
+			description="Экономим на GPRS"
+			template="*104*59#">
 		</command>
 	</group>
 </carrier>
