@@ -62,55 +62,58 @@
 		title = "Послуги"
 		icon="services">
 		<command
-			title="„Вам дзвонили”: Статус"
-			description="Перевірка статусу послуги „Вам дзвонили”"
-			template="*120*1#">
+			title="„Вам дзвонили”"
+			description="Послуга „Вам дзвонили”"
+			template="*120*{action}#">
+			<field
+                title="Дія"
+                description="Можна підключити чи відключити послугу"
+                tag="action"
+                type="select">
+                <customData>
+                    <option text="Активувати" value="11"/>
+                    <option text="Деактивувати" value="12"/>
+                    <option text="Перевірити статус" value="1"/>
+                </customData>
+            </field>
 		</command>
 		<command
-			title="„Вам дзвонили”: Активувати"
-			description="Активувати послугу „Вам дзвонили”"
-			template="*120*11#">
+			title="„Є зв'язок”"
+			description="Послуга „Є зв'язок”"
+			template="*120*{action}#">
+			<field
+                title="Дія"
+                description="Можна підключити чи відключити послугу"
+                tag="action"
+                type="select">
+                <customData>
+                    <option text="Активувати" value="21"/>
+                    <option text="Деактивувати" value="22"/>
+                    <option text="Перевірити статус" value="2"/>
+                </customData>
+            </field>
 		</command>
 		<command
-			title="„Вам дзвонили”: Деактивувати"
-			description="Деактивувати послугу „Вам дзвонили”"
-			template="*120*12#">
-		</command>
-		<command
-			title="„Є зв'язок”: Статус"
-			description="Перевірка статусу послуги „Є зв'язок”"
-			template="*120*2#">
-		</command>
-		<command
-			title="„Є зв'язок”: Активувати"
-			description="Активувати послугу „Є зв'язок”"
-			template="*120*21#">
-		</command>
-		<command
-			title="„Є зв'язок”: Деактивувати"
-			description="Деактивувати послугу „Є зв'язок”"
-			template="*120*22#">
-		</command>
-		<command
-			title="„Я на зв'язку”: Статус"
-			description="Перевірка статусу послуги „Я на зв'язку”"
-			template="*120*3#">
-		</command>
-		<command
-			title="„Я на зв'язку”: Активувати"
-			description="Активувати послугу „Я на зв'язку”"
-			template="*120*31#">
-		</command>
-		<command
-			title="„Я на зв'язку”: Деактивувати"
-			description="Деактивувати послугу „Я на зв'язку”"
-			template="*120*32#">
+			title="„Я на зв'язку”"
+			description="Послуга „Я на зв'язку”"
+			template="*120*{action}#">
+			<field
+                title="Дія"
+                description="Можна підключити чи відключити послугу"
+                tag="action"
+                type="select">
+                <customData>
+                    <option text="Активувати" value="31"/>
+                    <option text="Деактивувати" value="32"/>
+                    <option text="Перевірити статус" value="3"/>
+                </customData>
+            </field>
 		</command>
 		<!-- <command
 			title="IMEI код"
 			description="IMEI код телефону"
 			template="*#06#">
-		</command>-->		
+		</command>-->
 	</group>
 	<group
 		title = "Супер">
