@@ -187,14 +187,14 @@
 			<field
 				title="New barring code"
 				description="Enter new barring code"
-				tag="code"
-				type="new1">
+				tag="new1"
+				type="digits">
 			</field>
 			<field
 				title="New barring code again"
 				description="Enter new barring code again"
-				tag="code"
-				type="new2">
+				tag="new2"
+				type="digits">
 			</field>
 		</command>
 	</group>
