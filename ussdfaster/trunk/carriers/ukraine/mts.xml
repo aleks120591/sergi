@@ -18,7 +18,11 @@
 				description="Виберіть номер телефону абонента, якому будуть перераховані гроші"
 				tag="phone"
 				type="contact">
-			</field>			
+				<modifier
+					type="complete"
+					template="380500000000"
+				/>
+			</field>
 			<field
 				title="Сума"
 				description="Сума в гривнях, має бути кратна 5 грн"
@@ -45,6 +49,10 @@
 				description="Виберіть номер телефону для відправки запиту"
 				tag="phone"
 				type="contact">
+				<modifier
+					type="complete"
+					template="380500000000"
+				/>
 			</field>
 		</command>
 		<command
@@ -120,7 +128,7 @@
 		
 		<command
 			title="Бонуси"
-			description="Залишок безкоштовних хвилин "
+			description="Залишок безкоштовних хвилин"
 			template="*101*4#">
 		</command>
 		<command

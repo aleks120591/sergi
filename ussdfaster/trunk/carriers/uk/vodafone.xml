@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "Vodafone">
+	<group
+		title = "Call waiting">
+		<command
+			title="Activate"
+			description="Activate call waiting"
+			template="*43#">
+		</command>
+		<command
+			title="Cancel"
+			description="Cancel call waiting"
+			template="#43#">
+		</command>
+	</group>
+	<group
+		title = "Call Divert"
+		icon="callme">
+		<command
+			title="All"
+			description="Divert all calls at all time"
+			template="**21*{phone}#">
+			<field
+				title="Phone number"
+				description="Phone number where calls are to be forwarded"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="0000000000"
+				/>
+			</field>
+		</command>
+		<command
+			title="Another call"
+			description="Divert calls when on another call"
+			template="**67*{phone}#">
+			<field
+				title="Phone number"
+				description="Phone number where calls are to be forwarded"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="0000000000"
+				/>
+			</field>
+		</command>
+		<command
+			title="No reply"
+			description="Divert calls when there is no reply"
+			template="**61*{phone}#">
+			<field
+				title="Phone number"
+				description="Phone number where calls are to be forwarded"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="0000000000"
+				/>
+			</field>
+		</command>
+		<command
+			title="Cancel all"
+			description="Cancel all diverts"
+			template="##02#">
+		</command>
+		<command
+			title="Check"
+			description="Check the diverts"
+			template="#{action}#">
+			<field
+                title="Type"
+                description="Choose a direct type to check"
+                tag="action"
+                type="select">
+                <customData>
+                    <option text="All" value="21"/>
+                    <option text="Another Call" value="67"/>
+                    <option text="No reply" value="61"/>
+                </customData>
+            </field>
+		</command>
+		<command
+			title="Number of rings"
+			description="Set the number of rings before divert"
+			template="**61*{phone}*10*{amount}#">
+			<field
+				title="Voice mailbox numbe"
+				description="Can be obtained by calling your service provider"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="0000000000"
+				/>
+			</field>
+			<field
+				title="Amount of seconds"
+				description="Time period for ringing"
+				tag="amount"
+				type="digits">
+			</field>
+		</command>
+	</group>
+	<group
+		title = "Call barring"
+		icon="services">
+		<command
+			title="All outgoing"
+			description="Bar all outgoing calls at all times"
+			template="*33*{code}#">
+			<field
+				title="Barring code"
+				description="Your barring code"
+				tag="code"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="All international"
+			description="Bar all international calls"
+			template="*331*{code}#">
+			<field
+				title="Barring code"
+				description="Your barring code"
+				tag="code"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="Roaming (outgoing)"
+			description="Bar all international calls when roaming except those to the UK"
+			template="*332*{code}#">
+			<field
+				title="Barring code"
+				description="Your barring code"
+				tag="code"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="All incoming"
+			description="Bar all incoming calls dial"
+			template="*35*{code}#">
+			<field
+				title="Barring code"
+				description="Your barring code"
+				tag="code"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="Roaming (incoming)"
+			description="Bar all incoming calls when roaming (outside the UK)"
+			template="*351*{code}#">
+			<field
+				title="Barring code"
+				description="Your barring code"
+				tag="code"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="Cancel"
+			description="Cancel call barring"
+			template="#33*{code}#">
+			<field
+				title="Barring code"
+				description="Your barring code"
+				tag="code"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="Change code"
+			description="Change your barring code"
+			template="**03*{code}*{new1}*{new2}#">
+			<field
+				title="Barring code"
+				description="Old barring code"
+				tag="code"
+				type="digits">
+			</field>
+			<field
+				title="New barring code"
+				description="Enter new barring code"
+				tag="code"
+				type="new1">
+			</field>
+			<field
+				title="New barring code again"
+				description="Enter new barring code again"
+				tag="code"
+				type="new2">
+			</field>
+		</command>
+	</group>
+</carrier>
