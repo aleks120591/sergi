@@ -1,0 +1,190 @@
+<?version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "ЕТК">
+	<group
+		title = "Баланс"
+		icon="money">
+
+
+
+		<command
+			title="Баланс"
+			description="Запрос баланса"
+			template="*101*1#">
+		</command>
+
+
+
+
+
+		<command
+			title="Последний платёж"
+			description="Показывает последнюю сумму платежа"
+			template="*101*3#">
+		</command>
+
+<command
+title="ПРЕД.последний платёж"
+description="Показывает предпоследнюю сумму платежа"
+template="*101*33#">
+</command>
+
+<command
+title="ПРЕД.ПРЕД.последний платёж :)"
+description="Показывает предпредпоследнюю сумму платежа"
+template="*101*333#">
+</command>
+
+		<command
+			title="Пополнить свой"
+			description="Пополнить собственный счет картой оплаты"
+			template="*101*2*{voucher}#">
+			<field
+				title="Код карты"
+				description="Введите код карты оплаты"
+				tag="voucher"
+				type="digits">
+			</field>
+		</command>
+
+
+
+
+
+
+
+
+		<command
+			title="Пополнить чужой"
+			description="Пополнить счет другого абонента картой оплаты"
+			template="*101*2*{phone}*{voucher}#">
+			<field
+				title="Номер телефона"
+				description="Выберите или введите номер телефона"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="+79501234567"/>
+			</field>
+			<field
+				title="Код карты"
+				description="Введите код карты оплаты"
+				tag="voucher"
+				type="digits">
+			</field>
+		</command>
+
+
+
+
+
+
+
+
+
+
+		<command
+			title="Перевод средств"
+			description="Перевод со своего счета на другой"
+			template="*103*{phone}*{sum}#">
+			<field
+				title="Номер телефона"
+				description="Выберите или введите номер телефона"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="+79501234567"/>
+			</field>
+			<field
+				title="Сумма"
+				description="Сумма для перевода"
+				tag="sum"
+				type="digits">
+			</field>
+		</command>
+
+
+	</group>
+
+	<group
+		title = "Услуги">
+		<command
+			title="«Перезвони мне»"
+			description="Абоненту будет отправлен СМС с просьбой перезвонить Вам"
+			template="*101*50*{phone}#">
+			<field
+				title="Номер телефона"
+				description="Выберите или введите номер телефона"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="+79501234567"/>
+			</field>
+		</command>
+		
+		<command
+			title="«Заплати мне»"
+			description="Абоненту будет отправлен СМС с просьбой пополнить Ваш счёт"
+			template="*101*55*{phone}#">
+			<field
+				title="Номер телефона"
+				description="Выберите или введите номер телефона"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="+79501234567"/>
+			</field>
+		</command>
+
+		<command
+			title="«Обещанный платеж»"
+			description="Информация об обещаном платеже"
+			template="*110*32#">
+		</command>
+		<command
+			title="«Мой тарифный план»"
+			description="Узнать название своего ТП"
+			template="*111*8*10#">
+		</command>
+		<command
+			title="Помощь"
+			description="Информация о USSD"
+			template="*111#">
+		</command>
+	</group>
+
+	<group
+title = "Пакеты">
+<command
+title="Пакет SMS 100"
+description="Подключение пакета SMS 100"
+template="*111*4*4*1#">
+</command>
+
+<command
+title="Пакет SMS 300"
+description="Подключение пакета SMS 300"
+template="*111*4*5*1#">
+</command>
+
+<command
+title="Пакет SMS 1000"
+description="Подключение пакета SMS 1000"
+template="*111*4*6*1#">
+</command>
+
+<command
+title="Пакет GPRS 50"
+description="Подключение пакета GPRS 1000"
+template="*111*4*7*1#">
+</command>
+
+<command
+title="Пакет GPRS 120"
+description="Подключение пакета GPRS 120"
+template="*111*4*8*1#">
+</command>
+
+	</group>
+
+
+
+
+
+</carrier>
