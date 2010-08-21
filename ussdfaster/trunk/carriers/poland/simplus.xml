@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "Simplus">
+	<group title = "Simplus">
+		<command
+			title="Zasilenie"
+			description="Zasilenie konta Simplus"
+			template="*123*{code}#">
+			<field
+				title="TELEKOD"
+				description="14- lub 16-cyfrowy"
+				tag="code"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="Wprowadzenie Swojaki"
+			description="Wprowadzenie numeru telefonu na który będzie można wykonywać tańsze połączenia"
+			template="*103*11*48{phone}#">
+			<field
+				title="Numeru telefonu"
+				description="Napisz lub wybierz z kontaktów"
+				tag="phone"
+				type="contact">
+			</field>
+		</command>
+		<command
+			title="Usunięcie Swojaki"
+			description="usunięcie numeru telefonu z listy w usłudze Swojaki"
+			template="*103*00*48{phone}#">
+			<field
+				title="Numeru telefonu"
+				description="Napisz lub wybierz z kontaktów"
+				tag="phone"
+				type="contact">
+			</field>
+		</command>
+		<command
+			title="Swojaki?"
+			description="System wyśle do użytkownika sms zawierający listę numerów na które można wykonywać tańsze połączenia"
+			template="*103#">
+		</command>
+	</group>
+</carrier>
