@@ -65,21 +65,82 @@
 		</command>
 	</group>
 	<group title = "Пакеты" icon="more">
-                <command
-			title="Пакет услуг GPRS"
-			description="Услуга «Подключение GPRS»"
-			template="*104*18#">
-		</command>
 		<command
-			title="Ночной безлимит"
-			description="Услуга «Ночной GPRS безлимит»: с 01:00 до 08:00 БЕСПЛАТНО"
-			template="*104*29#">
-		</command>
+	            title="Интернет GPRS/EDGE"
+	            description="Услуга «Подключение GPRS»"
+	            template="*104*{action}#">
+	            <field
+	                title="Действие"
+	                description="Можно включить или отключить"
+	                tag="action"
+	                type="select">
+	                <customData>
+	                    <option text="Включить" value="18"/>
+	                    <option text="Отключить" value="38"/>
+	                </customData>
+	            </field>
+	        </command>
 		<command
-			title="GPRS: 10 Мб"
-			description="Бесплатно 10 Мб GPRS"
-			template="*104*123#">
-		</command>
+	            title="Передача данных"
+	            description="Интернет для тех, у кого телефон не поддерживает GPRS/EDGE"
+	            template="*104*{action}#">
+	            <field
+	                title="Действие"
+	                description="Можно включить или отключить"
+	                tag="action"
+	                type="select">
+	                <customData>
+	                    <option text="Включить" value="26"/>
+	                    <option text="Отключить" value="46"/>
+	                </customData>
+	            </field>
+	        </command>
+		<command
+	            title="Публичный статический IP-адрес GPRS"
+	            description="Услуга позволяет Вам получить постоянный IP-адрес при доступе к сети Интернет («ИНТЕРНЕТИЩЕ», «ДеWWWайс» и «DATA»)"
+	            template="*104*{action}#">
+	            <field
+	                title="Действие"
+	                description="Можно включить или отключить и проверить IP-адрес"
+	                tag="action"
+	                type="select">
+	                <customData>
+	                    <option text="Включить" value="81"/>
+	                    <option text="Отключить" value="83"/>
+			    <option text="проверка присвоенного IP-адреса" value="82"/>
+	                </customData>
+	            </field>
+	        </command>
+		<command
+	            title="Ночной безлимит"
+	            description="Услуга «Ночной GPRS безлимит»: с 01:00 до 08:00 БЕСПЛАТНО"
+	            template="*104*{action}#">
+	            <field
+	                title="Действие"
+	                description="Можно включить или отключить"
+	                tag="action"
+	                type="select">
+	                <customData>
+	                    <option text="Включить" value="29"/>
+	                    <option text="Отключить" value="49"/>
+	                </customData>
+	            </field>
+	        </command>
+		<command
+	            title="GPRS: 10 Мб"
+	            description="10 Мб GPRS за фиксированную плату"
+	            template="*104*{action}#">
+	            <field
+	                title="Действие"
+	                description="Отказаться от Пакетных услуг нельзя"
+	                tag="action"
+	                type="select">
+	                <customData>
+	                    <option text="Включить" value="123"/>
+	                    <option text="Проверка количества Мб в пакете" value="102"/>
+	                </customData>
+	            </field>
+	        </command>
 		<command
 			title="GPRS: 30 Мб"
 			description="Бесплатно 30 Мб GPRS"
@@ -189,12 +250,12 @@
 		</command>
 		<command
 			title="Абонемент «15 MMS»"
-			description="*12 MMS оптом по более выгодным ценам"
+			description="12 MMS оптом по более выгодным ценам"
 			template="*104*143*126#">
 		</command>
 		<command
 			title="Абонемент «30 MMS»"
-			description="*30 MMS оптом по более выгодным ценам"
+			description="30 MMS оптом по более выгодным ценам"
 			template="*104*143*127#">
 		</command>
 		<command
@@ -205,10 +266,20 @@
 	</group>
         <group title = "Услуги" icon="service">
 		<command
-			title="Пропущенный вызов"
-			description="Оповещение о пропущенных вызовах, если Ваш телефон был выключен или вне зоны действия сети"
-			template="*104*17#">
-		</command>
+	            title="Пропущенный вызов"
+	            description="Оповещение о пропущенных вызовах, если Ваш телефон был выключен или вне зоны действия сети"
+	            template="*104*{action}#">
+	            <field
+	                title="Действие"
+	                description="Можно включить и отключить"
+	                tag="action"
+	                type="select">
+	                <customData>
+	                    <option text="Включить" value="17"/>
+	                    <option text="Отключить" value="37"/>
+	                </customData>
+	            </field>
+	        </command>
 		<command
 			title="Проверка «Мобильного статуса»"
 			description="Проверить статус выбранного абонента"
@@ -230,15 +301,60 @@
 			template="*104*27#">
 		</command>
 		<command
-			title="Запрет АОН"
-			description="Позволяет скрыть свой номер телефона при исходящем вызове"
-			template="*104*13#">
-		</command>
+	            title="Запрет АОН"
+	            description="Позволяет скрыть свой номер телефона при исходящем вызове"
+	            template="*104*{action}#">
+	            <field
+	                title="Действие"
+	                description="Можно включить и отключить"
+	                tag="action"
+	                type="select">
+	                <customData>
+	                    <option text="Включить" value="13"/>
+	                    <option text="Отключить" value="33"/>
+	                </customData>
+	            </field>
+	        </command>
 		<command
-			title="Переадресация вызова"
-			description="Переадресация входящих вызовов на другой номер"
-			template="*103*14#">
-		</command>
+	            title="Переадресация вызова"
+	            description="Перевод входящих вызовов на другой номер"
+	            template="*103*{action}#">
+	            <field
+	                title="Действие"
+	                description="Можно включить и отключить"
+	                tag="action"
+	                type="select">
+	                <customData>
+	                    <option text="Включить" value="14"/>
+	                    <option text="Отключить" value=""/>
+	                </customData>
+	            </field>
+	        </command>
+		<command
+	            title="Выбор вида переадресации вызова"
+	            description="Позволяет выбрать подходящий режим переадресации"
+	            template="*{action}*8{phone}#">
+	            <field
+	                description="Можно выбрать один из 4 кодов"
+	                tag="action"
+	                type="select">
+	                <customData>
+	                    <option text="Абсолютная переадресация" value="21"/>
+	                    <option text="Переадресация «по занятости»" value="67"/>
+			    <option text="Переадресация «по неответу»" value="61"/>
+			    <option text="Переадресация, если телефон недоступен" value="62"/>
+	                </customData>
+	            </field>
+		    <field
+				description="Номер, на который производится переадресация (10 цифр)"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="3430000000"
+				/>
+			</field>
+	        </command>
 	</group>
        <group title = "Тарификация" icon="callme">
 		<command
