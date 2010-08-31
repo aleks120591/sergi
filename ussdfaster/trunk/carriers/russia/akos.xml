@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "АКОС">
+	<group title = "Общее" icon="money">
+		<command
+			title="Баланс"
+			description="Проверка остатка средств не счете"
+			template="*101#">
+		</command>	
+		<command
+			title="Активация карты"
+			description="Активировать карту экспресс-оплаты"
+			template="*102*{cardnumber}*#">
+			<field
+				title="Номер карты"
+				description="Введите pin-код карты"
+				tag="cardnumber"
+				type="digits">
+			</field>			
+		</command>
+		<command
+			title="Накопления"
+			description="Количество накопленных минут, SMS и GPRS"
+			template="*104#">
+		</command>
+		<command
+			title="Свой номер"
+			description="Узнать свой номер телефона"
+			template="*201#">
+		</command>
+		<command
+			title="Определитель номера"
+			description="Активировать определитель номера"
+			template="*100*241#">
+		</command>
+		<command
+			title="Переадресация вызова"
+			description="Активировать переадресацию вызова"
+			template="*100*242#">
+		</command>
+		<command
+			title="Ожидание вызова"
+			description="Активировать ожидание вызова"
+			template="*100*243#">
+		</command>
+		<command
+			title="Голосовая почта"
+			description="Активировать голосовую почту"
+			template="*100*244#">
+		</command>
+		<command
+			title="Междугородний доступ"
+			description="Активировать междугородний доступ"
+			template="*100*245#">
+		</command>
+		<command
+			title="Международный доступ"
+			description="Активировать международный доступ"
+			template="*100*246#">
+		</command>
+		<command
+			title="USSD по-русски"
+			description="Включить ответы на USSD-запросы по-русски"
+			template="*200*0#">
+		</command>
+		<command
+			title="USSD транслитом"
+			description="Включить ответы на USSD-запросы транслитом"
+			template="*200*1#">
+		</command>
+	</group>
+	<group title = "Услуги">
+		<command
+			title="«Антиопределитель номера»"
+			description="Вкл./выкл. услугу «Антиопределитель номера»"
+			template="*100*2471#">
+		</command>
+		<command
+			title="«ГУДОК»"
+			description="Вкл./выкл. сервис «ГУДОК»"
+			template="*100*2473#">
+		</command>
+		<command
+			title="«Внешние SMS-сервисы»"
+			description="Вкл./выкл. услугу «Внешние SMS-сервисы»"
+			template="*100*2474#">
+		</command>
+		<command
+			title="«Безлимитные выходные»"
+			description="Вкл./выкл. услугу «Безлимитные выходные»"
+			template="*100*2475#">
+		</command>
+		<command
+			title="«Безлимитные ночи»"
+			description="Вкл./выкл. услугу «Безлимитные ночи»"
+			template="*100*2476#">
+		</command>
+		<command
+			title="«Безлимит внути сети»"
+			description="Вкл./выкл. услугу «Безлимит внути сети»"
+			template="*100*2477#">
+		</command>
+		<command
+			title="«Рекламные и новостные рассылки от АКОС»"
+			description="Вкл./выкл. услугу «Рекламные и новостные рассылки от АКОС»"
+			template="*100*2482#">
+		</command>
+	</group>
+</carrier>
