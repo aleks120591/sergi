@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--Created with Liquid XML Studio Developer Edition (Trial) 8.1.6.2625 (http://www.liquid-technologies.com)-->
+<xs:schema blockDefault="" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="carrier">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="TitledEntity">
+                    <xs:sequence minOccurs="1">
+                        <xs:element name="group">
+                            <xs:annotation>
+                                <xs:documentation>A group of commands. All commands should be placed inside a group. Each group is represented as a tab in UI. If custom file contains only one group tabs are not shown.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:complexContent>
+                                    <xs:extension base="TitledEntity">
+                                        <xs:sequence>
+                                            <xs:element name="command">
+                                                <xs:annotation>
+                                                    <xs:documentation>Defines a request.</xs:documentation>
+                                                </xs:annotation>
+                                                <xs:complexType>
+                                                    <xs:complexContent>
+                                                        <xs:extension base="TitledEntity">
+                                                            <xs:attribute name="description" type="xs:string" />
+                                                        </xs:extension>
+                                                    </xs:complexContent>
+                                                </xs:complexType>
+                                            </xs:element>
+                                        </xs:sequence>
+                                        <xs:attribute name="icon" use="optional">
+                                            <xs:annotation>
+                                                <xs:documentation>An icon name</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                    <xs:enumeration value="money" />
+                                                    <xs:enumeration value="callme" />
+                                                    <xs:enumeration value="services" />
+                                                    <xs:enumeration value="builtin" />
+                                                    <xs:enumeration value="file" />
+                                                    <xs:enumeration value="more" />
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:attribute>
+                                    </xs:extension>
+                                </xs:complexContent>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="TitledEntity">
+        <xs:attribute name="title" type="xs:string" use="required" />
+    </xs:complexType>
+</xs:schema>
