@@ -9,6 +9,16 @@
          description="Узнать текущий баланс"
          template="*102#">
       </command>
+      <command
+         title="СМС"
+         description="Узнать количество оставшихся СМС"
+         template="*106#">
+      </command>
+      <command
+         title="Интернет"
+         description="Узнать остаток трафика"
+         template="*107#">
+      </command>
    </group>
    <group
       title = "Услуги">
@@ -62,6 +72,41 @@
             />            
          </field>         
       </command>
+      <command
+         title="Интернет пакет 15 Mb"
+         description="Абонентская плата 35 рублей в месяц"
+         template="06740715">
+      </command>
+	  <command
+   title="Интернет пакет 35 Mb"
+   description="Абонентская плата 70 рублей в месяц"
+   template="06740735">
+	  </command>
+	  <command
+	title="Интернет пакет 75 Mb"
+	description="Абонентская плата 125 рублей в месяц"
+	template="06740775">
+	  </command>
+	   <command
+	title="Интернет пакет 175 Mb"
+	description="Абонентская плата 215 рублей в месяц"
+	template="067407175">
+	   </command>
+	   <command
+   title="Интернет пакет 350 Mb"
+   description="Абонентская плата 295 рублей в месяц"
+   template="067407350">
+	  </command>
+	   <command
+   title="Интернет пакет 700 Mb"
+   description="Абонентская плата 345 рублей в месяц"
+   template="067407700">
+	   </command>
+	   <command
+   title="Интернет пакет 3 Gb"
+   description="Абонентская плата 395 рублей в месяц"
+   template="06747393">
+	   </command>
    </group>
    <group
       title="Разное"
