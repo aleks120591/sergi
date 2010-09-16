@@ -22,6 +22,11 @@
 				/>
 			</field>
 		</command>
+		<command
+			title="Свобода слова"
+			description="Запрос позволяет узнать колличество оставшихся минут по определенной цене"
+			template="*433#">
+		</command>
 	</group>
 	<group title="Услуги" icon="callme">
 		<command
