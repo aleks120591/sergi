@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "Актив">
+	<group
+		title = "Баланс"
+		icon="money">
+		<command
+			title="Баланс"
+			description="Проверка баланса"
+			template="*111#">
+		</command>
+		<command
+			title="Пополнить счет"
+			description="Пополнить собственный счет"
+			template="*110*{voucher}#">
+			<field
+				title="Код пополнения"
+				description="Введите код ваучера"
+				tag="voucher"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="Запрос единиц"
+			description="Запрос определенного колличества единиц у абонента"
+			template="*141#">
+		</command>
+		<command
+			title="Пересылка единиц"
+			description="Пересылка определенного колличества единиц абоненту"
+			template="*143#">
+		</command>
+		<command
+			title="«Перезвони мне»"
+			description="Абоненту будет отправлен СМС с просьбой перезвонить Вам"
+			template="*133*{phone}#">
+			<field
+				title="Номер телефона"
+				description="Выберите или введите номер телефона"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="87000000000"/>
+			</field>
+		</command>
+	</group>
+</carrier>
