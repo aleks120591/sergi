@@ -4,7 +4,7 @@
 	<group title = "Счет" icon="money">
 		<command
 			title="Баланс"
-			description="Проверка остатка не счете"
+			description="Проверка остатка на счету"
 			template="*100#">
 		</command>
 		<command
