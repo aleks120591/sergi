@@ -42,5 +42,15 @@
 				<modifier type="complete" template="87000000000"/>
 			</field>
 		</command>
+		<command
+			title="Экстра баланс"
+			description="Позволяет получить по запросу 120 тенге на баланс"
+			template="*911#">
+		</command>
+		<command
+			title="Инфопарк"
+			description="Услуга Инфопарк"
+			template="*123#">
+		</command>
 	</group>
 </carrier>
