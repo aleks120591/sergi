@@ -7,8 +7,7 @@
 		<command
 			title="Баланс"
 			description="Інформація про стан рахунку, термін дії послуги і тарифної моделі"
-			template="*101#"
-			featured="true">
+			template="*101#">
 		</command>
 		<command
 			title="Перевести гроші"
@@ -43,8 +42,7 @@
 		<command
 			title="Запит"
 			description="Запит послуги «Передзвони мені»"
-			template="*104*{phone}#"
-			featured="true">
+			template="*104*{phone}#">
 
 			<field
 				title="Номер телефону"
