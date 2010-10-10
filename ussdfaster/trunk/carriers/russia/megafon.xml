@@ -86,7 +86,34 @@
 			</field>
 		</command>
 	</group>
-	<group title="Сервис" icon="service">
+	<group title="Интернет" icon="more">
+		<command
+			title="Пакеты интернет"
+			description="Пакеты интернет (Разовые и Ежемесячные)"
+			template="*105*3*3#">
+		</command>
+		<command
+			title="Текущий статус"
+			description="Баланс, остаток пакетов, активированные пакеты и так далее"
+			template="*225*1*5#">
+		</command>
+		<command
+			title="10 Мб интернета"
+			description="Подключения пакета интернет 10 мб"
+			template="*105*3*3*1#">
+		</command>
+		<command
+			title="Сутки безлимита"
+			description="Безлимитный интернет на сутки"
+			template="*105*2*8*6#">
+		</command>
+		<command
+			title="Безлимит с Оперой"
+			description="Подключение-отключение Безлимит с Оперой Мини"
+			template="*105*2*8*4#">
+		</command>
+	</group>
+	<group title="Сервис" icon="services">
 		<command
 			title="«Точное время и номер телефона»"
 			description="Информация о точном времени и Вашем номере телефона. Стоимость - 1,69р."
