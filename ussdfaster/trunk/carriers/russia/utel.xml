@@ -1,11 +1,193 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <carrier
-	title = "U-tel">
-	<group title = "Счет">
+	title = "Utel">
+	<group
+		title = "Основные услуги"
+		icon="money">
 		<command
 			title="Баланс"
-			description="Проверка остатка не счету"
+			description="Запрос баланса"
 			template="*102#">
 		</command>
+		<command
+			title="«Перезвони мне»"
+			description="Абоненту будет отправлен СМС с просьбой перезвонить Вам"
+			template="*123*{phone}#">
+			<field
+				title="Номер телефона"
+				description="Выберите или введите номер телефона"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="89100000000"/>
+			</field>
+		</command>
+		<command
+			title="«Прямая передача»"
+			description="Напрямую пополнить счет абонента"
+			template="*126*{phone}*{sum}#">
+			<field
+				title="Номер телефона"
+				description="Выберите или введите номер телефона"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="9160000000"/>
+			</field>
+			<field
+				title="Сумма"
+				description="Сумма для перевода"
+				tag="sum"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="«Подтверждение перевода»"
+			description="Подтверждение перевода обещанного платежа"
+			template="*126*2*{num}#">
+			<field
+				title="Код"
+				description="Код для подтверждения"
+				tag="num"
+				type="digits">
+			</field>
+		</command>
 	</group>
+	<group
+		title = "Дополнительные услуги">
+		<command
+			title="Блок смс-50"
+			description="Запрос Блок смс-50 - (45р.)"
+			template="*109*1*50#">
+		</command>
+		<command
+			title="Блок смс-50 (Количество)"
+			description="Количество Блок смс-50"
+			template="*109*1*50*2#">
+		</command>
+		<command
+			title="Деактивировать Блок смс-50"
+			description="Деактивировать Блок смс-50"
+			template="*109*1*50*0#">
+		</command>
+
+		<command
+			title="Блок смс-150"
+			description="Запрос Блок смс-150 (100р.)"
+			template="*109*1*150#">
+		</command>
+		<command
+			title="Блок смс-150 (Количество)"
+			description="Количество Блок смс-150"
+			template="*109*1*150*2#">
+		</command>
+		<command
+			title="Деактивировать Блок смс-150"
+			description="Деактивировать Блок смс-150"
+			template="*109*1*150*0#">
+		</command>
+
+		<command
+			title="Блок смс-300"
+			description="Запрос Блок смс-300 (130р.)"
+			template="*109*1*300#">
+		</command>
+		<command
+			title="Блок смс-300 (Количество)"
+			description="Количество Блок смс-300"
+			template="*109*1*300*2#">
+		</command>
+		<command
+			title="Деактивировать Блок смс-300"
+			description="Деактивировать Блок смс-300"
+			template="*109*1*300*0#">
+		</command>
+
+		<command
+			title="Блок GPRS-50"
+			description="Блок GPRS-50 (130р.)"
+			template="*109*3*50#">
+		</command>
+		<command
+			title="Блок GPRS-50 (Количество)"
+			description="Количество Блок GPRS-50"
+			template="*109*3*50*2#">
+		</command>
+		<command
+			title="Деактивировать Блок GPRS-50"
+			description="Деактивировать Блок GPRS-50"
+			template="*109*3*50*0#">
+		</command>
+
+		<command
+			title="Блок GPRS-250"
+			description="Блок GPRS-250 (600р.)"
+			template="*109*3*250#">
+		</command>
+		<command
+			title="Блок GPRS-250 (Количество)"
+			description="Количество Блок GPRS-250"
+			template="*109*3*250*2#">
+		</command>
+		<command
+			title="Деактивировать Блок GPRS-250"
+			description="Деактивировать Блок GPRS-250"
+			template="*109*3*250*0#">
+		</command>
+
+		<command
+			title="Блок GPRS-1500"
+			description="Блок GPRS-1500 (2400р.)"
+			template="*109*3*1500#">
+		</command>
+		<command
+			title="Блок GPRS-1500 (Количество)"
+			description="Количество Блок GPRS-1500"
+			template="*109*3*1500*2#">
+		</command>
+		<command
+			title="Деактивировать Блок GPRS-1500"
+			description="Деактивировать Блок GPRS-1500"
+			template="*109*3*1500*0#">
+		</command>
+
+		<command
+			title="Подключить Ночной GPRS"
+			description="Подключить Бесплатный ночной GPRS на месяц (300руб.)"
+			template="*109*7#">
+		</command>
+		<command
+			title="Отключить Ночной GPRS"
+			description="Отключить ночной GPRS"
+			template="*109*7*0#">
+		</command>
+
+		<command
+			title="Подключить суточный GPRS"
+			description="Подключить неограниченный суточный GPRS (55руб.)"
+			template="*109*109#">
+		</command>
+		<command
+			title="Отключить суточный GPRS"
+			description="Отключить неограниченный суточный GPRS"
+			template="*109*109*0#">
+		</command>
+</group>
+<group
+		title = "Настройки">
+		<command
+			title="Запрос настроек GPRS"
+			description="Запрос настроек GPRS (0руб.)"
+			template="*104*1#">
+		</command>
+		<command
+			title="Запрос настроек WAP"
+			description="Запрос настроек WAP (0руб.)"
+			template="*104*2#">
+		</command>
+		<command
+			title="Запрос настроек MMS"
+			description="Запрос настроек MMS (0руб.)"
+			template="*104*3#">
+		</command>
+	</group>
+
 </carrier>
