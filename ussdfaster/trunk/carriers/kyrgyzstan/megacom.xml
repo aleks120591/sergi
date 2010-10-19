@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "MegaCom">
+	<group
+		title = "Main">
+		<command
+			title="Баланс"
+			description="Проверка баланса"
+			template="*500#">
+		</command>
+		<command
+			title="Точное время"
+			description="Получить точное время"
+			template="*060#">
+		</command>
+		<command
+			title="Тарифный план"
+			description="Проверка собственного телефонного номера и тарифного плана"
+			template="*112#">
+		</command>
+		<command
+			title="Счет: прошлый месяц"
+			description="Проверка счета за прошлый месяц"
+			template="*080#">
+		</command>
+		<command
+			title="Счет: текущий месяц"
+			description="Проверка счета за текущий месяц (баланс от начала месяца до прошедших суток)"
+			template="*081#">
+		</command>
+		<command
+			title="Скидки"
+			description="Проверка текущих скидок"
+			template="*505#">
+		</command>
+		<command
+			title="Активация карты"
+			description="Активация карт оплаты (100, 200, 400, 700)"
+			template="*555#{voucher}#">
+			<field
+				title="Код с ваучера"
+				description="Введите код ваучера"
+				tag="voucher"
+				type="digits">
+			</field>
+		</command>
+	</group>
+</carrier>
