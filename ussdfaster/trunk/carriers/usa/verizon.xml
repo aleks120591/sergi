@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "Verizon">
+	<group
+		title = "Main">
+		<command
+			title="Balance"
+			description="Check the balance on my account"
+			template="#225">
+		</command>
+		<command
+			title="Airtime usage"
+			description="Check current month's unbilled airtime usage"
+			template="#646">
+		</command>
+		<command
+			title="Messaging using"
+			description="Check your current monthly usage of TXT, PIX and FLIX Messaging"
+			template="#3282">
+		</command>
+		<command
+			title="Payment"
+			description="Make a payment"
+			template="#768">
+		</command>
+	</group>
+</carrier>
