@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <carrier
 	title = "МТС (Россия)">
 	<group
@@ -10,27 +10,41 @@
 			template="*100#">
 		</command>
 		<command
-			title="Баланс под контролем"
-			description="Переключить уведомление о стоимости звонка"
-			template="*111*152#">
+			title="Остаток"
+			description="Запрос оставшихся минут и SMS"
+			template="*100*1#">
 		</command>
 		<command
-			title="Пополнить счет"
-			description="Пополнить собственный счет"
-			template="*116*{voucher}#">
-			<field
-				title="Код пополнения"
-				description="Введите код ваучера"
-				tag="voucher"
-				type="digits">
-			</field>
+			title="Долг"
+			description="Запрос лимита и суммы к оплате"
+			template="*132#">
+		</command>
+		<command
+			title="Остаток по акциям"
+			description="Запрос оставшихся минут и SMS по акциям"
+			template="*100*2#">
+		</command>
+		<command
+			title="Последние затраты"
+			description="В открывшихся окнах нажать сначала 1, потом 2."
+			template="*152#">
+		</command>
+		<command
+			title="«Мой тарифный план»"
+			description="Узнать название своего ТП"
+			template="*111*59#">
+		</command>
+		<command
+			title="Помощь"
+			description="Информация о USSD"
+			template="*111#">
 		</command>
 	</group>
 	<group
 		title = "Услуги">
-		<command
+				<command
 			title="«Перезвони мне»"
-			description="Абоненту будет отправлен СМС с просьбой перезвонить Вам"
+			description="Отправить абоненту СМС с просьбой перезвонить Вам"
 			template="*110*{phone}#">
 			<field
 				title="Номер телефона"
@@ -41,8 +55,20 @@
 			</field>
 		</command>
 		<command
+			title="«Пополни мне счёт»"
+			description="Отправить абоненту СМС с просьбой пополнить Вам счёт"
+			template="*116*{phone}#">
+			<field
+				title="Номер телефона"
+				description="Выберите или введите номер телефона"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="9160000000"/>
+			</field>
+		</command>
+		<command
 			title="«Прямая передача»"
-			description="Напрямую пополнить счет абонента"
+			description="Напрямую пополнить счёт абонента МТС"
 			template="*112*{phone}*{sum}#">
 			<field
 				title="Номер телефона"
@@ -59,19 +85,20 @@
 			</field>
 		</command>
 		<command
-			title="«Обещанный платеж»"
-			description="Обещанный платеж"
+			title="«Прямая передача (подтверждение)»"
+			description="Подтвердить заявку на пополнение счёта абонента МТС"
+			template="*112*{code}#">
+			<field
+				title="Код подтверждения"
+				description="Введите код подтверждения, полученный на предыдущем шаге"
+				tag="sum"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="«Обещанный платёж»"
+			description="Обещанный платёж"
 			template="*110*32#">
-		</command>
-		<command
-			title="«Мой тарифный план»"
-			description="Узнать название своего ТП"
-			template="*111*59#">
-		</command>
-		<command
-			title="Помощь"
-			description="Информация о USSD"
-			template="*111#">
 		</command>
 	</group>
 </carrier>
