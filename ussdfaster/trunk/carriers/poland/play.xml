@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <carrier
 	title = "Play">
-	<group title = "Główny">
+	<group title = "Play">
 		<command
 			title="Konto"
 			description="Stan konta"
@@ -56,50 +56,6 @@
 			title="Plan taryfowy"
 			description="Sprawdź swój plan taryfowy"
 			template="*111*49*1#">
-		</command>
-	</group>
-	<group title = "Usługi" icon="services">
-		<command
-			title="Esy Nielimitesy"
-			description="Esy Nielimitesy"
-			template="*136{action}#">
-			<field
-                title="Działanie"
-                description="Co chcesz zrobić?"
-                tag="action"
-                type="select">
-                <customData>
-                    <option text="Włączanie" value="*11*06"/>
-                    <option text="Wyłączanie" value="*00*06"/>
-                    <option text="Sprawdzenie statusu" value=""/>
-                </customData>
-            </field>
-		</command>
-		<command
-			title="Video Call"
-			description="Video Call"
-			template="*101{action}#">
-			<field
-                title="Działanie"
-                description="Co chcesz zrobić?"
-                tag="action"
-                type="select">
-                <customData>
-                    <option text="Włączanie" value="*11*03"/>
-                    <option text="Wyłączanie" value="*00*03"/>
-                    <option text="Sprawdzenie statusu" value=""/>
-                </customData>
-            </field>
-		</command>
-		<command
-			title="Język polski"
-			description="Język polski"
-			template="*105*10#">
-		</command>
-		<command
-			title="Język angielski"
-			description="Język angielski"
-			template="*105*20#">
 		</command>
 	</group>
 </carrier>
