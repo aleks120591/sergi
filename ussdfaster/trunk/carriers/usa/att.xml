@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "AT&amp;T">
+	<group
+		title = "Main">
+		<command
+			title="Balance"
+			description="Check the balance on my account"
+			template="*777#">
+		</command>
+		<command
+			title="Nights &amp; Weekend"
+			description="Receive a text message with your Nights & Weekend minutes balance"
+			template="*777*1#">
+		</command>
+		<command
+			title="Remaining text messaging"
+			description="Receive a text message with your remaining text messaging and picture/video messaging features available"
+			template="#777*2#">
+		</command>
+		<command
+			title="Remaining kilobyte"
+			description="Receive a text message with the remaining kilobytes available as part of Data Packag"
+			template="*777*3#">
+		</command>
+		<command
+			title="Replenishment"
+			description="Account Replenishment"
+			template="*888*{voucher}#">
+			<field
+				title="Voucher Code"
+				description="Enter Voucher Code"
+				tag="voucher"
+				type="digits">
+			</field>
+		</command>
+	</group>
+</carrier>
