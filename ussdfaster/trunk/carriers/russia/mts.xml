@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <carrier
 	title = "МТС (Россия)">
 	<group
@@ -40,9 +40,8 @@
 			template="*111#">
 		</command>
 	</group>
-	<group
-		title = "Услуги">
-				<command
+	<group title = "Услуги">
+		<command
 			title="«Перезвони мне»"
 			description="Отправить абоненту СМС с просьбой перезвонить Вам"
 			template="*110*{phone}#">

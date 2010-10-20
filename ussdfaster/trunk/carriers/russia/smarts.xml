@@ -44,8 +44,8 @@
 		</command>
 	</group>
 	<group
-	title = "Услуги"
-	icon="services">
+		title = "Услуги"
+		icon="services">
 		<command
 			title="«SMS-чек» включение"
 			description="Подключение SMS-услуги уведомлений о зачислении платежа"
@@ -119,8 +119,7 @@
 			template="*143#">
 		</command>
 	</group>
-	<group
-	title = "Интернет">
+	<group title = "Интернет">
 		<command
 			title="«Ночной безлимитный Интернет»"
 			description="Подключение услуги «Ночной безлимитный Интернет»"
