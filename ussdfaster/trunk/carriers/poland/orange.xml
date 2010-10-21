@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "Orange">
+	<group title = "Main">
+		<command
+			title="Konto"
+			description="Stan konta"
+			template="*#124#">
+		</command>
+		<command
+			title="Twoje Menu"
+			description="Twoje Menu"
+			template="*100*#">
+		</command>
+	</group>
+</carrier>
