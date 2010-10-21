@@ -1,15 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<carrier
-	title = "36i6">
-	<group title = "Usługi" icon="services">
+<carrier title = "36i6">
+	<group title = "Konto" icon="money">
 		<command
 			title="Chill Bill"
 			description="Stan konta"
 			template="*121#">
 		</command>
 		<command
+			title="Ważność konta"
+			description="Ważność konta"
+			template="*125#">
+		</command>
+		<command
+			title="Doładowanie"
+			description="Doładowanie swojego telefonu"
+			template="*123*{voucher}#">
+			<field
+				title="Kod"
+				description="Kod dla doładowania"
+				tag="voucher"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="Doładowanie innemu"
+			description="Doładowanie tel. innej osoby"
+			template="*123*{voucher}*{phone}#">
+			<field
+				title="Numer telefonu"
+				description="Komu chcesz doladovać?"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="48725116606"/>
+			</field>
+			<field
+				title="Kod"
+				description="Kod dla doładowania"
+				tag="voucher"
+				type="digits">
+			</field>
+		</command>
+		<command
 			title="Esy Nielimitesy"
 			description="Esy Nielimitesy"
+			template="*136{action}#">
+			<field
+                title="Działanie"
+                description="Co chcesz zrobić?"
+                tag="action"
+                type="select">
+                <customData>
+                    <option text="Włączanie" value="*11*01"/>
+                    <option text="Wyłączanie" value="*00*01"/>
+                    <option text="Sprawdzenie statusu" value=""/>
+                </customData>
+            </field>
+		</command>
+		<command
+			title="Esy Floresy"
+			description="Esy Floresy"
 			template="*136{action}#">
 			<field
                 title="Działanie"
@@ -22,6 +71,23 @@
                     <option text="Sprawdzenie statusu" value=""/>
                 </customData>
             </field>
+		</command>
+	</group>
+	<group title = "Usługi" icon="services">
+		<command
+			title="Zadzwoń do mnie"
+			description="SMS: zadzwoń do mnie"
+			template="*139*{phone}#">
+			<field
+				title="Numer telefonu"
+				description="Numer odbiornika"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="48725116606"
+				/>
+			</field>
 		</command>
 		<command
 			title="Video Call"
@@ -40,14 +106,122 @@
             </field>
 		</command>
 		<command
-			title="Język polski"
-			description="Język polski"
-			template="*105*10#">
+			title="Roaming"
+			description="Roaming"
+			template="*101{action}#">
+			<field
+                title="Działanie"
+                description="Co chcesz zrobić?"
+                tag="action"
+                type="select">
+                <customData>
+                    <option text="Włączanie" value="*11*01"/>
+                    <option text="Wyłączanie" value="*00*01"/>
+                    <option text="Sprawdzenie statusu" value=""/>
+                </customData>
+            </field>
 		</command>
 		<command
-			title="Język angielski"
-			description="Język angielski"
-			template="*105*20#">
+			title="Dzwonienie w roamingu"
+			description="Dzwonienie w roamingu"
+			template="*111*{phone}#">
+			<field
+				title="Numer telefonu"
+				description="Numer odbiornika"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="48725116606"
+				/>
+			</field>
+		</command>
+		<command
+			title="Blokada informacji"
+			description="Blokada informacji o czasie/koszcie rozmowy"
+			template="*101{action}#">
+			<field
+                title="Działanie"
+                description="Co chcesz zrobić?"
+                tag="action"
+                type="select">
+                <customData>
+                    <option text="Włączanie" value="*11*06"/>
+                    <option text="Wyłączanie" value="*00*06"/>
+                    <option text="Sprawdzenie statusu" value=""/>
+                </customData>
+            </field>
+		</command>
+		<command
+			title="Język"
+			description="Wybierz język"
+			template="*105*{s}0#">
+			<field
+                title="Język"
+                description="Wybierz jeden"
+                tag="action"
+                type="select">
+                <customData>
+                    <option text="Polski" value="1"/>
+                    <option text="Angielski" value="2"/>
+                </customData>
+            </field>
+		</command>
+	</group>
+	<group title = "Pakiety internetowe" icon="more">
+		<command
+			title="Włączyć pakiet"
+			description="Włączyć pakiet"
+			template="*121*11*{size}#">
+			<field
+                title="Rozmiar"
+                description="Wybierz pakiet"
+                tag="size"
+                type="select">
+                <customData>
+                    <option text="25 MB" value="05"/>
+                    <option text="100 MB" value="04"/>
+                    <option text="250 MB" value="11"/>
+                    <option text="500 MB" value="12"/>
+                </customData>
+            </field>
+		</command>
+		<command
+			title="Inet: stan usługi"
+			description="Sprawdzić aktualny stan usługi"
+			template="*121#">
+		</command>
+		<command
+			title="Poczta głosowa"
+			description="Poczta głosowa"
+			template="*122{action}#">
+			<field
+                title="Działanie"
+                description="Co chcesz zrobić?"
+                tag="action"
+                type="select">
+                <customData>
+                    <option text="Włączanie" value="*11"/>
+                    <option text="Wyłączanie" value="*00"/>
+                    <option text="Sprawdzenie statusu" value=""/>
+                </customData>
+            </field>
+		</command>
+		<command
+			title="GPRS/MMS"
+			description="GPRS/MMS"
+			template="*101{action}#">
+			<field
+                title="Działanie"
+                description="Co chcesz zrobić?"
+                tag="action"
+                type="select">
+                <customData>
+                    <option text="Włączanie" value="*11*02"/>
+                    <option text="Wyłączanie" value="*00*02"/>
+                    <option text="Sprawdzenie statusu" value=""/>
+                </customData>
+            </field>
 		</command>
 	</group>
 </carrier>
