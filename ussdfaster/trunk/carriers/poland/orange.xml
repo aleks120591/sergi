@@ -1,15 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <carrier
 	title = "Orange">
-	<group title = "Main">
+	<group title = "Konto">
 		<command
 			title="Konto"
 			description="Stan konta"
-			template="*#124#">
+			template="*124*#">
+		</command>
+		<command
+			title="Doładowanie"
+			description="Doładowanie swojego konta"
+			template="*125*{voucher}#">
+			<field
+				title="Kod"
+				description="Kod dla doładowania"
+				tag="voucher"
+				type="digits">
+			</field>
+		</command>
+	</group>
+	<group title = "Twoje Menu" icon="services">
+		<command
+			title="Moje konto"
+			description="Moje konto"
+			template="*100*1*{action}#">
+			<field
+                title="Działanie"
+                description="Co chcesz zrobić?"
+                tag="action"
+                type="select">
+                <customData>
+                    <option text="Sprawdzenie" value=""/>
+                    <option text="Stan konta - konto główne" value="1"/>
+                    <option text="Środki na połączenia z internetem" value="2"/>
+                    <option text="Doładowanie konta" value="3"/>
+                </customData>
+            </field>
+		</command>
+		<command
+			title="Oferty Orange"
+			description="Oferty Orange"
+			template="*100*2*{action}#">
+			<field
+                title="Działanie"
+                description="Co chcesz zrobić?"
+                tag="action"
+                type="select">
+                <customData>
+                    <option text="Sprawdzenie" value=""/>
+                    <option text="Orange POP" value="1"/>
+                    <option text="Nowe Orange Go" value="2"/>
+                    <option text="Orange Music" value="3"/>
+                </customData>
+            </field>
+		</command>
+		<command
+			title="Promocje"
+			description="Promocje dzwoń taniej"
+			template="*100*3*{action}#">
+			<field
+                title="Działanie"
+                description="Co chcesz zrobić?"
+                tag="action"
+                type="select">
+                <customData>
+                    <option text="Sprawdzenie" value=""/>
+                    <option text="Masz za staż" value="1"/>
+                    <option text="20% więcej" value="2"/>
+                </customData>
+            </field>
+		</command>
+		<command
+			title="Mało środków"
+			description="Usługi - mało środków?"
+			template="*100*4*{action}#">
+			<field
+                title="Działanie"
+                description="Co chcesz zrobić?"
+                tag="action"
+                type="select">
+                <customData>
+                    <option text="Sprawdzenie" value=""/>
+                    <option text="Kredyt 1 PLN" value="1"/>
+                    <option text="SMS SOS" value="2"/>
+                    <option text="Rozmowa na koszt odbiorcy" value="3"/>
+                    <option text="Przelew SMS" value="4"/>
+                    <option text="Gwarancja zwrotu" value="5"/>
+                </customData>
+            </field>
+		</command>
+		<command
+			title="Pozostałe usługi"
+			description="Usługi - pozostałe"
+			template="*100*5*{action}#">
+			<field
+                title="Działanie"
+                description="Co chcesz zrobić?"
+                tag="action"
+                type="select">
+                <customData>
+                    <option text="Sprawdzenie" value=""/>
+                    <option text="Poczta głosowa" value="1"/>
+                    <option text="Blokada prezentacji numeru" value="2"/>
+                    <option text="Pakiet TV" value="3"/>
+                </customData>
+            </field>
 		</command>
 		<command
 			title="Twoje Menu"
-			description="Twoje Menu"
+			description="Interaktywne"
 			template="*100*#">
 		</command>
 	</group>
