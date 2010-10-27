@@ -172,6 +172,98 @@
 		</command>
 </group>
 <group
+		title = "Utel - премия">
+		<command
+			title="Подключить"
+			description="Согласие на участие в бонусной программе (0руб.)"
+			template="*100*555*1#">
+		</command>
+		<command
+			title="Отключить"
+			description="Отказ от участия в бонусной программе (0руб.)"
+			template="*100*555*0#">
+		</command>
+		<command
+			title="Количество"
+			description="Запрос баланса бонусных балов (0руб.)"
+			template="*100*555#">
+		</command>
+
+
+
+
+		<command
+			title="Бонус блок смс-50"
+			description="Запрос Блок смс-50 - (45бал.)"
+			template="*100*555*2*1#">
+		</command>
+
+		<command
+			title="Бонус блок смс-150"
+			description="Запрос Блок смс-150 (100бал.)"
+			template="*100*555*2*2#">
+		</command>
+
+		<command
+			title="Бонус блок смс-300"
+			description="Запрос Блок смс-300 (130бал.)"
+			template="*100*555*2*3#">
+		</command>
+
+		<command
+			title="Бонус блок GPRS-50"
+			description="Блок GPRS-50 (130бал.)"
+			template="*100*555*2*4#">
+		</command>
+
+		<command
+			title="Бонус блок GPRS-250"
+			description="Блок GPRS-250 (600бал.)"
+			template="*100*555*2*5#">
+		</command>
+
+		<command
+			title="Бонус блок GPRS-1500"
+			description="Блок GPRS-1500 (2400бал.)"
+			template="*100*555*2*6#">
+		</command>
+
+		<command
+			title="Бонус ночной GPRS"
+			description="Подключить услугу ночной GPRS на месяц (250бал.)"
+			template="*100*555*2*7#">
+		</command>
+
+		<command
+			title="Бонус паркур"
+			description="Подключить услугу паркур (350бал.)"
+			template="*100*555*2*8#">
+		</command>
+
+		<command
+			title="Бонус блок ммс-20"
+			description="Запрос Блок ммс-20 - (50бал.)"
+			template="*100*555*2*9#">
+		</command>
+
+		<command
+			title="Бонус блок ммс-50"
+			description="Запрос Блок ммс-50 (100бал.)"
+			template="*100*555*2*10#">
+		</command>
+
+		<command
+			title="Бонус блок ммс-100"
+			description="Запрос Блок ммс-100 (150бал.)"
+			template="*100*555*2*11#">
+		</command>
+
+
+
+
+
+	</group>
+<group
 		title = "Настройки">
 		<command
 			title="Запрос настроек GPRS"
