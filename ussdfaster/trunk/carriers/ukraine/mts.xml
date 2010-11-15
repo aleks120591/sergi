@@ -51,7 +51,7 @@
 				type="contact">
 				<modifier
 					type="complete"
-					template="380500000000"
+					template="0500000000"
 				/>
 			</field>
 		</command>
@@ -74,48 +74,48 @@
 			description="Послуга „Вам дзвонили”"
 			template="*120*{action}#">
 			<field
-                title="Дія"
-                description="Можна підключити чи відключити послугу"
-                tag="action"
-                type="select">
-                <customData>
-                    <option text="Активувати" value="11"/>
-                    <option text="Деактивувати" value="12"/>
-                    <option text="Перевірити статус" value="1"/>
-                </customData>
-            </field>
+          title="Дія"
+          description="Можна підключити чи відключити послугу"
+          tag="action"
+          type="select">
+          <customData>
+              <option text="Активувати" value="11"/>
+              <option text="Деактивувати" value="12"/>
+              <option text="Перевірити статус" value="1"/>
+          </customData>
+      </field>
 		</command>
 		<command
 			title="„Є зв'язок”"
 			description="Послуга „Є зв'язок”"
 			template="*120*{action}#">
 			<field
-                title="Дія"
-                description="Можна підключити чи відключити послугу"
-                tag="action"
-                type="select">
-                <customData>
-                    <option text="Активувати" value="21"/>
-                    <option text="Деактивувати" value="22"/>
-                    <option text="Перевірити статус" value="2"/>
-                </customData>
-            </field>
+          title="Дія"
+          description="Можна підключити чи відключити послугу"
+          tag="action"
+          type="select">
+          <customData>
+              <option text="Активувати" value="21"/>
+              <option text="Деактивувати" value="22"/>
+              <option text="Перевірити статус" value="2"/>
+          </customData>
+      </field>
 		</command>
 		<command
 			title="„Я на зв'язку”"
 			description="Послуга „Я на зв'язку”"
 			template="*120*{action}#">
 			<field
-                title="Дія"
-                description="Можна підключити чи відключити послугу"
-                tag="action"
-                type="select">
-                <customData>
-                    <option text="Активувати" value="31"/>
-                    <option text="Деактивувати" value="32"/>
-                    <option text="Перевірити статус" value="3"/>
-                </customData>
-            </field>
+          title="Дія"
+          description="Можна підключити чи відключити послугу"
+          tag="action"
+          type="select">
+          <customData>
+              <option text="Активувати" value="31"/>
+              <option text="Деактивувати" value="32"/>
+              <option text="Перевірити статус" value="3"/>
+          </customData>
+      </field>
 		</command>
 		<!-- <command
 			title="IMEI код"
