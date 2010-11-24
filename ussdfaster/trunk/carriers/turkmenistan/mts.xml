@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "МТС (Туркменистан)">
+	<group
+		title = "Баланс"
+		icon="money">
+		<command
+			title="Баланс"
+			description="Запрос баланса"
+			template="*111#">
+		</command>
+		<command
+			title="Меню USSD"
+			description="Вход в главное меню USSD"
+			template="*123#">
+		</command>
+		<command
+			title="Пополнить счет"
+			description="Пополнить собственный счет"
+			template="*112#{voucher}#">
+			<field
+				title="Код пополнения"
+				description="Введите код ваучера"
+				tag="voucher"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="«Прямая передача»"
+			description="Напрямую пополнить счет абонента"
+			template="*113#{phone}*{sum}#">
+			<field
+				title="Номер телефона"
+				description="Выберите или введите номер телефона"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="66000000"/>
+			</field>
+			<field
+				title="Сумма (дол. США)"
+				description="Сумма для перевода"
+				tag="sum"
+				type="digits">
+			</field>
+		</command>
+	</group>
+	<group
+		title = "Услуги">
+		<command
+			title="«Перезвони мне»"
+			description="Абоненту будет отправлен СМС с просьбой перезвонить Вам"
+			template="*115#{phone}#">
+			<field
+				title="Номер телефона"
+				description="Выберите или введите номер телефона"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="66000000"/>
+			</field>
+		</command>
+		<command
+			title="Любимый номер"
+			description="Установить любимый номер"
+			template="*110#{phone}#">
+			<field
+				title="Номер телефона"
+				description="Выберите или введите номер телефона"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="66000000"/>
+			</field>
+		</command>
+	</group>
+</carrier>
