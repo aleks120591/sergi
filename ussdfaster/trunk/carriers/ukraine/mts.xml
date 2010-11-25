@@ -71,7 +71,7 @@
 		icon="services">
 		<command
 			title="„Вам дзвонили”"
-			description="Послуга „Вам дзвонили”"
+			description="Оповіщення про дзвінки до вас поки ви були недоступні за допомогою СМС"
 			template="*120*{action}#">
 			<field
           title="Дія"
@@ -87,35 +87,51 @@
 		</command>
 		<command
 			title="„Є зв'язок”"
-			description="Послуга „Є зв'язок”"
+			description="Оповіщення коли абонент (якому ви не можете додзвонитись) знову стає доступним"
 			template="*120*{action}#">
 			<field
-          title="Дія"
-          description="Можна підключити чи відключити послугу"
-          tag="action"
-          type="select">
-          <customData>
-              <option text="Активувати" value="21"/>
-              <option text="Деактивувати" value="22"/>
-              <option text="Перевірити статус" value="2"/>
-          </customData>
-      </field>
+	          title="Дія"
+	          description="Можна підключити чи відключити послугу"
+	          tag="action"
+	          type="select">
+		          <customData>
+		              <option text="Активувати" value="21"/>
+		              <option text="Деактивувати" value="22"/>
+		              <option text="Перевірити статус" value="2"/>
+		          </customData>
+	       </field>
 		</command>
 		<command
 			title="„Я на зв'язку”"
-			description="Послуга „Я на зв'язку”"
+			description="Інформувати інших про вашу появу в мережі."
 			template="*120*{action}#">
 			<field
-          title="Дія"
-          description="Можна підключити чи відключити послугу"
-          tag="action"
-          type="select">
-          <customData>
-              <option text="Активувати" value="31"/>
-              <option text="Деактивувати" value="32"/>
-              <option text="Перевірити статус" value="3"/>
-          </customData>
-      </field>
+		          title="Дія"
+		          description="Можна підключити чи відключити послугу"
+		          tag="action"
+		          type="select">
+		          <customData>
+		              <option text="Активувати" value="31"/>
+		              <option text="Деактивувати" value="32"/>
+		              <option text="Перевірити статус" value="3"/>
+		          </customData>
+		      </field>
+		</command>
+		<command
+			title="Режим „День/Ніч”"
+			description="Можливість тимчасово відключити послуги «Вам дзвонили» та «Є зв'язок» з 23-00 до 7-00."
+			template="*120*{action}#">
+			<field
+		          title="Дія"
+		          description="Можна підключити чи відключити послугу"
+		          tag="action"
+		          type="select">
+		          <customData>
+		              <option text="Активувати" value="01"/>
+		              <option text="Деактивувати" value="02"/>
+		              <option text="Перевірити статус" value="0"/>
+		          </customData>
+		      </field>
 		</command>
 		<!-- <command
 			title="IMEI код"
