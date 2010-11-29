@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier title="Beeline KZ">
+       <group title="Счет" icon="money">
+               <command title="Остаток на счете" description="Проверяет остаток на счете" template="*102#"></command>
+               <command title="Остаток интернета" description="Проверяет остаток трафика" template="*135#"></command>
+               <command title="Перевод денег" description="Перевести деньги абоненту" template="*145*{who}*{sum}#">
+                       <field title="Кому" type="contact" tag="who"></field>
+                       <field title="Сколько" type="digits" tag="sum"></field>
+               </command>
+               <command title="Позвони мне" description="Попросить абонента позвонить" template="*144*{who}#">
+                       <field title="Кому" type="contact" tag="who"></field>
+               </command>
+               <command title="Пополни мне счет" description="Попросить абонента пополнить Ваш счет" template="*143*{who}#">
+                       <field title="Кому" type="contact" tag="who"></field>
+               </command>
+               <command title="Доверительный платеж" description="Попросить Beeline добавить немного денег :)" template="*141#"></command>
+       </group>
+       <group title="Пополнение" icon="money">
+              	<command title="Добавить 20 Мб" description="Заказывает пакет 20 Мб" template="*146*20#"></command>
+               <command title="Добавить 60 Мб" description="Заказывает пакет 60 Мб" template="*146*60#"></command>
+               <command title="Добавить 120 Мб" description="Заказывает пакет 120 Мб" template="*146*120#"></command>
+       </group>
+</carrier>
