@@ -2,6 +2,45 @@
 <carrier
 	title = "Vodafone">
 	<group
+		title = "Main"
+		icon = "builtin">
+		<command
+			title="Balance"
+			description="Check balance"
+			template="*#1345#">
+		</command>
+		<command
+			title="Network Time"
+			description="This asks the mobile network to report it's local time. It is mostly only useful to engineers testing the core network."
+			template="*#103#">
+		</command>
+		<command
+			title="Last Caller"
+			description="The command is useful as it will return the last dialed number to your mobile even when it's switched off or not in network coverage."
+			template="*#147#">
+		</command>
+		<command
+			title="MSISDN From HLR"
+			description="MSISDN From HLR"
+			template="*#100#">
+		</command>
+		<command
+			title="MSISDN From BSC"
+			description="MSISDN From BSC"
+			template="*#100*#">
+		</command>
+		<command
+			title="HLR Number Device"
+			description="Get the HLR number the device is registered with"
+			template="*#101#">
+		</command>
+		<command
+			title="VLR Number Device"
+			description="Get the VLR number the device is registered with"
+			template="*#102#">
+		</command>
+	</group>
+	<group
 		title = "Call waiting">
 		<command
 			title="Activate"
