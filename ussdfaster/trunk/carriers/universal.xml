@@ -248,10 +248,11 @@
 		          description="What are you going to do?"
 		          tag="action"
 		          type="select">
-		          <customData>
-		            <option text="Activate" value="*"/>
-					<option text="Cancel" value="#"/>
-					<option text="Check Status" value="*#"/>
+			          <customData>
+			            <option text="Activate" value="*"/>
+						<option text="Cancel" value="#"/>
+						<option text="Check Status" value="*#"/>
+					</customData>
 				</field>
 		</command>
 		<command
