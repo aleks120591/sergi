@@ -81,7 +81,7 @@
 			</field>
 		</command>
 		<command
-			title="Cancel&Retain"
+			title="Cancel&amp;Retain"
 			description="Deactivate call diverts but remember forwarding number"
 			template="#{dt}#">
 				<field
@@ -100,7 +100,7 @@
 		      	</field>
 		</command>
 		<command
-			title="Cancel&Forget"
+			title="Cancel&amp;Forget"
 			description="Deactivate call diverts and clear forwarding number"
 			template="##{dt}#">
 				<field
