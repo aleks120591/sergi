@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "Moldcell">
+	<group
+		title = "Contul tău"
+		icon="money">
+		<command
+			title="Contul tău"
+			description="Aici găseşti toată informaţia despre banii pe care îi ai în cont, despre perioada activă şi bonusurile acumulate. Mai mult decât atât, aici ai posibilitatea să faci un împrumut de la Moldcell sau de la un prieten."
+			template="*444#">
+		</command>
+		<command
+			title="Activarea serviciilor"
+			description="În acest meniu interactiv poţi gestiona tarifele speciale de care dispui (de ex. Numere preferate, Tarif regional, etc.), procura pachete cu servicii incluse, activa servicii adiţionale, precum Roaming sau Mesagerie vocală şi migra la un alt plan tarifar."
+			template="*222#">
+		</command>
+		<command
+			title="Servicii informative"
+			description="Servicii informative şi de divertisment"
+			template="*555#">
+		</command>
+	</group>
+	<group title = "Servicii" icon="services">
+		<command
+			title="«Sună-mă, te rog»"
+			description="Solicitarea de apel atunci când nu ai bani pe cont"
+			template="*111*7{phone}#">
+			<field
+				title="Numărul de telefon"
+				description="Alege sau introdu numărul de telefon"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="0000000"/>
+			</field>
+		</command>
+		<command
+			title="Restricționarea identificării"
+			description="Restricţionarea identităţii tale când apelezi"
+			template="#31#7{phone}">
+			<field
+				title="Numărul de telefon"
+				description="Alege sau introdu numărul de telefon"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="0000000"/>
+			</field>
+		</command>
+		<command
+			title="Numerele preferate"
+			description="Gestionarea listei de numere preferate şi a tarifelor speciale"
+			template="*222*1#">
+		</command>
+		<command
+			title="Activarea pachetelor"
+			description="Activarea pachetelor cu servicii incluse (SMS, MMS, minute voce şi video, Internet mobil)"
+			template="*222*2#">
+		</command>
+		<command
+			title="Activarea serviciilor adiționale"
+			description="Activarea serviciilor adiţionale – Roaming, Mesageria vocală, Internet mobil/MMS, Controlul costurilor, Notificarea despre apelurile pierdute"
+			template="*222*3#">
+		</command>
+		<command
+			title="Planul tarifar"
+			description="Migrarea la alt plan tarifar"
+			template="*222*4#">
+		</command>
+		<command
+			title="Cantitatea bonusurilor"
+			description="Cantitatea bonusurilor acumulate la moment"
+			template="*444*1*1#">
+		</command>
+		<command
+			title="Reîncărcarea contului"
+			description="Reîncărcarea contului – transfer sau împrumutт"
+			template="*444*1*2#">
+		</command>
+		<command
+			title="Schimbul bonus-urilor"
+			description="Valorificarea punctelor de loialitate"
+			template="*444*1*3#">
+		</command>
+		<command
+			title="Perioada activa"
+			description="Prelungirea perioadei active (Cartelă Moldcell), Opţiunea creditară (Abonament Moldcell)"
+			template="*444*1*4#">
+		</command>
+	</group>
+	<group title = "Content" icon="builtin">
+		<command
+			title="Ştiri"
+			description="Ştiri din politică, economie, societate, sport, externe"
+			template="*555*1*1#">
+		</command>
+		<command
+			title="Meteo"
+			description="Prognoza meteo"
+			template="*555*1*2#">
+		</command>
+		<command
+			title="Horoscop"
+			description="Horoscop business, familie, sănătate, dragoste, shopping, gastronomic"
+			template="*555*1*3#">
+		</command>
+		<command
+			title="Cinema"
+			description="Programul Cinema"
+			template="*555*1*4#">
+		</command>
+		<command
+			title="Afişa"
+			description="Afişa concertelor, expoziţiilor, teatrelor şi cluburilor de noapte"
+			template="*555*1*5#">
+		</command>
+		<command
+			title="Cursuri"
+			description="Cursuri valutare"
+			template="*555*1*6#">
+		</command>
+		<command
+			title="Mesaje"
+			description="Mesaje de felicitare pentru diverse ocazii"
+			template="*555*2*1#">
+		</command>
+		<command
+			title="Dragoste"
+			description="Declaraţii de dragoste"
+			template="*555*2*2#">
+		</command>
+		<command
+			title="Aforisme"
+			description="Aforisme"
+			template="*555*2*3#">
+		</command>
+		<command
+			title="Proverbe"
+			description="Proverbe"
+			template="*555*2*4#">
+		</command>
+		<command
+			title="Ştiaţi că"
+			description="Ştiaţi că"
+			template="*555*2*5#">
+		</command>
+		<command
+			title="Tonuri"
+			description="Tonuri de aşteptare"
+			template="*555*2*6#">
+		</command>
+		<command
+			title="Content"
+			description="Content mobil divers – imagini, melodii, video, jocuri, etc"
+			template="*555*2*7#">
+		</command>
+		<command
+			title="Dicţionar"
+			description="Dicţionar, fus orar şi prefixe"
+			template="*555*3*1#">
+		</command>
+	</group>
+</carrier>
