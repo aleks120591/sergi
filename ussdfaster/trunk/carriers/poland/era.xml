@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "Era">
+	<group title = "Konto">
+		<command
+			title="Konto"
+			description="Stan konta"
+			template="*101#">
+		</command>
+	</group>
+</carrier>
