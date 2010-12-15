@@ -1,11 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <carrier
 	title = "Era">
-	<group title = "Konto">
+	<group title = "Era">
 		<command
 			title="Konto"
 			description="Stan konta"
 			template="*101#">
+		</command>
+		<command
+			title="Uzupełnienie"
+			description="Uzupełnienie konta Tak Tak"
+			template="*111*14{code}#">
+			<field
+				title="Kod"
+				description="Kod dla doładowania"
+				tag="code"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="Oczekiwanie na połączenie"
+			description="Podczas prowadzonej rozmowy jesteś informowany o drugiej, oczekującej w kolejce"
+			template="{action}43#">
+			<field
+	          title="Co zrobić?"
+	          description="Wybierz"
+	          tag="action"
+	          type="select">
+	          <customData>
+	              <option text="Ustawić" value="*"/>
+	              <option text="Sprawdzić" value="*#"/>
+	              <option text="Skasować" value="#"/>
+	          </customData>
+	      </field>
+		</command>
+		<command
+			title="Ukrywanie numeru"
+			description="Jednorazowo ukryć prezentacje"
+			template="#31#{phone}">
+			<field
+				title="Numer"
+				description="Numer osoby, do której dzwonisz"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="600000000"
+				/>
+			</field>
 		</command>
 	</group>
 </carrier>
