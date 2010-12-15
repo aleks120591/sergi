@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "Telenor (Hungary)">
+	<group title = "Divert Calls">
+		<command
+			title="Set and Activate uncoditional diverts"
+			description="Activate uncoditional diverts"
+			template="*21*{phone}#">
+			<field
+				title="Phone Number"
+				description="Enter phone number or choose from contact list"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="0500000000"/>
+			</field>
+		</command>
+		<command
+			title="Set and Activate if busy"
+			description="Activate diverts if busy"
+			template="*67*{phone}#">
+			<field
+				title="Phone Number"
+				description="Enter phone number or choose from contact list"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="0500000000"/>
+			</field>
+		</command>
+		<command
+			title="Set and Activate if no answer"
+			description="Activate diverts if no answer"
+			template="*61*{phone}*{sec}#">
+			<field
+				title="Phone Number"
+				description="Enter phone number or choose from contact list"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="0500000000"/>
+			</field>
+			<field
+				title="Duration"
+				description="How many seconds to wait before divert"
+				tag="sec"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="Set and Activate if unreachable"
+			description="Activate diverts if unreachable"
+			template="*62*{phone}#">
+			<field
+				title="Phone Number"
+				description="Enter phone number or choose from contact list"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="0500000000"/>
+			</field>
+		</command>
+		<command
+			title="Set and Activate all diverts"
+			description="Activate all diverts"
+			template="*002*{phone}#">
+			<field
+				title="Phone Number"
+				description="Enter phone number or choose from contact list"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="0500000000"/>
+			</field>
+		</command>
+		<command
+			title="Set and Activate coditional diverts"
+			description="Activate coditional diverts"
+			template="*004*{phone}#">
+			<field
+				title="Phone Number"
+				description="Enter phone number or choose from contact list"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="0500000000"/>
+			</field>
+		</command>
+		<command
+			title="Cancel&amp;Retain"
+			description="Deactivate call diverts but remember forwarding number"
+			template="#{dt}#">
+				<field
+		          title="Divert type"
+		          description="Select a divert type"
+		          tag="dt"
+		          type="select">
+		          <customData>
+		            <option text="All unconditional" value="21"/>
+					<option text="All conditional" value="004"/>
+					<option text="All" value="002"/>
+		            <option text="If busy" value="67"/>
+		            <option text="If no answer" value="61"/>
+		            <option text="If unreachable" value="62"/>
+		          </customData>
+		      	</field>
+		</command>
+		<command
+			title="Cancel&amp;Forget"
+			description="Deactivate call diverts and clear forwarding number"
+			template="##{dt}#">
+				<field
+		          title="Divert type"
+		          description="Select a divert type"
+		          tag="dt"
+		          type="select">
+		          <customData>
+		            <option text="All unconditional" value="21"/>
+					<option text="All conditional" value="004"/>
+					<option text="All" value="002"/>
+		            <option text="If busy" value="67"/>
+		            <option text="If no answer" value="61"/>
+		            <option text="If unreachable" value="62"/>
+		          </customData>
+		      	</field>
+		</command>
+		<command
+			title="Reestablish"
+			description="Activate call diverts"
+			template="*{dt}#">
+				<field
+		          title="Divert type"
+		          description="Select a divert type"
+		          tag="dt"
+		          type="select">
+		          <customData>
+		            <option text="All unconditional" value="21"/>
+					<option text="All conditional" value="004"/>
+					<option text="All" value="002"/>
+		            <option text="If busy" value="67"/>
+		            <option text="If no answer" value="61"/>
+		            <option text="If unreachable" value="62"/>
+		          </customData>
+		      	</field>
+		</command>
+		<command
+			title="Check status"
+			description="Check status call diverts"
+			template="*#{dt}#">
+				<field
+		          title="Divert type"
+		          description="Select a divert type"
+		          tag="dt"
+		          type="select">
+		          <customData>
+		            <option text="All unconditional" value="21"/>
+					<option text="All conditional" value="004"/>
+					<option text="All" value="002"/>
+		            <option text="If busy" value="67"/>
+		            <option text="If no answer" value="61"/>
+		            <option text="If unreachable" value="62"/>
+		          </customData>
+		      	</field>
+		</command>
+	</group>
+	<group
+		title = "Barring"
+		icon="callme">
+		<command
+			title="Activate"
+			description="Activate restriction calls that can be made or received by your handset"
+			template="**3{type}*{code}#">
+				<field
+		          title="Call type"
+		          description="Chose a call type"
+		          tag="type"
+		          type="select">
+		          <customData>
+		            <option text="All" value="30"/>
+					<option text="Outgoing" value="33"/>
+					<option text="Incoming" value="5"/>
+		            <option text="Outgoing International" value="31"/>
+		            <option text="Outgoing Intl except home country" value="32"/>
+		            <option text="Incoming outside home country" value="51"/>
+		          </customData>
+		      	</field>
+				<field
+					title="Code"
+					description="Call Barring codes are specific to your network, so you'll have to ask your service provider what [code] to enter"
+					tag="code"
+					type="digits">
+				</field>
+		</command>
+		<command
+			title="Status"
+			description="Check Status"
+			template="*#3{type}#">
+				<field
+		          title="Call type"
+		          description="Chose a call type"
+		          tag="type"
+		          type="select">
+		          <customData>
+		            <option text="All" value="30"/>
+					<option text="Outgoing" value="33"/>
+					<option text="Incoming" value="5"/>
+		            <option text="Outgoing International" value="31"/>
+		            <option text="Outgoing Intl except home country" value="32"/>
+		            <option text="Incoming outside home country" value="51"/>
+		          </customData>
+		      	</field>
+				<field
+					title="Code"
+					description="Call Barring codes are specific to your network, so you'll have to ask your service provider what [code] to enter"
+					tag="code"
+					type="digits">
+				</field>
+		</command>
+		<command
+			title="Cancel"
+			description="Cancel Barring"
+			template="##3{type}#">
+				<field
+		          title="Call type"
+		          description="Chose a call type"
+		          tag="type"
+		          type="select">
+		          <customData>
+		            <option text="All" value="30"/>
+					<option text="Outgoing" value="33"/>
+					<option text="Incoming" value="5"/>
+		            <option text="Outgoing International" value="31"/>
+		            <option text="Outgoing Intl except home country" value="32"/>
+		            <option text="Incoming outside home country" value="51"/>
+		          </customData>
+		      	</field>
+				<field
+					title="Code"
+					description="Call Barring codes are specific to your network, so you'll have to ask your service provider what [code] to enter"
+					tag="code"
+					type="digits">
+				</field>
+		</command>
+	</group>
+	<group
+		title = "Others"
+		icon="services">
+		<command
+			title="Call Waiting"
+			description="Call Waiting allows you to switch to another conversation during calling"
+			template="{action}43#">
+				<field
+		          title="Action"
+		          description="What are you going to do?"
+		          tag="action"
+		          type="select">
+			          <customData>
+			            <option text="Activate" value="*"/>
+						<option text="Cancel" value="#"/>
+						<option text="Check Status" value="*#"/>
+					</customData>
+				</field>
+		</command>
+		<command
+			title="Hide Caller ID"
+			description="Do not display calling ID"
+			template="#31#{phone}">
+			<field
+				title="Phone Number"
+				description="Enter phone number or choose from contact list"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="0500000000"/>
+			</field>
+		</command>
+		<command
+			title="Minutes Used"
+			description="Minutes Used"
+			template="#646#"/>
+		<command
+			title="Own Number"
+			description="Own Number"
+			template="*#175#"/>
+	</group>
+</carrier>
