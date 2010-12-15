@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "Moldcell">
+	<group
+		title = "Баланс"
+		icon="money">
+		<command
+			title="Баланс"
+			description="Запрос баланса"
+			template="*444#">
+		</command>
+		<command
+			title="Активация услуг"
+			description="Управление услугами"
+			template="*222#">
+		</command>
+		<command
+			title="Информационные услуги"
+			description="Информационные услуги и развлечения"
+			template="*555#">
+		</command>
+	</group>
+	<group title = "Услуги" icon="services">
+		<command
+			title="«Перезвони мне»"
+			description="Отправить абоненту СМС с просьбой перезвонить Вам"
+			template="*111*7{phone}#">
+			<field
+				title="Номер телефона"
+				description="Выберите или введите номер телефона"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="0000000"/>
+			</field>
+		</command>
+		<command
+			title="Блокирование определения"
+			description="Блокирование определения Вашего номера при звонке"
+			template="#31#7{phone}">
+			<field
+				title="Номер телефона"
+				description="Выберите или введите номер телефона"
+				tag="phone"
+				type="contact">
+				<modifier type="complete" template="0000000"/>
+			</field>
+		</command>
+		<command
+			title="Любимые номера"
+			description="Управление списком любимых номеров и специальных тарифов"
+			template="*222*1#">
+		</command>
+		<command
+			title="Активация пакетов"
+			description="Активация пакетов с включенными услугами (SMS, MMS, голосовые минуты и видео, Internet mobil)"
+			template="*222*2#">
+		</command>
+		<command
+			title="Активация доп. услуг"
+			description="Активация дополнительных услуг – Роуминг, голосовая почта, Internet mobil/MMS, контроль цен, извещение о пропущенных звонках"
+			template="*222*3#">
+		</command>
+		<command
+			title="Тарифный план"
+			description="Переход на другой тарифный план"
+			template="*222*4#">
+		</command>
+		<command
+			title="Количество бонусов"
+			description="Количество бонусов, набранных на данный момент"
+			template="*444*1*1#">
+		</command>
+		<command
+			title="Пополнение счёта"
+			description="Пополнение счёта – перевод или кредит"
+			template="*444*1*2#">
+		</command>
+		<command
+			title="Обмен бонусов"
+			description="Обмен бонусов за лояльность на услуги"
+			template="*444*1*3#">
+		</command>
+		<command
+			title="Активный период"
+			description="Продление активного периода"
+			template="*444*1*4#">
+		</command>
+	</group>
+	<group title = "Контент" icon="builtin">
+		<command
+			title="Новости"
+			description="Новости политики, экономики, общества, спорта, международные новости"
+			template="*555*1*1#">
+		</command>
+		<command
+			title="Погода"
+			description="Прогноз погоды"
+			template="*555*1*2#">
+		</command>
+		<command
+			title="Гороскоп"
+			description="Гороскоп: бизнес, семья, здоровье, любовь, покупки, гастрономический"
+			template="*555*1*3#">
+		</command>
+		<command
+			title="Кинотеатры"
+			description="Афиша кинотеатров"
+			template="*555*1*4#">
+		</command>
+		<command
+			title="Концерты"
+			description="Афиша концертов, выставок, театров и ночных клубов"
+			template="*555*1*5#">
+		</command>
+		<command
+			title="Валюты"
+			description="Курсы валют"
+			template="*555*1*6#">
+		</command>
+		<command
+			title="Поздравления"
+			description="Поздравления по разным случаям"
+			template="*555*2*1#">
+		</command>
+		<command
+			title="Любовь"
+			description="Признания в любви"
+			template="*555*2*2#">
+		</command>
+		<command
+			title="Афоризмы"
+			description="Афоризмы"
+			template="*555*2*3#">
+		</command>
+		<command
+			title="Пословицы"
+			description="Пословицы"
+			template="*555*2*4#">
+		</command>
+		<command
+			title="Факты"
+			description="Интересные факты"
+			template="*555*2*5#">
+		</command>
+		<command
+			title="Гудки"
+			description="Гудки ожидания"
+			template="*555*2*6#">
+		</command>
+		<command
+			title="Разное"
+			description="Фото, мелодии, видео, игры и т.д."
+			template="*555*2*7#">
+		</command>
+		<command
+			title="Словарь"
+			description="Словарь"
+			template="*555*3*1#">
+		</command>
+	</group>
+</carrier>
