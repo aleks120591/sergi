@@ -44,5 +44,24 @@
 				type="digits">
 			</field>
 		</command>
+		<command
+			title="Второе дыхание"
+			description="Позволяет абоненту получить кредит на свой лицевой счет для использования на любые услуги связи в счет будущей оплаты"
+			template="*400#10{action}#">
+			<field
+		          title="Дествие"
+		          description="Что сделать с этой услугой?"
+		          tag="action"
+		          type="select">
+		          <customData>
+		              <option text="Подключение" value="#1"/>
+		              <option text="Досрочно погасить" value="#2"/>
+		              <option text="Внесение гарантийного платежа" value="#5"/>
+		              <option text="Отключение от SMS рассылки" value="#00"/>
+		              <option text="Подключение SMS рассылк" value="#9"/>
+		              <option text="Информация об услуге" value=""/>
+		          </customData>
+		      </field>
+		</command>
 	</group>
 </carrier>
