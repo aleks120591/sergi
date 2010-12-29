@@ -97,7 +97,7 @@
 		<command
 			title="«Обещанный платёж»"
 			description="Обещанный платёж"
-			template="*110*32#">
+			template="*111*32#">
 		</command>
 	</group>
 </carrier>
