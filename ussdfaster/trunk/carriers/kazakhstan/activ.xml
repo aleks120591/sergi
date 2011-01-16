@@ -52,5 +52,10 @@
 			description="Услуга Инфопарк"
 			template="*123#">
 		</command>
+		<command
+			title="Подписки"
+			description="Новости, погода, юмор и т.д."
+			template="*200#">
+		</command>
 	</group>
 </carrier>
