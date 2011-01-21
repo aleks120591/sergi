@@ -51,11 +51,14 @@
 				description="Кому пополнить счет"
 				tag="phone"
 				type="contact">
+				<modifier
+					type="complete"
+					template="380670000000"/>
 			</field>
 			<field
 				title="Сумма перевода"
 				description="Введите сумму перевода в грн."
-				tag="voucher"
+				tag="amount"
 				type="digits">
 			</field>
 		</command>
