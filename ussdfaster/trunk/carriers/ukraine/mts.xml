@@ -34,7 +34,12 @@
 			title="Керування рахунком"
 			description="Меню команд для управління рахунком"
 			template="*121#">
-		</command>	
+		</command>
+		<command
+			title="Залишок інтернет пакету"
+			description="Перевірка залишку пакетних МБ"
+			template="*101*103#">
+		</command>
 	</group>
 	<group
 		title = "«Передзвони мені»"
