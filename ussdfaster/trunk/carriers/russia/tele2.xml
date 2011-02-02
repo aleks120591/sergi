@@ -8,7 +8,7 @@
 			title="Баланс"
 			description="Проверка остатка на счету"
 			template="*105#">
-		</command>	
+		</command>
 		<command
 			title="Название тарифа"
 			description="Узнать название текущего тарифа"
@@ -38,7 +38,21 @@
 				description="Код карты оплаты"
 				tag="number"
 				type="digits">
-			</field>			
+			</field>
+		</command>
+		<command
+			title="«Звонок в роуминге»"
+			description="Звонок в роуминге"
+			template="*147*{phone}#">
+			<field
+				title="Номер телефона"
+				description="Кому позвонить"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="89520000000"/>
+			</field>
 		</command>
 	</group>
 	<group
@@ -80,8 +94,8 @@
 				<modifier
 					type="complete"
 					template="89520000000"
-				/>				
-			</field>			
+				/>
+			</field>
 		</command>
 		<command
 			title="«Пополни мой счёт»"
@@ -94,9 +108,8 @@
 				type="contact">
 				<modifier
 					type="complete"
-					template="89520000000"
-				/>				
-			</field>			
+					template="89520000000"/>
+			</field>
 		</command>
 		<command
 			title="«Мобильный перевод»"
@@ -109,9 +122,8 @@
 				type="contact">
 				<modifier
 					type="complete"
-					template="89520000000"
-				/>				
-			</field>			
+					template="89520000000"/>
+			</field>
 			<field
 				title="Сумма перевода"
 				description="Введите сумму перевода, руб."
@@ -120,8 +132,8 @@
 				<modifier
 					type="complete"
 					template="50"
-				/>				
-			</field>			
-		</command>		
+				/>
+			</field>
+		</command>
 	</group>
 </carrier>
