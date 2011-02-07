@@ -93,11 +93,6 @@
 			template="*105*3*3#">
 		</command>
 		<command
-			title="Текущий статус"
-			description="Баланс, остаток пакетов, активированные пакеты и так далее"
-			template="*225*1*5#">
-		</command>
-		<command
 			title="10 Мб интернета"
 			description="Подключения пакета интернет 10 мб"
 			template="*105*3*3*1#">
