@@ -63,11 +63,6 @@
 				type="digits">
 			</field>
 		</command>
-		<command
-			title="Трафік"
-			description="Залишок інтернет трафіку"
-			template="*121#">
-		</command>		
 	</group>
 	<group
 		title = "«Передзвони мені»"
@@ -92,6 +87,53 @@
 			title="Запит (у роумінгу)"
 			description="Запит послуги «Передзвони мені» у роумінгу"
 			template="*131*{phone}#">
+		</command>
+	</group>
+	<group title = "Інтернет">
+		<command
+			title="Залишок пакетів даних"
+			description="Залишок інтернет трафіку"
+			template="*121#">
+		</command>
+		<command
+			title="Замовити пакети даних"
+			description="Замовлення пакетів даних (ПЛАТНО!)"
+			template="*121*{size}#">
+			<field
+	          title="Розмір"
+	          description="Виберіть розмір пакету"
+	          tag="size"
+	          type="select">
+	          <customData>
+	              <option text="20 Mb (20 грн)" value="20"/>
+	              <option text="100 Mb (50 грн)" value="100"/>
+	              <option text="1000 Mb (99 грн)" value="1000"/>
+	              <option text="5000 Mb (119 грн)" value="5000"/>
+	              <option text="Нічний [0:00-8:00] (49грн)" value="5000*1"/>
+	              <option text="«Спробуйте Інтернет» 50 мб (25грн)" value="50"/>
+	          </customData>
+	      	</field>
+		</command>
+		<command
+			title="Залишок пакетів «Смартфон»"
+			description="Залишок інтернет трафіку «Смартфон»"
+			template="*120#">
+		</command>
+		<command
+			title="Замовити пакети «Смартфон»"
+			description="Замовлення пакетів «Смартфон» (ПЛАТНО!)"
+			template="*120*{size}#">
+			<field
+	          title="Розмір"
+	          description="Виберіть розмір пакету"
+	          tag="size"
+	          type="select">
+	          <customData>
+	              <option text="50мб\25смс\25ммс (40грн)" value="50"/>
+	              <option text="200мб\50смс\50ммс (70грн)" value="100"/>
+	              <option text="500мб\100смс\100ммс (80грн)" value="500"/>
+	          </customData>
+	      	</field>
 		</command>
 	</group>
 </carrier>
