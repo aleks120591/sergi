@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier 
+	title = "Мегафон">
+	<group title = "Счет" icon="money">
+		<command
+			title="Баланс"
+			description="Проверка остатка на счету"
+			template="*100#">
+		</command>
+		<command
+			title="«Заплати за меня»"
+			description="Отправить смс с просьбой пополнить Вам счет"
+			template="*143*{phone}#">
+			<field
+				title="Номер телефона"
+				description="Кому отправить запрос"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="79030000000"
+				/>
+			</field>
+		</command>
+		<command
+			title="«Бабло с карточки»"
+			description="Пополнение СВОЕГО счета с карточки"
+			template="*145#{sum}#">
+			<field
+				title="Сумма перевода"
+				description="Не менее 1р."
+				tag="sum"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="«Бабло с карточки прочее»"
+			description="Пополнение чужого счета с карточки"
+			template="*145#{sum}#{phone}#">
+			<field
+				title="Номер телефона"
+				description="Кому положить деньги"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="79030000000"/>
+			</field>
+			<field
+				title="Сумма перевода"
+				description="Не менее 1р."
+				tag="sum"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="«Мобильный перевод»"
+			description="Вы можете перевести деньги со своего мобильного на счет другого абонента"
+			template="*133*{sum}*{phone}#">
+			<field
+				title="Номер телефона"
+				description="Кому перевести деньги"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="79030000000"
+				/>
+			</field>
+			<field
+				title="Сумма перевода"
+				description="Не менее 10р., остаток на счете не менее 50р., комиссия 5р."
+				tag="sum"
+				type="digits">
+			</field>
+		</command>
+	</group>
+	<group title="Услуги" icon="callme">
+		<command
+			title="«АнтиАОН»"
+			description="Скрывает Ваш номер на текущий вызов. Услуга АнтиАОН должна быть ПОДКЛЮЧЕНА"
+			template="#31#{phone}">
+			<field
+				title="Номер телефона"
+				description="Для кого скрыть номер"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="79030000000"
+				/>
+			</field>
+		</command>
+		<command
+			title="Сервис-гид"
+			description="Сервисное меню"
+			template="*105#">
+		</command>
+		<command
+			title="«Позвони мне»"
+			description="Отправить смс с просьбой перезвонить Вам"
+			template="*144*{phone}#">
+			<field
+				title="Номер телефона"
+				description="Кому отправить запрос"
+				tag="phone"
+				type="contact">
+				<modifier
+					type="complete"
+					template="79030000000"
+				/>
+			</field>
+		</command>
+	</group>
+	<group title="Сервис" icon="services">
+		<command
+			title="«Точное время и номер телефона»"
+			description="Информация о точном времени и Вашем номере телефона. Стоимость - 1,69р."
+			template="*122#">
+		</command>
+		<command
+			title="«IMEI телефона»"
+			description="Информация о IMEI коде телефона"
+			template="*#06#">
+		</command>
+	</group>
+</carrier>
