@@ -153,6 +153,11 @@
 			template="*101*4#">
 		</command>
 		<command
+			title="Гіпер.Нет"
+			description="Активація послуги Гіпер.Нет"
+			template="*109*210#">
+		</command>
+		<command
 			title="Безкоштовний тиждень"
 			description="Термін дії послуги тиждень безк. хвилин"
 			template="*101*6#">
