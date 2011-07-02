@@ -8,7 +8,18 @@
 			title="Баланс"
 			description="Проверка остатка денег на счету"
 			template="*111#">
-		</command>	
+		</command>
+		<command
+			title="Пополнить счет"
+			description="Пополнить собственный счет"
+			template="*111*{voucher}#">
+			<field
+				title="Код пополнения"
+				description="Введите код ваучера"
+				tag="voucher"
+				type="digits">
+			</field>
+		</command>
 		<command
 			title="Перевести деньги"
 			description="Пополнить счет для выбранного номера"
@@ -21,14 +32,14 @@
 				<modifier
 					type="complete"
 					template="380930000000"
-				/>				
-			</field>			
+				/>
+			</field>
 			<field
 				title="Сумма перевода"
 				description="Сколько перевести?"
 				tag="amount"
 				type="digits">
-			</field>			
+			</field>
 		</command>
 	</group>
 </carrier>
