@@ -1,0 +1,80 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>Stock Game</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+	<link rel="stylesheet" href="jquery/jquery.mobile.css" />
+	<script type="text/javascript" src="jquery/jquery.js"></script>
+	<script type="text/javascript" src="jquery/jquery.mobile.js"></script>
+	
+	<script type="text/javascript">
+		var STORAGE_KEY = "StockGame";
+		var DEFAULT_STOCKS = {"GDS":1000, "SLP":500};
+				
+		var stocks, stocks_ui;
+		var changes = [0, 0.005, 0.01, 0.015, 0.02, 0.03, 0.05, 0.08];
+		
+		
+		$(document).ready(function() {
+			init();
+ 		});
+ 		
+ 		
+ 		function init(){
+ 			var stocksJson = localStorage[STORAGE_KEY];
+ 			
+ 			if (stocksJson){
+ 				stocks = JSON.parse(stocksJson);
+ 			}
+ 			else {
+ 				stocks = DEFAULT_STOCKS;
+ 			}
+
+ 			stocks_ui = {};
+ 			for(var ticker in stocks) {
+ 				var blk = $('<div class="ui-grid-b"></div>');
+ 				$('<div class="ui-block-a">'+ticker+'</div>').appendTo(blk);
+ 				var divRate = $('<div class="ui-block-b">'+stocks[ticker]+'</div>');
+ 				var divChange = $('<div class="ui-block-c"></div>');
+ 				
+ 				divRate.appendTo(blk);
+ 				divChange.appendTo(blk);
+ 				
+ 				blk.appendTo(".ui-page #qoutes");
+ 				
+ 				stocks_ui[ticker] = {divRate : divRate, divChange : divChange};
+ 			}
+ 			
+ 			$(".ui-page #btnMove").click(function() {
+ 				change();
+ 			});
+ 			
+ 			$(".ui-page").trigger( "create" );
+ 		}
+ 		
+ 		function change(){
+ 			for(var ticker in stocks) {
+ 				var relativeChange = changes[Math.floor(Math.random()*changes.length)];
+ 				if (Math.random() < 0.5) relativeChange = -relativeChange;
+ 				
+ 				var change = Math.round(stocks[ticker]*relativeChange/5)*5;
+ 				
+ 				stocks[ticker] += change;
+ 				
+ 				stocks_ui[ticker].divRate.html(stocks[ticker].toString());
+ 				stocks_ui[ticker].divChange.html(((change > 0) ? "+" :"") +change.toString());
+ 			}
+ 			
+ 			localStorage.setItem(STORAGE_KEY, JSON.stringify(stocks));
+ 		}
+	</script>
+</head> 
+
+<body>
+	<div data-role="header">Nastya trading</div> 
+	<div id="qoutes"></div>
+	<a id="btnMove" href="#" data-role="button" data-icon="arrow-d">Move</a>
+</body>
+</html>
