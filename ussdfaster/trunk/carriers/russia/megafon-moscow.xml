@@ -52,4 +52,14 @@
 		<command title="«IMEI телефона»" description="Информация о IMEI коде телефона" template="*#06#">
 		</command>
 	</group>
+		<group title="МегаФон-Visa" icon="money">
+		<command title="Получить онлайн-карту" description="Запрос на получение виртуальной карты" template="*455*1#">
+		</command>
+		<command title="Получить код CVV2" description="Срок действия кода безопасности CVV2 – 1 час" template="*455*2#">
+		</command>
+		<command title="Реквизиты и срок действия" description="Узнать реквизиты и срок действия своей карты" template="*455*1#">
+		</command>
+		<command title="Заблокировать онлайн-карту" description="Запрос на удаление виртуальной карты" template="*455*0#">
+		</command>
+	</group>
 </carrier>
