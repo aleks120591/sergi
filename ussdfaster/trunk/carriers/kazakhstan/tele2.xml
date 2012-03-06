@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<carrier title="Tele 2 KZ">
+  <group title="Счет" icon="money">
+    <command title="Остаток на счете" description="Проверяет остаток на счете" template="*111#"></command>
+    <command title="Остаток интернета" description="Проверяет остаток трафика" template="*123*1*3#"></command>
+    <command title="Перевод денег" description="Перевести деньги абоненту" template="*145*{who}*{sum}#">
+      <field title="Кому" type="contact" tag="who"></field>
+      <field title="Сколько" type="digits" tag="sum"></field>
+    </command>
+    <command title="Позвони мне" description="Попросить абонента позвонить" template="*144*{who}#">
+      <field title="Кому" type="contact" tag="who"></field>
+    </command>
+    <command title="Пополни мне счет" description="Попросить абонента пополнить Ваш счет" template="*143*{who}#">
+      <field title="Кому" type="contact" tag="who"></field>
+    </command>
+  </group>
+  <group title="Счет 2" icon="money">
+    <command title="Мой номер" description="Узнать свой номер" template="*120#"></command>
+    <command title="Мой тарифный план" description="Узнаем свой тарифный план=" template=" *121#"></command>
+    <command title="Доверительный платеж" description="Попросить Beeline добавить немного денег :)" template="*141#"></command>
+    <command title="Звонок за счет друга" description="Звонок абоненту за ЕГО счет" template="*133*{who}#">
+      <field title="Кому" type="contact" tag="who"></field>
+    </command>
+  </group>
+  <group title="Пополнение" icon="money">
+    <command title="Добавить 5 Гб" description="Заказывает пакет 5 Гб" template="*147*1#"></command>
+    <command title="Добавить 12 Гб" description="Заказывает пакет 12 Гб" template="*147*2#"></command>
+  </group>
+</carrier>
