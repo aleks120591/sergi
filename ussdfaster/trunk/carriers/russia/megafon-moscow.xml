@@ -1,65 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <carrier title="Мегафон">
 	<group title="Счет" icon="money">
-		<command title="Баланс" description="Проверка остатка на счету" template="*100#">
+		<command title="Баланс" description="Проверка остатка на счету." template="*100#">
 		</command>
-		<command title="Обещанный платеж" description="Пополнить счет в кредит" template="*106#">
+		<command title="Обещанный платеж" description="Пополнить счёт в кредит сроком на три дня." template="*106#">
 		</command>
-		<command title="«Заплати за меня»" description="Отправить смс с просьбой пополнить Вам счет" template="*143*{phone}#">
+		<command title="«Заплати за меня»" description="Отправить смс с просьбой пополнить вам счет." template="*143*{phone}#">
 			<field title="Номер телефона" description="Кому отправить запрос" tag="phone" type="contact">
 				<modifier type="complete" template="79030000000"/>
 			</field>
 		</command>
-		<command title=" Счёт «Мегафон-Бонус»" description="Проверка бонусного счета" template="*105*5*1#">
+		<command title="Информация о платежах" description="Просмотр последних платежей." template="*105*1*3*3#">
 		</command>
-		<command title="«Мегафон-Бонус»" description="Обменять баллы на услуги связи" template="*105*5*2#">
+		<command title=" Счёт «Мегафон-Бонус»" description="Проверка бонусного счета." template="*105*5*1#">
+		</command>
+		<command title="«Мегафон-Бонус»" description="Обменять баллы на услуги связи." template="*105*5*2#">
 		</command>
 	</group>
 	<group title="Услуги" icon="callme">
-		<command title="«АнтиАОН»" description="Скрывает Ваш номер на текущий вызов. Услуга АнтиАОН должна быть ПОДКЛЮЧЕНА" template="#31#{phone}">
+		<command title="«Разовый АнтиАОН»" description="Скрывает Ваш номер на текущий вызов. Стоимость 5 руб." template="#31#{phone}">
 			<field title="Номер телефона" description="Для кого скрыть номер" tag="phone" type="contact">
 				<modifier type="complete" template="79030000000"/>
 			</field>
 		</command>
-		<command title="Сервис-гид" description="Сервисное меню" template="*105#">
+		<command title="Сервис-гид" description="Сервисное меню." template="*105#">
 		</command>
-		<command title="«Позвони мне»" description="Отправить смс с просьбой перезвонить Вам" template="*144*{phone}#">
+		<command title="«Позвони мне»" description="Отправить смс с просьбой перезвонить вам." template="*144*{phone}#">
 			<field title="Номер телефона" description="Кому отправить запрос" tag="phone" type="contact">
 				<modifier type="complete" template="79030000000"/>
 			</field>
 		</command>
-		<command title="«Мобильный перевод»" description="Вы можете перевести деньги со своего мобильного на счет другого абонента" template="*133*{sum}*{phone}#">
+		<command title="«Мобильный перевод»" description="Перевод средств со своего счёта на счёт другого абонента." template="*133*{sum}*{phone}#">
 			<field title="Номер телефона" description="Кому перевести деньги" tag="phone" type="contact">
 				<modifier type="complete" template="79030000000"/>
 			</field>
-			<field title="Сумма перевода" description="Не менее 10р., остаток на счете не менее 50р., комиссия 5р." tag="sum" type="digits">
+			<field title="Сумма перевода" description="Не менее 10 руб, остаток на счете не менее 50 руб, комиссия 5 руб." tag="sum" type="digits">
 			</field>
 		</command>
+		<command title="«Звонок за счёт друга»" description="Разговор оплачивается вашим собеседником." template="0008{phone}">
+			<field title="Номер телефона" description="Кому позвонить" tag="phone" type="contact">
+				<modifier type="complete" template="79030000000"/>
+			</field>
+		</command>
+		<command title="Включить «Чёрный список»" description="Подключение услуги «Чёрный список» - 1 руб. в сутки." template="*130*5#">
+		</command>
+		<command title="Внести номер в «Чёрный список»" description="Данный абонент не сможет до вас дозвониться." template="*130*{phone}#">
+			<field title="Номер телефона" description="Кому отправить запрос" tag="phone" type="contact">
+				<modifier type="complete" template="79030000000"/>
+			</field>
+		</command>
+		<command title="Номера занесенные в «Чёрный список»" description="Информация о номерах из «Чёрного списка»." template="*130*3#">
+		</command>
+		<command title="Отключить «Чёрный список»" description="Отключение услуги «Чёрный список»." template="*130*4#">
+		</command>
+		<command title="Подключённые услуги" description="Просмотр списка подключённых услуг." template="*105*11#">
+		</command>		
 	</group>
 	<group title="Интернет" icon="more">
-		<command title="Пакеты интернет" description="Пакеты интернет (Разовые и Ежемесячные)" template="*105*3*3#">
+		<command title="Пакеты интернет" description="Пакеты интернет (Разовые и Ежемесячные)." template="*105*3*3#">
 		</command>
-		<command title="10 Мб интернета" description="Подключения пакета интернет 10 мб" template="*105*3*3*1#">
+		<command title="10 Мб интернета" description="Подключения пакета интернет 10 Мб." template="*105*3*3*1#">
 		</command>
-		<command title="Сутки безлимита" description="Безлимитный интернет на сутки" template="*105*2*8*6#">
+		<command title="Сутки безлимита" description="Безлимитный интернет на сутки." template="*105*2*8*6#">
 		</command>
-		<command title="Безлимит с Оперой" description="Подключение-отключение Безлимит с Оперой Мини" template="*105*2*8*4#">
+		<command title="Безлимит с Оперой" description="Подключение-отключение Безлимит с Оперой Мини." template="*105*2*8*4#">
+		</command>
+		<command title="Включить «SMS+»" description="Хранение переписки на Интернет-портале, 2 руб. в сутки. " template="*105*637#">
+		</command>
+		<command title="Отключить «SMS+»" description="Удаление архива переписки и настроек." template="*105*637*0#">
 		</command>
 	</group>
 	<group title="Сервис" icon="services">
-		<command title="«Точное время и номер телефона»" description="Информация о точном времени и Вашем номере телефона. Стоимость - 1,69р." template="*122#">
+		<command title="«Точное время и номер телефона»" description="Московское время и номер вашего телефона - 1,59 руб." template="*155#">
 		</command>
-		<command title="«IMEI телефона»" description="Информация о IMEI коде телефона" template="*#06#">
+		<command title="«IMEI телефона»" description="Информация о IMEI коде телефона." template="*#06#">
 		</command>
-	</group>
-		<group title="МегаФон-Visa" icon="money">
-		<command title="Получить онлайн-карту" description="Запрос на получение виртуальной карты" template="*455*1#">
+		<command title="Детализация за сутки" description="Бесплатная детализация на е-Mail один раз в сутки." template="*105*803#">
 		</command>
-		<command title="Получить код CVV2" description="Срок действия кода безопасности CVV2 – 1 час" template="*455*2#">
+		<command title="Разовая детализация" description="Платная детализация на е-Mail за сутки, неделю или месяц." template="*105*1*4*1*1#">
 		</command>
-		<command title="Реквизиты и срок действия" description="Узнать реквизиты и срок действия своей карты" template="*455*1#">
-		</command>
-		<command title="Заблокировать онлайн-карту" description="Запрос на удаление виртуальной карты" template="*455*0#">
+		<command title="Экспресс-детализация" description="Детализация за неделю. Стоимость 35 руб." template="*113#">
 		</command>
 	</group>
 </carrier>
