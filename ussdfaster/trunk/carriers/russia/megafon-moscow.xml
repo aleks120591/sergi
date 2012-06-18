@@ -10,6 +10,13 @@
 				<modifier type="complete" template="79030000000"/>
 			</field>
 		</command>
+		<command title="«Мобильный перевод»" description="Перевод средств со своего счёта на счёт другого абонента." template="*133*{sum}*{phone}#">
+			<field title="Номер телефона" description="Кому перевести деньги" tag="phone" type="contact">
+				<modifier type="complete" template="79030000000"/>
+			</field>
+			<field title="Сумма перевода" description="Не менее 10 руб, остаток на счете не менее 50 руб, комиссия 5 руб." tag="sum" type="digits">
+			</field>
+		</command>
 		<command title="Информация о платежах" description="Просмотр последних платежей." template="*105*1*3*3#">
 		</command>
 		<command title=" Счёт «Мегафон-Бонус»" description="Проверка бонусного счета." template="*105*5*1#">
@@ -18,23 +25,9 @@
 		</command>
 	</group>
 	<group title="Услуги" icon="callme">
-		<command title="«Разовый АнтиАОН»" description="Скрывает Ваш номер на текущий вызов. Стоимость 5 руб." template="#31#{phone}">
-			<field title="Номер телефона" description="Для кого скрыть номер" tag="phone" type="contact">
-				<modifier type="complete" template="79030000000"/>
-			</field>
-		</command>
-		<command title="Сервис-гид" description="Сервисное меню." template="*105#">
-		</command>
 		<command title="«Позвони мне»" description="Отправить смс с просьбой перезвонить вам." template="*144*{phone}#">
 			<field title="Номер телефона" description="Кому отправить запрос" tag="phone" type="contact">
 				<modifier type="complete" template="79030000000"/>
-			</field>
-		</command>
-		<command title="«Мобильный перевод»" description="Перевод средств со своего счёта на счёт другого абонента." template="*133*{sum}*{phone}#">
-			<field title="Номер телефона" description="Кому перевести деньги" tag="phone" type="contact">
-				<modifier type="complete" template="79030000000"/>
-			</field>
-			<field title="Сумма перевода" description="Не менее 10 руб, остаток на счете не менее 50 руб, комиссия 5 руб." tag="sum" type="digits">
 			</field>
 		</command>
 		<command title="«Звонок за счёт друга»" description="Разговор оплачивается вашим собеседником." template="0008{phone}">
@@ -42,7 +35,20 @@
 				<modifier type="complete" template="79030000000"/>
 			</field>
 		</command>
-		<command title="Включить «Чёрный список»" description="Подключение услуги «Чёрный список» - 1 руб. в сутки." template="*130*5#">
+		<command title="«Разовый АнтиАОН»" description="Скрывает Ваш номер на текущий вызов. Стоимость 5 р." template="#31#{phone}">
+			<field title="Номер телефона" description="Для кого скрыть номер" tag="phone" type="contact">
+				<modifier type="complete" template="79030000000"/>
+			</field>
+		</command>
+		<command title="Сервис-гид" description="Сервисное меню." template="*105#">
+		</command>
+		<command title="Подключённые услуги" description="Просмотр списка подключённых услуг." template="*105*11#">
+		</command>
+		<command title="Включить «МегаЗвонки»" description="Безлимит внутри сети. Подключение 30 р. далее 10 р. в сутки." template="*105*335#">
+		</command>
+		<command title="Отключить «МегаЗвонки»" description="Отключение услуги «МегаЗвонки»." template="*105*335*0#">
+		</command>
+		<command title="Включить «Чёрный список»" description="Подключение услуги «Чёрный список» - 1 р. в сутки." template="*130*5#">
 		</command>
 		<command title="Внести номер в «Чёрный список»" description="Данный абонент не сможет до вас дозвониться." template="*130*{phone}#">
 			<field title="Номер телефона" description="Кому отправить запрос" tag="phone" type="contact">
@@ -52,34 +58,56 @@
 		<command title="Номера занесенные в «Чёрный список»" description="Информация о номерах из «Чёрного списка»." template="*130*3#">
 		</command>
 		<command title="Отключить «Чёрный список»" description="Отключение услуги «Чёрный список»." template="*130*4#">
-		</command>
-		<command title="Подключённые услуги" description="Просмотр списка подключённых услуг." template="*105*11#">
-		</command>		
+		</command>	
 	</group>
 	<group title="Интернет" icon="more">
-		<command title="Пакеты интернет" description="Пакеты интернет (Разовые и Ежемесячные)." template="*105*3*3#">
+		<command title="Включить пакет «Безлимитный»" description="Стоимость 5 р. в сутки. Ограничение скорости после 30 МБ." template="*105*450#">
 		</command>
-		<command title="10 Мб интернета" description="Подключения пакета интернет 10 Мб." template="*105*3*3*1#">
+		<command title="Отключить пакет «Безлимитный" description="Первое подключение бесплатно, далее 150 р." template="*105*450#*0#">
 		</command>
-		<command title="Сутки безлимита" description="Безлимитный интернет на сутки." template="*105*2*8*6#">
+		<command title="Включить пакет «Безлимитный PRO»" description="Стоимость 9,90 р. в сутки. Ограничение скорости после 80 МБ." template="*105*276#">
 		</command>
-		<command title="Безлимит с Оперой" description="Подключение-отключение Безлимит с Оперой Мини." template="*105*2*8*4#">
+		<command title="Отключить пакет «Безлимитный PRO»" description="Первое подключение бесплатно, далее 150 р." template="*105*276#*0#">
 		</command>
-		<command title="Включить «SMS+»" description="Хранение переписки на Интернет-портале, 2 руб. в сутки. " template="*105*637#">
+		<command title="Включить пакет «Базовый» 512 Кбит/с" description="Стоимость 250 р. в мес, ограничение скорости после 1,5 ГБ." template="*236*1#">
+		</command>
+		<command title="Отключить пакет «Базовый»" description="Отключение пакета «Базовый»." template="*236*1*0#">
+		</command>
+		<command title="Включить пакет «Оптимальный» 1 Мбит/с" description="Стоимость 350 р. в мес, ограничение скорости после 3 ГБ." template="*236*2#">
+		</command>
+		<command title="Отключить пакет «Оптимальный»" description="Отключение пакета «Оптимальный»." template="*236*2*0#">
+		</command>
+		<command title="Включить пакет«Прогрессивный» 2 Мбит/с" description="Стоимость 550 р. в мес, ограничение скорости после 4 ГБ." template="*236*3#">
+		</command>
+		<command title="Отключить пакет «Прогрессивный»" description="Отключение пакета «Прогрессивный»." template="*236*3*0#">
+		</command>
+		<command title="Включить пакет «Максимальный» 4 Мбит/с" description="Стоимость 750 р. в мес, ограничение после 8/10/12/14 Гб." template="*236*4#">
+		</command>
+		<command title="Отключить пакет «Максимальный»" description="Отключение пакета «Максимальный»." template="*236*4*0#">
+		</command>
+		<command title="Включить пакет «Безлимит с Opera Mini»" description="Подключение 20 руб. Стоимость 4 руб. в сутки." template="*105*235#">
+		</command>
+		<command title="Отключить пакет «Безлимит с Opera Mini»" description="Отключение пакета «Безлимит с Opera Mini»" template="*105*235*0#">
+		</command>
+		<command title="Включить «SMS+»" description="Хранение переписки на Интернет-портале, 2 р. в сутки. " template="*105*637#">
 		</command>
 		<command title="Отключить «SMS+»" description="Удаление архива переписки и настроек." template="*105*637*0#">
 		</command>
 	</group>
 	<group title="Сервис" icon="services">
-		<command title="«Точное время и номер телефона»" description="Московское время и номер вашего телефона - 1,59 руб." template="*155#">
+		<command title="«Точное время и номер телефона»" description="Московское время и номер вашего телефона - 1,59 р." template="*155#">
 		</command>
 		<command title="«IMEI телефона»" description="Информация о IMEI коде телефона." template="*#06#">
+		</command>
+		<command title="Включить «Второй номер»" description="Подключение 30 р. Стоимость 1 р. в сутки." template="*437*1#">
+		</command>
+		<command title="Отключить «Второй номер»" description="Номер теряется без возможности восстановления." template="*437*0#">
 		</command>
 		<command title="Детализация за сутки" description="Бесплатная детализация на е-Mail один раз в сутки." template="*105*803#">
 		</command>
 		<command title="Разовая детализация" description="Платная детализация на е-Mail за сутки, неделю или месяц." template="*105*1*4*1*1#">
 		</command>
-		<command title="Экспресс-детализация" description="Детализация за неделю. Стоимость 35 руб." template="*113#">
+		<command title="Экспресс-детализация" description="Детализация за неделю. Стоимость 35 р." template="*113#">
 		</command>
 	</group>
 </carrier>
