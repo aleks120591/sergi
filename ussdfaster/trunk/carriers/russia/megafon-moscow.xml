@@ -23,6 +23,8 @@
 		</command>
 		<command title="«Мегафон-Бонус»" description="Обменять баллы на услуги связи." template="*105*5*2#">
 		</command>
+		<command title="   " description="   " template="    ">
+		</command>	
 	</group>
 	<group title="Услуги" icon="callme">
 		<command title="«Позвони мне»" description="Отправить смс с просьбой перезвонить вам." template="*144*{phone}#">
@@ -59,6 +61,8 @@
 		</command>
 		<command title="Отключить «Чёрный список»" description="Отключение услуги «Чёрный список»." template="*130*4#">
 		</command>	
+		<command title="   " description="   " template="    ">
+		</command>	
 	</group>
 	<group title="Интернет" icon="more">
 		<command title="Включить пакет «Безлимитный»" description="Стоимость 5 р. в сутки. Ограничение скорости после 30 МБ." template="*105*450#">
@@ -93,6 +97,8 @@
 		</command>
 		<command title="Отключить «SMS+»" description="Удаление архива переписки и настроек." template="*105*637*0#">
 		</command>
+		<command title="   " description="   " template="    ">
+		</command>	
 	</group>
 	<group title="Сервис" icon="services">
 		<command title="«Точное время и номер телефона»" description="Московское время и номер вашего телефона - 1,59 р." template="*155#">
@@ -109,5 +115,15 @@
 		</command>
 		<command title="Экспресс-детализация" description="Детализация за неделю. Стоимость 35 р." template="*113#">
 		</command>
+		<command title="Получить онлайн-карту" description="Запрос на получение виртуальной карты" template="*455*1#">
+		</command>
+		<command title="Получить код CVV2" description="Срок действия кода безопасности CVV2 – 1 час" template="*455*2#">
+		</command>
+		<command title="Реквизиты и срок действия" description="Узнать реквизиты и срок действия своей карты" template="*455*1#">
+		</command>
+		<command title="Заблокировать онлайн-карту" description="Запрос на удаление виртуальной карты" template="*455*0#">
+		</command>
+		<command title="   " description="   " template="    ">
+		</command>	
 	</group>
 </carrier>
