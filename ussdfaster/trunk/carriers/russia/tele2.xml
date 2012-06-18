@@ -30,15 +30,25 @@
 			template="##002#">
 		</command>	
 		<command
-			title="Карта оплаты"
-			description="Активировать карту оплаты"
-			template="*106*{number}#">
+			title="Справка о стоимости"
+			description="Справка о стоимости звонка или SMS на короткий номер"
+			template="*125*{number}#">
 			<field
-				title="Код карты"
-				description="Код карты оплаты"
+				title="Номер"
+				description="Короткий номер"
 				tag="number"
 				type="digits">
 			</field>
+		</command>
+		<command
+			title="Карта оплаты"
+			description="Активировать карту оплаты"
+			template="*106*{number}#">
+		  <field
+				title="Код карты"
+				description="Код карты оплаты"
+				tag="number"
+				type="digits"/>
 		</command>
 		<command
 			title="«Звонок в роуминге»"
