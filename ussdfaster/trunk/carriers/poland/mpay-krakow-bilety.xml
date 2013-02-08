@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carrier
+	title = "Mpay">
+	<group title = "Mpay bilety Kraków">		
+	<command
+			title="Bilet jednoprzejazdowy lub 40-minutowy"
+			description="Bilet jednoprzejazdowy lub 40-minutowy"
+			template="*145*120{typ}{linia}#">
+			<field
+				title="Typ Biletu"
+				description="Wybierz typ biletu: na miasto Kraków lub aglomeracyjny"
+				tag="typ"
+				type="select">
+				 <customData>
+                    <option text="Kraków" value="1"/>
+                    <option text="Aglomeracyjny" value="2"/>
+                </customData>
+			</field>
+			<field
+				title="Linia"
+				description="Wpisz trzycyfrowy numer linii tramwajowej lub autobusowej. Jeśli numer linii jest jedno- lub dwucyfrowy, wówczas należy wpisać go z zerami (np. dla linii nr 1 - 001, a dla linii 15 - 015)."
+				tag="linia"
+				type="digits">
+			</field>
+		</command>
+
+		<command
+			title="Bilet jednoprzejazdowy grupowy"
+			description="Bilet jednoprzejazdowy grupowy"
+			template="*145*120{typ}{linia}#">
+			<field
+				title="Typ Biletu"
+				description="Wybierz typ biletu: na miasto Kraków lub aglomeracyjny"
+				tag="typ"
+				type="select">
+				 <customData>
+                    <option text="Kraków do 20 osób" value="3"/>
+					<option text="Aglomeracyjny do 20 osób" value="4"/>
+                </customData>
+			</field>
+			<field
+				title="Linia"
+				description="Wpisz trzycyfrowy numer linii tramwajowej lub autobusowej. Jeśli numer linii jest jedno- lub dwucyfrowy, wówczas należy wpisać go z zerami (np. dla linii nr 1 - 001, a dla linii 15 - 015)."
+				tag="linia"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="Bilet wieloprzejazdowy Kraków"
+			description="Bilet wieloprzejazdowy Kraków"
+			template="*145*1200{typ}#">
+			<field
+				title="Typ Biletu"
+				description="Wybierz typ biletu"
+				tag="typ"
+				type="select">
+				 <customData>
+                    <option text="20-minutowy" value="120"/>
+					<option text="60-minutowy" value="260"/>
+					<option text="90-minutowy" value="290"/>
+                    <option text="24-godzinny" value="101"/>
+					<option text="48-godzinny" value="102"/>
+					<option text="72-godzinny" value="103"/>
+					<option text="tygodniowy" value="107"/>
+                </customData>
+			</field>
+		</command>
+		<command
+			title="Bilet wieloprzejazdowy aglomeracja"
+			description="Bilet wieloprzejazdowy aglomeracja"
+			template="*145*1200{typ}#">
+			<field
+				title="Typ Biletu"
+				description="Wybierz typ biletu"
+				tag="typ"
+				type="select">
+				 <customData>
+					<option text="60-minutowy" value="260"/>
+                    <option text="90-minutowy" value="290"/>
+                    <option text="24-godzinny" value="201"/>
+					<option text="tygodniowy" value="207"/>
+                </customData>
+			</field>
+		</command>
+		<command
+			title="Bilet weekendowy rodzinny"
+			description="Bilet weekendowy rodzinny"
+			template="*145*1200{typ}#">
+			<field
+				title="Typ Biletu"
+				description="Wybierz typ biletu: na miasto Kraków lub aglomeracyjny"
+				tag="typ"
+				type="select">
+				 <customData>
+                    <option text="Kraków i Aglomeracja" value="200"/>
+                </customData>
+			</field>
+		</command>
+		<command
+			title="Okazanie biletu do kontroli"
+			description="Okazanie zakupionego biletu do kontroli"
+			template="*145*54321#">
+		</command>
+	</group>
+</carrier>
+
