@@ -44,7 +44,7 @@
 		</command>
 		<command
 			title="Перевести кошти"
-			description="Перевести гроші іншому абоненту"
+			description="Перевести гроші іншому абоненту. Ви отримаєте відповідь такого виду: ' Підтвердження командою *125*????# '. Запам'ятайте код '????'"
 			template="*124*{amount}*{phone}#">
 			<field
 				title="Номер телефону"
@@ -60,6 +60,17 @@
 				title="Сума переводу"
 				description="Введіть суму переводу в грн."
 				tag="amount"
+				type="digits">
+			</field>
+		</command>
+		<command
+			title="Перевести кошти (підтвердження)"
+			description="Підтвердити переведення грошей іншому абоненту"
+			template="*125*{code}#">
+			<field
+				title="Код підтвердження"
+				description="Введіть 4-значний код, наприклад 0123"
+				tag="code"
 				type="digits">
 			</field>
 		</command>
