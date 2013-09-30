@@ -76,6 +76,30 @@
 		</command>
 	</group>
 	<group
+		title = "Інформаційні"
+		icon="services">
+		<command
+			title="Дізнатись свій тариф"
+			description=""
+			template="*100*01*2#">
+		</command>
+		<command
+			title="Дізнатись свій номер"
+			description=""
+			template="*161#">
+		</command>
+		<command
+			title="Дізнатись строк дії номера"
+			description=""
+			template="*114#">
+		</command>
+		<command
+			title="Дізнатись точний час"
+			description=""
+			template="*160#">
+		</command>
+	</group>
+	<group
 		title = "«Передзвони мені»"
 		icon="callme">
 		<command
@@ -101,6 +125,22 @@
 		</command>
 	</group>
 	<group title = "Інтернет">
+		<command
+			title="Термін дії 'Інтернет без меж'"
+			description="Перевірити статус і термін дії послуги 'Інтернет без меж'"
+			template="*154#">
+		</command>
+
+		<command
+			title="Замовити 'Інтернет без меж' з подобовою оплатою"
+			description="Замовити послугу 'Інтернет без меж' з подобовою оплатою (1.34 грн/день)"
+			template="*154*1#">
+		</command>
+		<command
+			title="Замовити 'Інтернет без меж' одразу на 30 днів"
+			description="Замовити послугу 'Інтернет без меж' з передоплатою на 30 днів (29.03 грн)"
+			template="*154*3#">
+		</command>
 		<command
 			title="Залишок пакетів даних"
 			description="Залишок інтернет трафіку"
@@ -145,6 +185,19 @@
 	              <option text="500мб\100смс\100ммс (80грн)" value="500"/>
 	          </customData>
 	      	</field>
+		</command>
+	</group>
+	<group
+		title = "Перенаправлення"
+		icon="builtin">
+		<command
+			title="Перенаправлення вхідних дзвінків в нікуди"
+			description="Абонент почує повідомлення від оператора: 'Ви набрали не вірний номер. Перевірте його ще раз і перетелефонуйте!'"
+			template="*002*8067#">
+		</command>
+		<command
+			title="Відключити всі типи перенаправлення"
+			template="##002#">
 		</command>
 	</group>
 </carrier>
