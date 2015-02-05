@@ -1,0 +1,1 @@
+{"carrier":{"group":[{"command":[{"template":"*111#","description":"*111#","title":"Main menu"}],"title":"Main Menu"},{"command":[{"template":"*111*3*2#","description":"*111*3*2#","title":"Internet menu"}],"title":"Internet Menu"}],"title":"IR-MCI"}}

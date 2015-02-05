@@ -1,0 +1,1 @@
+{"carrier":{"group":[{"command":[{"template":"*555#","description":"*555#","title":"Main Menu"}],"title":"Main Menu"},{"command":[{"template":"*555*3#","description":"*555*3#","title":"Internet Menu"}],"title":"Internet Menu"}],"title":"IRANCELL"}}
